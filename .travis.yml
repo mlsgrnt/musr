@@ -1,0 +1,18 @@
+language: python
+python: 3.7
+dist: xenial
+sudo: false
+
+branches:
+  only:
+    - master
+
+install:
+  - pip install -r requirements.txt
+
+before_install:
+  - export DEBUG=True
+
+script:
+  - cd musr_project
+  - python manage.py test
