@@ -1,0 +1,5 @@
+certifi==2018.11.29
+Django==2.1.7
+pytz==2018.9
+pre-commit==1.14.4
+black==18.9b0
