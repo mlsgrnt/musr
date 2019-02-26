@@ -6,3 +6,8 @@ from django.http import HttpResponse
 @login_required
 def test_page(request):
     return HttpResponse("Hello " + str(request.user))
+
+
+@login_required
+def account(request):
+    return render(request, "musr/account.html", {})
