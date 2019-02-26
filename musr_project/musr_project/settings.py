@@ -123,6 +123,10 @@ STATIC_URL = "/static/"
 # Redirect logged-in users to the homepage
 LOGIN_REDIRECT_URL = "/"
 
+# Allauth wants /accounts/ by default, override this
+# TODO: REMOVE allauth views entirely!
+LOGIN_URL = "/allauth/login"
+
 # Django-allauth Config
 AUTHENTICATION_BACKENDS = (
     # Needed to login by username in Django admin, regardless of `allauth`
