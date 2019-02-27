@@ -1,0 +1,15 @@
+<!-- MUSR base.html -->
+<h1>MUSR</h1>
+
+{% if messages %}
+<div>
+  <ul>
+    {% for message in messages %}
+    <li>{{message}}</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
+
+{% block content %}
+{% endblock %}
