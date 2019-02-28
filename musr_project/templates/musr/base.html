@@ -2,7 +2,7 @@
 <!-- MUSR base.html -->
 <html>
 	<head>
-		<title>MUSR{% block title%}{% endblock %}</title>
+		<title>{% block title%}MUSR{% endblock %}</title>
 	</head>
 	<body>
 		<div>
@@ -11,6 +11,7 @@
 			 	<a href={% url 'account_logout' %}>Logout</a>
 			{% else %}
 			 	<a href={% url 'account_login' %}>Login</a>
+			 	<a href={% url 'account_signup' %}>Sign Up</a>
 			{% endif %}
 		</div>
 
@@ -23,7 +24,6 @@
 		  </ul>
 		</div>
 		{% endif %}
-
 		<div>
 			{% block content %}
 			{% endblock %}

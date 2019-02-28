@@ -1,0 +1,14 @@
+{% extends "musr/base.html" %}
+
+{% block content %}
+	<h1>What's Hot</h1>
+  {% if user.is_authenticated %}
+  <div>
+  	Hello {{ user }}
+  	<a href="{% url 'feed' %}">Feed</a>
+  	<a href="{% url 'profile' %}">Profile</a>
+  </div>
+  {% else %}
+  	Please login or Sign up.
+  {% endif %}
+{% endblock %}
