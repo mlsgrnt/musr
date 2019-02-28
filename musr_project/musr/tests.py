@@ -1,6 +1,8 @@
-from django.test import TestCase, Client
+from django.test import TestCase
 from django.contrib.sites.models import Site
 from django.contrib.auth.models import User
+
+from .models import Profile, Post, Following
 
 # Create your tests here.
 class TravisTesterTestCase(TestCase):
@@ -9,6 +11,78 @@ class TravisTesterTestCase(TestCase):
         test_value = 5
         self.assertEqual(test_value, 5)
 
+class ModelTestCase(TestCase):
+    def test_can_create_user(self):
+        self.user = User.objects.create_user(username="testuser", password="password")
+
+        self.assertTrue(isinstance(self.user, User))
+
+    def test_can_create_profile(self):
+        self.user = User.objects.create_user(username="testuser", password="password")
+        self.profile = Profile.objects.create(user=self.user)
+
+        self.assertTrue(isinstance(self.profile, Profile))
+
+    def test_user_deletion_cascades(self):
+        self.user = User.objects.create_user(username="testuser", password="password")
+        self.user.save()
+
+        self.profile = Profile.objects.create(user=self.user)
+        self.profile.save()
+
+        self.user.delete()
+
+        self.assertQuerysetEqual(Profile.objects.all(), [])
+
+    def test_can_create_following_relationship(self):
+        self.follower = User.objects.create_user(
+            username="testuser", password="password"
+        )
+        self.follower.save()
+
+        self.follower_profile = Profile.objects.create(user=self.follower)
+        self.follower_profile.save()
+
+        self.followee = User.objects.create_user(
+            username="testuser2", password="password"
+        )
+        self.followee.save()
+
+        self.followee_profile = Profile.objects.create(user=self.followee)
+        self.followee_profile.save()
+
+        self.following = Following.objects.create(
+            follower=self.follower_profile, followee=self.followee_profile
+        )
+        self.following.save()
+
+        self.assertTrue(isinstance(self.following, Following))
+
+    def test_user_deletion_cascades_following(self):
+        self.follower = User.objects.create_user(
+            username="testuser", password="password"
+        )
+        self.follower.save()
+
+        self.follower_profile = Profile.objects.create(user=self.follower)
+        self.follower_profile.save()
+
+        self.followee = User.objects.create_user(
+            username="testuser2", password="password"
+        )
+        self.followee.save()
+
+        self.followee_profile = Profile.objects.create(user=self.followee)
+        self.followee_profile.save()
+
+        self.following = Following.objects.create(
+            follower=self.follower_profile, followee=self.followee_profile
+        )
+        self.following.save()
+
+        self.follower.delete()
+
+        self.assertQuerysetEqual(Following.objects.all(), [])
 
 # TODO: these could use some fleshing out
 class AllAuthTestCase(TestCase):
