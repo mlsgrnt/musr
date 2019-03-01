@@ -1,35 +1,42 @@
 <!DOCTYPE html>
 <!-- MUSR base.html -->
 <html>
-	<head>
-		<title>{% block title%}MUSR{% endblock %}</title>
-	</head>
-	<body>
-		<div>
-			<h1>MUSR</h1>
-			{% if user.is_authenticated %}
-			 	<a href="{% url 'account_logout' %}">Logout</a>
-			 	<a href="{% url 'whats_hot' %}">Whats's Hot</a>
-  				<a href="{% url 'feed' %}">Feed</a>
-  				<a href="{% url 'profile' %}">Profile</a>
-			{% else %}
-			 	<a href="{% url 'account_login' %}">Login</a>
-			 	<a href="{% url 'account_signup' %}">Sign Up</a>
-			{% endif %}
-		</div>
+  <head>
+    <title>{% block title%}MUSR{% endblock %}</title>
+  </head>
+  <body>
+    <div>
+      <h1>MUSR</h1>
+      <ul>
+        {% if user.is_authenticated %}
+          <li><a href="{% url 'account_logout' %}">Logout</a></li>
+          <li><a href="{% url 'whats_hot' %}">Whats's Hot</a> </li>
+          <li><a href="{% url 'feed' %}">Feed</a></li>
+          <li><a href="{% url 'own_profile' %}">Profile</a></li>
+        {% else %}
+          <li><a href="{% url 'account_login' %}">Login</a></li>
+          <li><a href="{% url 'account_signup' %}">Sign Up</a></li>
+        {% endif %}
+      </ul>
+      {% if user.is_authenticated %}
+        <span>You are logged in as {{ user }}</span>
+      {% else %}
+        <span>You are not logged in</span>
+      {% endif %}
+    </div>
 
-		{% if messages %}
-		<div>
-		  <ul>
-		    {% for message in messages %}
-		    <li>{{message}}</li>
-		    {% endfor %}
-		  </ul>
-		</div>
-		{% endif %}
-		<div>
-			{% block content %}
-			{% endblock %}
-		</div>
-	</body>
+    {% if messages %}
+      <div>
+        <ul>
+          {% for message in messages %}
+            <li>{{message}}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+    <div>
+      {% block content %}
+      {% endblock %}
+    </div>
+  </body>
 </html>

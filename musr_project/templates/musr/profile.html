@@ -1,12 +1,5 @@
 {% extends "musr/base.html" %}
 
 {% block content %}
-  {% if user.is_authenticated %}
-  <div>
-  	<h1>{{ user }}</h1>
-
-  </div>
-  {% else %}
-  	Please login or Sign up.
-  {% endif %}
+  <h1>{{ username }}'s profile</h1>
 {% endblock %}
