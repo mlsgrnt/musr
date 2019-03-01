@@ -13,6 +13,13 @@
           <li><a href="{% url 'whats_hot' %}">Whats's Hot</a> </li>
           <li><a href="{% url 'feed' %}">Feed</a></li>
           <li><a href="{% url 'own_profile' %}">Profile</a></li>
+          <li>
+            <ul>
+              <li><a href="{% url 'account_change_password' %}">Change Password</a></li>
+              <li><a href="{% url 'account_email' %}">Change Email</a></li>
+              <li><a href="{% url 'socialaccount_connections' %}">Change Social Connections</a></li>
+            </ul>
+          </li>
         {% else %}
           <li><a href="{% url 'account_login' %}">Login</a></li>
           <li><a href="{% url 'account_signup' %}">Sign Up</a></li>
