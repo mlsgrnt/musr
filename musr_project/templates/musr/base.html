@@ -1,15 +1,51 @@
+{% load current from musr_template_tags %}
+
+<!DOCTYPE html>
 <!-- MUSR base.html -->
-<h1>MUSR</h1>
+<html>
+  <head>
+    <title>{% block title%}MUSR{% endblock %}</title>
+  </head>
+  <body>
+    <div>
+      <h1>MUSR</h1>
+      <ul>
+        {% if user.is_authenticated %}
+          <li class="{% current 'account_logout' %}"><a href="{% url 'account_logout' %}">Logout</a></li>
+          <li class="{% current 'whats_hot' %}"><a href="{% url 'whats_hot' %}">Whats's Hot</a> </li>
+          <li class="{% current 'feed' %}"><a href="{% url 'feed' %}">Feed</a></li>
+          <li><a href="{% url 'own_profile' %}">Profile</a></li> <!-- own profile doens't get highlighted because the link will bea  photo -->
+          <li>
+            <ul>
+              <li class="{% current 'account_change_password' %}"><a href="{% url 'account_change_password' %}">Change Password</a></li>
+              <li class="{% current 'account_email' %}"><a href="{% url 'account_email' %}">Change Email</a></li>
+              <li class="{% current 'socialaccount_connections' %}"><a href="{% url 'socialaccount_connections' %}">Change Social Connections</a></li>
+            </ul>
+          </li>
+        {% else %}
+          <li class="{% current 'account_login' %}"><a href="{% url 'account_login' %}">Login</a></li>
+          <li class="{% current 'account_signup' %}"><a href="{% url 'account_signup' %}">Sign Up</a></li>
+        {% endif %}
+      </ul>
+      {% if user.is_authenticated %}
+        <span>You are logged in as {{ user }}</span>
+      {% else %}
+        <span>You are not logged in</span>
+      {% endif %}
+    </div>
 
-{% if messages %}
-<div>
-  <ul>
-    {% for message in messages %}
-    <li>{{message}}</li>
-    {% endfor %}
-  </ul>
-</div>
-{% endif %}
-
-{% block content %}
-{% endblock %}
+    {% if messages %}
+      <div>
+        <ul>
+          {% for message in messages %}
+            <li>{{message}}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+    <div>
+      {% block content %}
+      {% endblock %}
+    </div>
+  </body>
+</html>
