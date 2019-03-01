@@ -5,7 +5,6 @@ from . import views
 urlpatterns = [
     path("", views.whats_hot, name="whats_hot"),
     path("feed/", views.feed, name="feed"),
-    # TODO:
-    # How to match to profile/username/
-    path("profile/", views.profile, name="profile"),
+    path("profile/", views.own_profile, name="own_profile"),
+    path("profile/<slug:username>/", views.profile, name="profile"),
 ]
