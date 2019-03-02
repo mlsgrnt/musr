@@ -25,10 +25,9 @@ def song(post):
             "Invalid request; song can't be displayed without song id"
         )
         return
-    # TODO: fail on no post --> unit test
     # TODO: make this more elegant
     poster = Profile.objects.get(user=post.poster)
-    re_poster = None  # TODO IS THIS PYTHON STYLE
+    re_poster = None
     if post.original_poster:
         re_poster = poster
         poster = Profile.objects.get(user=post.original_poster)
