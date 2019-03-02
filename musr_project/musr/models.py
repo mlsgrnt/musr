@@ -58,4 +58,4 @@ class Post(models.Model):
     song_id = models.IntegerField()
 
     # a field for the date the post was made
-    date = models.DateField(default=timezone.now().date())
+    date = models.DateField(default=timezone.now)
