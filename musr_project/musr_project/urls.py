@@ -16,8 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+from django.conf import settings
+from django.conf.urls.static import static
+
+# Manually place the musr photo upload page under account/ to match rest of accounts pages
+from musr.views import photo_upload
+
 urlpatterns = [
     path("", include("musr.urls")),
     path("account/", include("allauth.urls")),
+    path("account/photo-upload", photo_upload, name="photo_upload"),
     path("admin/", admin.site.urls),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
