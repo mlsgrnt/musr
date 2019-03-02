@@ -17,6 +17,7 @@
           <li><a href="{% url 'own_profile' %}">Profile</a></li> <!-- own profile doens't get highlighted because the link will bea  photo -->
           <li>
             <ul>
+              <li class="{% current 'account_photo_upload' %}"><a href="{% url 'account_photo_upload' %}">Profile Photo</a></li>
               <li class="{% current 'account_change_password' %}"><a href="{% url 'account_change_password' %}">Change Password</a></li>
               <li class="{% current 'account_email' %}"><a href="{% url 'account_email' %}">Change Email</a></li>
               <li class="{% current 'socialaccount_connections' %}"><a href="{% url 'socialaccount_connections' %}">Change Social Connections</a></li>

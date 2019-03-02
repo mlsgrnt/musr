@@ -25,6 +25,6 @@ from musr.views import photo_upload
 urlpatterns = [
     path("", include("musr.urls")),
     path("account/", include("allauth.urls")),
-    path("account/photo-upload", photo_upload, name="photo_upload"),
+    path("account/photo-upload", photo_upload, name="account_photo_upload"),
     path("admin/", admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
