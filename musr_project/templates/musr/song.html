@@ -1,0 +1,10 @@
+<div>
+  <div class="poster">
+    <img src="{{ poster.picture.url }}" />
+    <span>{{ poster }}</span>
+    {% if re_poster %}
+      <span>Reposted by {{ re_poster }}</span>
+    {% endif %}
+    <span>Posted {{ post.date }}</span>
+  </div>
+</div>
