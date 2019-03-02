@@ -7,7 +7,7 @@
     current photo:
     <img src="{{ profile.picture.url }}" />
   {% endif %}
-  <form id="photoUpload" method="post" action="{% url 'photo_upload' %}" enctype="multipart/form-data">
+  <form id="photoUpload" method="post" action="{% url 'account_photo_upload' %}" enctype="multipart/form-data">
     {% csrf_token %}
     <input type="file" name="photoUpload" id="photoUpload"/>
     <input type="submit" name="submit" value="Upload Photo"/>
