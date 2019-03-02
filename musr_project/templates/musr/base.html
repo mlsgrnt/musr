@@ -32,8 +32,10 @@
       </ul>
       {% if user.is_authenticated %}
         <span>You are logged in as {{ user }}</span>
-        Add post:
-        {% add_post %}
+        <div>
+          Add Post:
+          {% add_post %}
+        </div>
       {% else %}
         <span>You are not logged in</span>
       {% endif %}

@@ -35,6 +35,7 @@ const selectSong = e => {
     form.reset();
 
     document.querySelector('.songSearchResults').innerHTML = '';
+    document.querySelector('.songSearch').value = '';
   });
 };
 
