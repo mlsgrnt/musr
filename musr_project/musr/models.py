@@ -15,7 +15,10 @@ class Profile(models.Model):
     picture = models.ImageField(upload_to="profile_images", blank=True)
 
     def __str__(self):
-        return self.user.first_name + " " + self.user.last_name
+        if self.user.first_name:
+            return self.user.first_name + " " + self.user.last_name
+
+        return self.user.username
 
 
 class Following(models.Model):
