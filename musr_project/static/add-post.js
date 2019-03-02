@@ -16,8 +16,10 @@ const onChangeHandler = e => {
 };
 
 const selectSong = e => {
+  // Browser compatibility
+  const path = e.path || (e.composedPath && e.composedPath());
   // traverse tree of clicked elements to find the li so we can grab the ID
-  const songId = e.path.find(element => {
+  const songId = path.find(element => {
     // Find LI element and check it has an id just to be safe
     return element.nodeName == 'LI' && element.id;
   }).id;
