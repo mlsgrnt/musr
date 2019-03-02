@@ -2,7 +2,7 @@ import urllib.request
 import json
 
 from django import template
-
+from django.core.exceptions import SuspiciousOperation
 from django.contrib.auth.models import User
 from musr.models import Profile
 
@@ -20,6 +20,11 @@ def current(context, url=None):
 # Post "component"
 @register.inclusion_tag("musr/song.html")
 def song(post):
+    if not post:
+        raise SuspiciousOperation(
+            "Invalid request; song can't be displayed without song id"
+        )
+        return
     # TODO: fail on no post --> unit test
     # TODO: make this more elegant
     poster = Profile.objects.get(user=post.poster)
@@ -33,6 +38,9 @@ def song(post):
     req = urllib.request.Request(url)
     r = urllib.request.urlopen(req).read()
     data = json.loads(r.decode("utf-8"))
+
+    if "error" in data:
+        raise SuspiciousOperation("Invalid request; deezer song id is not a valid song")
 
     post.title = data["title"]
     post.artist = data["artist"]["name"]
