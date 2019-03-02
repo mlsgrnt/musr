@@ -137,46 +137,6 @@ class baseLinksTestCase(TestCase):
         )
 
 
-# TODO: refactor these
-class baseLinksTestCase(TestCase):
-    @classmethod
-    def setUp(self):
-        self.current_site = Site.objects.get_current()
-        self.SocialApp1 = self.current_site.socialapp_set.create(
-            provider="facebook",
-            name="facebook",
-            client_id="1234567890",
-            secret="0987654321",
-        )
-        self.SocialApp2 = self.current_site.socialapp_set.create(
-            provider="google",
-            name="google",
-            client_id="1234567890",
-            secret="0987654321",
-        )
-
-        self.user = User.objects.create_user(username="admin", password="secret")
-
-    def test_logged_out_user_sees_sign_in_link(self):
-        response = self.client.get("/", follow=True)
-        self.assertContains(
-            response, '<a href="%s">Login</a>' % reverse("account_login"), html=True
-        )
-        self.assertNotContains(
-            response, '<a href="%s">Logout</a>' % reverse("account_logout"), html=True
-        )
-
-    def test_normally_logged_in_user_sees_sign_out_link(self):
-        self.client.post("/account/login/", {"login": "admin", "password": "secret"})
-        response = self.client.get("/")
-        self.assertNotContains(
-            response, '<a href="%s">Login</a>' % reverse("account_login"), html=True
-        )
-        self.assertContains(
-            response, '<a href="%s">Logout</a>' % reverse("account_logout"), html=True
-        )
-
-
 # TODO: these could use some fleshing out
 class AllAuthTestCase(TestCase):
     @classmethod
@@ -253,6 +213,46 @@ class PostShowingViewTestCase(TestCase):
             profile=self.profile, Song_Id=1, date=datetime.datetime(2019, 2, 1, 12, 0)
         )
         self.post.save()
+
+
+class AddPostTestCase(TestCase):
+    @classmethod
+    def setUp(self):
+        self.current_site = Site.objects.get_current()
+        self.SocialApp1 = self.current_site.socialapp_set.create(
+            provider="facebook",
+            name="facebook",
+            client_id="1234567890",
+            secret="0987654321",
+        )
+        self.SocialApp2 = self.current_site.socialapp_set.create(
+            provider="google",
+            name="google",
+            client_id="1234567890",
+            secret="0987654321",
+        )
+
+        self.user = User.objects.create_user(username="admin", password="secret")
+        Profile.objects.create(user=self.user)
+
+    def test_cant_make_post_if_not_logged_in(self):
+        response = self.client.get(reverse("add_post"), follow=True)
+        self.assertTemplateUsed(response, "account/login.html")
+
+    def test_making_get_request_to_add_post_does_nothing(self):
+        self.client.post("/account/login/", {"login": "admin", "password": "secret"})
+
+        response = self.client.get(reverse("add_post"))
+        self.assertRedirects(response, "/")
+
+    def test_post_creation_sucessful(self):
+        self.client.post("/account/login/", {"login": "admin", "password": "secret"})
+
+        self.client.post(reverse("add_post"), {"song": 1}, follow=True)
+
+        testpost = Post.objects.get(song_id=1)
+        self.assertIsNotNone(testpost)
+
 
 class SongTemplateTagTestCase(TestCase):
     def render_template(self, string, context=None):

@@ -1,0 +1,15 @@
+/* TEMPORARY */
+.addPostForm {
+  display: none;
+}
+
+.active {
+  font-weight: 900;
+}
+
+.song {
+  cursor: pointer;
+}
+.song:hover {
+  background-color: #eee;
+}
