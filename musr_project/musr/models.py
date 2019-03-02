@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 # Create your models here.
 
@@ -57,4 +58,4 @@ class Post(models.Model):
     song_id = models.IntegerField()
 
     # a field for the date the post was made
-    date = models.DateField()
+    date = models.DateTimeField(default=timezone.now)

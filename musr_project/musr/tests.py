@@ -2,6 +2,8 @@ from django.test import TestCase
 from django.contrib.sites.models import Site
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.template import Context, Template
+from datetime import datetime
 
 from .models import Profile, Post, Following
 
@@ -12,7 +14,15 @@ class TravisTesterTestCase(TestCase):
         test_value = 5
         self.assertEqual(test_value, 5)
 
+
 class ModelTestCase(TestCase):
+    def test_post_can_be_created_with_just_song_id_and_user(self):
+        self.user = User.objects.create_user(username="testuser", password="password")
+        profile = Profile.objects.create(user=self.user)
+        post = Post.objects.create(poster=profile, song_id=27)
+
+        self.assertTrue(isinstance(post, Post))
+
     def test_can_create_user(self):
         self.user = User.objects.create_user(username="testuser", password="password")
 
@@ -84,6 +94,7 @@ class ModelTestCase(TestCase):
         self.follower.delete()
 
         self.assertQuerysetEqual(Following.objects.all(), [])
+
 
 # TODO: refactor these
 class baseLinksTestCase(TestCase):
