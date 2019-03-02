@@ -1,9 +1,12 @@
 {% extends "musr/base.html" %}
+{% load musr_template_tags %}
 
 {% block content %}
   <h1>{{ user }}'s profile</h1>
   {% if posts %}
-    I have posts
+    {% for post in posts %}
+      {% song post %}
+    {% endfor %}
   {% else %}
     I have no posts yet!
   {% endif %}

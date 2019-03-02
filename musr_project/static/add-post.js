@@ -16,6 +16,7 @@ const onChangeHandler = e => {
 };
 
 const selectSong = e => {
+  // traverse tree of clicked elements to find the li so we can grab the ID
   const songId = e.path.find(element => {
     // Find LI element and check it has an id just to be safe
     return element.nodeName == 'LI' && element.id;
@@ -34,8 +35,13 @@ const selectSong = e => {
     // Success!
     form.reset();
 
-    document.querySelector('.songSearchResults').innerHTML = '';
+    document.querySelector('.songSearchResults').innerHTML = 'Song added!';
     document.querySelector('.songSearch').value = '';
+
+    // reload the window in case we are on profile page
+    window.setTimeout(() => {
+      location.reload();
+    }, 300);
   });
 };
 
