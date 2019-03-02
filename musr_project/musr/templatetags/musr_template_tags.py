@@ -17,6 +17,12 @@ def current(context, url=None):
     return ""
 
 
+# Add post "component"
+@register.inclusion_tag("musr/add_post.html")
+def add_post():
+    return {}
+
+
 # Post "component"
 @register.inclusion_tag("musr/song.html")
 def song(post):
@@ -26,9 +32,8 @@ def song(post):
         )
         return
     # TODO: fail on no post --> unit test
-    # TODO: make this more elegant
     poster = Profile.objects.get(user=post.poster)
-    re_poster = None  # TODO IS THIS PYTHON STYLE
+    re_poster = None
     if post.original_poster:
         re_poster = poster
         poster = Profile.objects.get(user=post.original_poster)

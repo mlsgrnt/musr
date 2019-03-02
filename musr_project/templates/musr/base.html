@@ -1,4 +1,4 @@
-{% load current from musr_template_tags %}
+{% load musr_template_tags %}
 
 <!DOCTYPE html>
 <!-- MUSR base.html -->
@@ -29,6 +29,8 @@
       </ul>
       {% if user.is_authenticated %}
         <span>You are logged in as {{ user }}</span>
+        Add post:
+        {% add_post %}
       {% else %}
         <span>You are not logged in</span>
       {% endif %}

@@ -1,0 +1,5 @@
+<form method="post" action="{% url 'add_post' %}">
+  {% csrf_token %}
+  <input type="text" name="song" />
+  <input type="submit" name="submit" />
+</form>
