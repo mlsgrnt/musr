@@ -3,7 +3,8 @@ from django.contrib.sites.models import Site
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.template import Context, Template
-from datetime import datetime
+from django.core.exceptions import SuspiciousOperation
+from django.core.files.uploadedfile import SimpleUploadedFile
 
 from .models import Profile, Post, Following
 
@@ -237,3 +238,41 @@ class AllAuthTestCase(TestCase):
             "/account/login/", {"login": "admin", "password": "secret"}
         )
         self.assertRedirects(response, "/")
+
+
+class SongTemplateTagTestCase(TestCase):
+    def render_template(self, string, context=None):
+        context = context or {}
+        context = Context(context)
+        return Template(string).render(context)
+
+    def test_tag_handles_empty_context_dict(self):
+        with self.assertRaises(SuspiciousOperation):
+            self.render_template("{% load musr_template_tags %}{% song post %}", {})
+
+    def test_tag_handles_invalid_deezer_song_id(self):
+        user = User.objects.create_user(username="admin", password="secret")
+        profile = Profile.objects.create(user=user)
+        post = Post.objects.create(post_id=1, poster=profile, song_id=27)
+        with self.assertRaises(SuspiciousOperation):
+            self.render_template("{% load musr_template_tags %}{% song post %}", {})
+
+    def test_tag_pulls_song_info_from_deezer(self):
+        user = User.objects.create_user(username="admin", password="secret")
+        image = (
+            b"\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x00\x00\x00\x21\xf9\x04"
+            b"\x01\x0a\x00\x01\x00\x2c\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02"
+            b"\x02\x4c\x01\x00\x3b"
+        )
+        profile = Profile.objects.create(
+            user=user,
+            picture=SimpleUploadedFile("small.gif", image, content_type="image/gif"),
+        )
+        post = Post.objects.create(post_id=1, poster=profile, song_id=3135556)
+        response = self.render_template(
+            "{% load musr_template_tags %}{% song post %}", {"post": post}
+        )
+
+        self.assertInHTML("Harder Better Faster Stronger", response)
+        self.assertInHTML("Discovery", response)
+        self.assertInHTML("Daft Punk", response)
