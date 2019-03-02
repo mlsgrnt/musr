@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponse
+from django.shortcuts import redirect
 
 from .models import Profile, Post, Following
 
@@ -9,7 +10,7 @@ from .models import Profile, Post, Following
 def whats_hot(request):
     return render(request, "musr/whats_hot.html", {})
 
-  
+# Profile views (including redirect to own)
 @login_required
 def own_profile(request):
     return redirect("profile", username=request.user.username)
@@ -23,6 +24,7 @@ def profile(request, username):
 @login_required
 def feed(request):
     return render(request, "musr/feed.html", {})
+
 
 # Account photo upload
 @login_required
