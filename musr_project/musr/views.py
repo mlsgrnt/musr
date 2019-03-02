@@ -21,9 +21,7 @@ def profile(request, username):
     user = User.objects.get(username=username)
     profile = Profile.objects.get(user=user)
     profilePosts = Post.objects.filter(poster=profile).order_by("-date")
-    return render(
-        request, "musr/profile.html", {"username": username, "posts": profilePosts}
-    )
+    return render(request, "musr/profile.html", {"posts": profilePosts})
 
 
 # Feed view

@@ -1,5 +1,10 @@
 {% extends "musr/base.html" %}
 
 {% block content %}
-  <h1>{{ username }}'s profile</h1>
+  <h1>{{ user }}'s profile</h1>
+  {% if posts %}
+    I have posts
+  {% else %}
+    I have no posts yet!
+  {% endif %}
 {% endblock %}
