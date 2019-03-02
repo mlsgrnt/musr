@@ -200,6 +200,21 @@ class AllAuthTestCase(TestCase):
         self.assertRedirects(response, "/")
 
 
+class PostShowingViewTestCase(TestCase):
+    @classmethod
+    def setUp(self):
+        self.user = User.objects.create_user(username="number_one", password="1")
+        self.user.save()
+
+        self.profile = Profile.objects.create(user=self.user)
+        self.profile.save()
+
+        self.post = Post.objects.create(
+            profile=self.profile, Song_Id=1, date=datetime.datetime(2019, 2, 1, 12, 0)
+        )
+        self.post.save()
+
+
 class AddPostTestCase(TestCase):
     @classmethod
     def setUp(self):
