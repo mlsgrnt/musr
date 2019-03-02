@@ -10,6 +10,7 @@ from .models import Profile, Post, Following
 def whats_hot(request):
     return render(request, "musr/whats_hot.html", {})
 
+
 # Profile views (including redirect to own)
 @login_required
 def own_profile(request):
@@ -24,6 +25,21 @@ def profile(request, username):
 @login_required
 def feed(request):
     return render(request, "musr/feed.html", {})
+
+
+# Add post!
+@login_required
+def add_post(request):
+    if request.method != "POST":
+        return redirect("/")
+
+    # TODO: validate this data!!!! this is begging for mysql injection
+    song_id = request.POST["song"]
+    profile = Profile.objects.get(user=request.user)
+
+    newpost = Post.objects.create(poster=profile, song_id=song_id)
+
+    return HttpResponse("OK")
 
 
 # Account photo upload

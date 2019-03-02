@@ -17,6 +17,12 @@ def current(context, url=None):
     return ""
 
 
+# Add post "component"
+@register.inclusion_tag("musr/add_post.html")
+def add_post():
+    return {}
+
+
 # Post "component"
 @register.inclusion_tag("musr/song.html")
 def song(post):
@@ -25,6 +31,7 @@ def song(post):
             "Invalid request; song can't be displayed without song id"
         )
         return
+
     # TODO: make this more elegant
     poster = Profile.objects.get(user=post.poster)
     re_poster = None
