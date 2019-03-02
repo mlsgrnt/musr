@@ -36,18 +36,22 @@ class Following(models.Model):
 
 class Post(models.Model):
     # create a post ID as the post primary key
-    Post_Id = models.AutoField(primary_key=True)
+    post_id = models.AutoField(primary_key=True)
 
     # store Profile ID of poster
     poster = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="poster")
 
     # a foreign key field if the post is reposted
-    Original_Poster_Id = models.ForeignKey(
-        Profile, null=True, on_delete=models.SET_NULL, related_name="original_poster"
+    original_poster = models.ForeignKey(
+        Profile,
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name="original_poster",
     )
 
     # a field for the song's Deezr ID
-    Song_Id = models.IntegerField()
+    song_id = models.IntegerField()
 
     # a field for the date the post was made
     date = models.DateField()
