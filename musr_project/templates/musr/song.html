@@ -5,6 +5,15 @@
     {% if re_poster %}
       <span>Reposted by {{ re_poster }}</span>
     {% endif %}
-    <span>Posted {{ post.date }}</span>
+    <span>Posted {{ song.date }}</span>
+  </div>
+  <div class="song">
+    <img src="{{ song.album_art }}" />
+    <div>
+      <span>{{ song.title }}</span>
+      <span>{{ song.artist }}</span>
+      <span>{{ song.album }}</span>
+      <audio src="{{ song.preview }}" controls />
+    </div>
   </div>
 </div>
