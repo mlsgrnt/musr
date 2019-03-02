@@ -12,6 +12,7 @@ class TravisTesterTestCase(TestCase):
         test_value = 5
         self.assertEqual(test_value, 5)
 
+
 class ModelTestCase(TestCase):
     def test_can_create_user(self):
         self.user = User.objects.create_user(username="testuser", password="password")
@@ -84,6 +85,7 @@ class ModelTestCase(TestCase):
         self.follower.delete()
 
         self.assertQuerysetEqual(Following.objects.all(), [])
+
 
 # TODO: refactor these
 class baseLinksTestCase(TestCase):
@@ -226,3 +228,18 @@ class AllAuthTestCase(TestCase):
             "/account/login/", {"login": "admin", "password": "secret"}
         )
         self.assertRedirects(response, "/")
+
+
+class PostShowingViewTestCase(TestCase):
+    @classmethod
+    def setUp(self):
+        self.user = User.objects.create_user(username="number_one", password="1")
+        self.user.save()
+
+        self.profile = Profile.objects.create(user=self.user)
+        self.profile.save()
+
+        self.post = Post.objects.create(
+            profile=self.profile, Song_Id=1, date=datetime.datetime(2019, 2, 1, 12, 0)
+        )
+        self.post.save()
