@@ -48,7 +48,7 @@ const selectSong = e => {
 };
 
 updateResults = query => {
-  fetch(`https://deezer-proxy.glitch.me/search?q=track:"${query}"`, {
+  fetch(`https://deezer-proxy.glitch.me/search?q="${query}"`, {
     singal
   }).then(async result => {
     const json = await result.json();
