@@ -130,10 +130,10 @@ class baseLinksTestCase(TestCase):
         self.client.post("/account/login/", {"login": "admin", "password": "secret"})
         response = self.client.get("/")
         self.assertNotContains(
-            response, '<a href="%s">Login</a>' % reverse("account_login"), html=True
+            response, 'href="%s"' % reverse("account_login"), html=True
         )
         self.assertContains(
-            response, '<a href="%s">Logout</a>' % reverse("account_logout"), html=True
+            response, 'href="%s"' % reverse("account_logout"), html=True
         )
 
 
