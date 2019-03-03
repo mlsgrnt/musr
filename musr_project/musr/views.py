@@ -20,7 +20,7 @@ def own_profile(request):
 def profile(request, username):
     user = User.objects.get(username=username)
     profile = Profile.objects.get(user=user)
-    profilePosts = Post.objects.filter(poster=profile).order_by("-date")
+    profilePosts = Post.objects.filter(poster=profile)
     return render(request, "musr/profile.html", {"posts": profilePosts})
 
 

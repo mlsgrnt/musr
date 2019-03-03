@@ -39,6 +39,10 @@ class Following(models.Model):
 
 
 class Post(models.Model):
+    # Automatically order most recent to least recent post
+    class Meta:
+        ordering = ("-date", "-post_id")
+
     # create a post ID as the post primary key
     post_id = models.AutoField(primary_key=True)
 
