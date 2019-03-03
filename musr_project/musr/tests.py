@@ -19,7 +19,7 @@ class TravisTesterTestCase(TestCase):
 class ModelTestCase(TestCase):
     def test_post_can_be_created_with_just_song_id_and_user(self):
         self.user = User.objects.create_user(username="testuser", password="password")
-        profile = Profile.objects.create(user=self.user)
+        profile = Profile.objects.get(user=self.user)
         post = Post.objects.create(poster=profile, song_id=27)
 
         self.assertTrue(isinstance(post, Post))
@@ -31,7 +31,7 @@ class ModelTestCase(TestCase):
 
     def test_can_create_profile(self):
         self.user = User.objects.create_user(username="testuser", password="password")
-        self.profile = Profile.objects.create(user=self.user)
+        self.profile = Profile.objects.get(user=self.user)
 
         self.assertTrue(isinstance(self.profile, Profile))
 
@@ -39,7 +39,7 @@ class ModelTestCase(TestCase):
         self.user = User.objects.create_user(username="testuser", password="password")
         self.user.save()
 
-        self.profile = Profile.objects.create(user=self.user)
+        self.profile = Profile.objects.get(user=self.user)
         self.profile.save()
 
         self.user.delete()
@@ -52,7 +52,7 @@ class ModelTestCase(TestCase):
         )
         self.follower.save()
 
-        self.follower_profile = Profile.objects.create(user=self.follower)
+        self.follower_profile = Profile.objects.get(user=self.follower)
         self.follower_profile.save()
 
         self.followee = User.objects.create_user(
@@ -60,7 +60,7 @@ class ModelTestCase(TestCase):
         )
         self.followee.save()
 
-        self.followee_profile = Profile.objects.create(user=self.followee)
+        self.followee_profile = Profile.objects.get(user=self.followee)
         self.followee_profile.save()
 
         self.following = Following.objects.create(
@@ -76,7 +76,7 @@ class ModelTestCase(TestCase):
         )
         self.follower.save()
 
-        self.follower_profile = Profile.objects.create(user=self.follower)
+        self.follower_profile = Profile.objects.get(user=self.follower)
         self.follower_profile.save()
 
         self.followee = User.objects.create_user(
@@ -84,7 +84,7 @@ class ModelTestCase(TestCase):
         )
         self.followee.save()
 
-        self.followee_profile = Profile.objects.create(user=self.followee)
+        self.followee_profile = Profile.objects.get(user=self.followee)
         self.followee_profile.save()
 
         self.following = Following.objects.create(
@@ -206,7 +206,7 @@ class PostShowingViewTestCase(TestCase):
         self.user = User.objects.create_user(username="number_one", password="1")
         self.user.save()
 
-        self.profile = Profile.objects.create(user=self.user)
+        self.profile = Profile.objects.get(user=self.user)
         self.profile.save()
 
         self.post = Post.objects.create(
@@ -233,7 +233,7 @@ class AddPostTestCase(TestCase):
         )
 
         self.user = User.objects.create_user(username="admin", password="secret")
-        Profile.objects.create(user=self.user)
+        Profile.objects.get(user=self.user)
 
     def test_cant_make_post_if_not_logged_in(self):
         response = self.client.get(reverse("add_post"), follow=True)
@@ -266,7 +266,7 @@ class SongTemplateTagTestCase(TestCase):
 
     def test_tag_handles_invalid_deezer_song_id(self):
         user = User.objects.create_user(username="admin", password="secret")
-        profile = Profile.objects.create(user=user)
+        profile = Profile.objects.get(user=user)
         post = Post.objects.create(post_id=1, poster=profile, song_id=27)
         with self.assertRaises(SuspiciousOperation):
             self.render_template("{% load musr_template_tags %}{% song post %}", {})
@@ -278,10 +278,11 @@ class SongTemplateTagTestCase(TestCase):
             b"\x01\x0a\x00\x01\x00\x2c\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02"
             b"\x02\x4c\x01\x00\x3b"
         )
-        profile = Profile.objects.create(
-            user=user,
-            picture=SimpleUploadedFile("small.gif", image, content_type="image/gif"),
+        profile = Profile.objects.get(user=user)
+        profile.picture = SimpleUploadedFile(
+            "small.gif", image, content_type="image/gif"
         )
+        profile.save()
         post = Post.objects.create(post_id=1, poster=profile, song_id=3135556)
         response = self.render_template(
             "{% load musr_template_tags %}{% song post %}", {"post": post}
