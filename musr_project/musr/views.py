@@ -27,7 +27,11 @@ def profile(request, username):
 # Feed view
 @login_required
 def feed(request):
-    return render(request, "musr/feed.html", {})
+    user = request.user
+    profile = Profile.objects.get(user=user)
+    profilesFollowed = Profile.objects.filter(follower__followee=profile)
+    posts = Post.objects.filter(poster__in=profilesFollowed)
+    return render(request, "musr/feed.html", {"posts": posts})
 
 
 # Add post!
