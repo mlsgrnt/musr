@@ -1,3 +1,39 @@
+.header {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-rows: 1fr;
+}
+
+.nav {
+  list-style-type: none;
+}
+.nav > li {
+  display: inline-block;
+  padding: 0 10px;
+  white-space: nowrap;
+}
+.nav > li > a {
+  color: var(--c-primary-2xlight);
+  text-decoration: none;
+
+  transition: color 0.1s ease-in-out;
+}
+.nav > li > a:hover {
+  color: var(--c-primary-xlight);
+  text-decoration: none;
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.headerItem {
+  white-space: nowrap;
+  text-decoration: none;
+}
+
 /* TEMPORARY */
 .addPostForm {
   display: none;

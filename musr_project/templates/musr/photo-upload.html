@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {% block content %}
-  <div>uploading photo for {{ user }}</div>
+  <h1 class="textSize-xl">uploading photo for {{ user }}</h1>
   {% if profile.picture %}
     current photo:
     <img src="{{ profile.picture.url }}" />

@@ -26,6 +26,12 @@ def profile(request, username):
     )
 
 
+# Account info
+@login_required
+def account(request):
+    return render(request, "musr/account.html")
+
+
 # Feed view
 @login_required
 def feed(request):

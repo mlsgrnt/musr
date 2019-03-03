@@ -1,0 +1,13 @@
+{% extends "musr/base.html" %}
+{% load musr_template_tags %}
+
+{% block content %}
+  <h1 class="textSize-xl c-primary-dark">Account Settings</h1>
+  <!-- Big Todo -->
+  <ul sytle="c-grey-1">
+    <li class="{% current 'account_photo_upload' %}"><a class="c-grey-1" href="{% url 'account_photo_upload' %}">Profile Photo</a></li>
+    <li class="{% current 'account_change_password' %}"><a class="c-grey-1" href="{% url 'account_change_password' %}">Change Password</a></li>
+    <li class="{% current 'account_email' %}"><a class="c-grey-1" href="{% url 'account_email' %}">Change Email</a></li>
+    <li class="{% current 'socialaccount_connections' %}"><a class="c-grey-1" href="{% url 'socialaccount_connections' %}">Change Social Connections</a></li>
+  </ul>
+{% endblock %}
