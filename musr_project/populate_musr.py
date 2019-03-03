@@ -3,6 +3,7 @@ import os
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "musr_project.settings")
 
 import django
+import datetime
 
 django.setup()
 from musr.models import Profile, Following, Post, User
@@ -30,6 +31,15 @@ def populate():
         {"follower": "Drake", "followee": "MichaelScott"},
     ]
 
+    posts = [
+        {"poster": "Drake", "original": "Drake", "song_id": "000000"},
+        {"poster": "Ludwig", "original": "Drake", "song_id": "000000"},
+        {"poster": "PostMalone", "original": "Drake", "song_id": "000000"},
+        {"poster": "MichaelScott", "original": "Drake", "song_id": "000000"},
+        {"poster": "PeterParker", "original": "Drake", "song_id": "000000"},
+        {"poster": "FreddieMercury", "original": "Drake", "song_id": "000000"},
+    ]
+
     x = 0
     for users in musers:
         value = musers[x]
@@ -44,6 +54,10 @@ def populate():
             Profile.objects.get(user=User.objects.get(username=value["followee"])),
         )
         y = y + 1
+    z = 0
+    for post in posts:
+        value = posts[z]
+        add_post(value["poster"], value["original"])
 
 
 def add_user(userName, firstName, lastName):
@@ -70,6 +84,18 @@ def add_profile(User, firstName, lastName):
 def add_following(follower, followee):
     f = Following.objects.create(follower=follower, followee=followee)
     return f
+
+
+def add_post(posterParam, original_posterParam):
+    po = Post.objects.get_or_create(
+        poster=Profile.objects.get(user=User.objects.get(username=posterParam)),
+        Original_Poster_Id=Profile.objects.get(
+            user=User.objects.get(username=original_posterParam)
+        ),
+        Song_Id=000000,
+        date=datetime.datetime.now(),
+    )
+    return po
 
 
 if __name__ == "__main__":
