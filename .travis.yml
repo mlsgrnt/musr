@@ -15,5 +15,4 @@ before_install:
 
 script:
   - black musr_project/ --check
-  - cd musr_project
-  - python manage.py test
+  - python musr_project/manage.py test musr
