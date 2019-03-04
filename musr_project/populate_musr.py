@@ -6,6 +6,7 @@ import django
 import datetime
 
 django.setup()
+from django.contrib.sites.models import Site
 from musr.models import Profile, Following, Post, User
 from django.core.files.uploadedfile import SimpleUploadedFile
 
@@ -32,12 +33,16 @@ def populate():
     ]
 
     posts = [
-        {"poster": "Drake", "original": "Drake", "song_id": "000000"},
-        {"poster": "Ludwig", "original": "Drake", "song_id": "000000"},
-        {"poster": "PostMalone", "original": "Drake", "song_id": "000000"},
-        {"poster": "MichaelScott", "original": "Drake", "song_id": "000000"},
-        {"poster": "PeterParker", "original": "Drake", "song_id": "000000"},
-        {"poster": "FreddieMercury", "original": "Drake", "song_id": "000000"},
+        {"poster": "Drake", "original": "Drake", "Song_Id": 639437722},
+        {"poster": "Ludwig", "original": "Drake", "Song_Id": 639437722},
+        {"poster": "PostMalone", "original": "Drake", "Song_Id": 639437722},
+        {"poster": "MichaelScott", "original": "Drake", "Song_Id": 639437722},
+        {"poster": "PeterParker", "original": "Drake", "Song_Id": 639437722},
+        {"poster": "FreddieMercury", "original": "Drake", "Song_Id": 639437722},
+        {"poster": "Ludwig", "original": "Ludwig", "Song_Id": 5707517},
+        {"poster": "Drake", "original": "Ludwig", "Song_Id": 5707517},
+        {"poster": "PostMalone", "original": "PostMalone", "Song_Id": 3135556},
+        {"poster": "PeterParker", "original": "PostMalone", "Song_Id": 3135556},
     ]
 
     x = 0
@@ -57,12 +62,13 @@ def populate():
     z = 0
     for post in posts:
         value = posts[z]
-        add_post(value["poster"], value["original"])
+        add_post(value["poster"], value["original"], value["Song_Id"])
 
 
 def add_user(userName, firstName, lastName):
-    u = User.objects.create_user(username=userName, password="password")
-    u.email = "test@email.com"
+    u = User.objects.create_user(
+        username=userName, password="password", email="test@email.com"
+    )
     u.first_name = firstName
     u.last_name = lastName
     u.save()
@@ -86,16 +92,29 @@ def add_following(follower, followee):
     return f
 
 
-def add_post(posterParam, original_posterParam):
-    po = Post.objects.get_or_create(
+def add_post(posterParam, original_posterParam, Song_IdParam):
+    po = Post.objects.create(
         poster=Profile.objects.get(user=User.objects.get(username=posterParam)),
         Original_Poster_Id=Profile.objects.get(
             user=User.objects.get(username=original_posterParam)
         ),
-        Song_Id=000000,
+        Song_Id=Song_IdParam,
         date=datetime.datetime.now(),
     )
     return po
+
+
+def setUp(self):
+    self.current_site = Site.objects.get_current()
+    self.SocialApp1 = self.current_site.socialapp_set.create(
+        provider="facebook",
+        name="facebook",
+        client_id="1234567890",
+        secret="0987654321",
+    )
+    self.SocialApp2 = self.current_site.socialapp_set.create(
+        provider="google", name="google", client_id="1234567890", secret="0987654321"
+    )
 
 
 if __name__ == "__main__":
