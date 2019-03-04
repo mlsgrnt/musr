@@ -1,3 +1,14 @@
+a {
+  color: var(--c-primary-2xlight);
+  text-decoration: none;
+
+  transition: color 0.1s ease-in-out;
+}
+a:hover {
+  color: var(--c-primary-xlight);
+  text-decoration: none;
+}
+
 .header {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -12,16 +23,6 @@
   display: inline-block;
   padding: 0 10px;
   white-space: nowrap;
-}
-.nav > li > a {
-  color: var(--c-primary-2xlight);
-  text-decoration: none;
-
-  transition: color 0.1s ease-in-out;
-}
-.nav > li > a:hover {
-  color: var(--c-primary-xlight);
-  text-decoration: none;
 }
 
 .center {
@@ -49,4 +50,63 @@
 }
 .song:hover {
   background-color: #eee;
+}
+
+/* Login page styles
+ *  this is especially tricky because we do not have control over html
+ * */
+/* main login div */
+.socialaccount_ballot {
+  display: flex;
+  align-items: left;
+  justify-content: center;
+  flex-direction: column;
+}
+
+/* Use placeholders */
+.container div .login label {
+  display: none;
+}
+
+/* But not for the remember me checkbox */
+.container div .login label[for='id_remember'] {
+  display: inline;
+}
+
+.socialaccount_providers {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+
+  display: flex;
+  align-items: left;
+  justify-content: center;
+  flex-direction: column;
+}
+
+form.login {
+  max-width: var(--space-3xl);
+}
+
+.socialaccount_providers li {
+  padding: 5px 0;
+}
+
+/* nasty hack to hide remember me checkbox */
+body div:nth-child(2) > form.login #id_remember,
+body div:nth-child(2) > form.login label[for='id_remember'] {
+  display: none;
+}
+
+/* login form forgot password link */
+.login a ~ button {
+  float: right;
+  margin: var(--spaceframe-l) 0;
+}
+
+/* messages */
+.messages ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
