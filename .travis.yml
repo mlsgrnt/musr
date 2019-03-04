@@ -14,5 +14,5 @@ before_install:
   - export DEBUG=True
 
 script:
-  - cd musr_project
-  - python manage.py test
+  - black musr_project/ --check
+  - python musr_project/manage.py test musr
