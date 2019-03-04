@@ -18,7 +18,10 @@ def own_profile(request):
 
 
 def profile(request, username):
-    user = User.objects.get(username=username)
+    try:
+        user = User.objects.get(username=username)
+    except User.DoesNotExist:
+        raise Http404("User Does Not Exist")
     profile = Profile.objects.get(user=user)
     profilePosts = Post.objects.filter(poster=profile)
     return render(request, "musr/profile.html", {"posts": profilePosts})
