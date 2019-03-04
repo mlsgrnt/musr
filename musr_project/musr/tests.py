@@ -10,7 +10,7 @@ from .models import Profile, Post, Following
 
 # Create your tests here.
 class TravisTesterTestCase(TestCase):
-    def test_unit_tests_are_understood_and_can_pass(self):
+    def test_unit_tests_are_understood_and_can_pass(self ):
         """Unit tests run and are able to pass"""
         test_value = 5
         self.assertEqual(test_value, 5)
@@ -18,7 +18,7 @@ class TravisTesterTestCase(TestCase):
 
 class ModelTestCase(TestCase):
     def test_post_can_be_created_with_just_song_id_and_user(self):
-        self.user = User.objects.create_user(username="testuser", password="password")
+        self.user = User.objects.create_user(username="testuser", password="password"  )
         profile = Profile.objects.get(user=self.user)
         post = Post.objects.create(poster=profile, song_id=27)
 
