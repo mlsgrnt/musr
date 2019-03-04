@@ -119,22 +119,14 @@ class baseLinksTestCase(TestCase):
 
     def test_logged_out_user_sees_sign_in_link(self):
         response = self.client.get("/", follow=True)
-        self.assertContains(
-            response, '<a href="%s">Login</a>' % reverse("account_login"), html=True
-        )
-        self.assertNotContains(
-            response, '<a href="%s">Logout</a>' % reverse("account_logout"), html=True
-        )
+        self.assertIn(reverse("account_login"), response.content.decode("ascii"))
+        self.assertNotIn(reverse("account_logout"), response.content.decode("ascii"))
 
     def test_normally_logged_in_user_sees_sign_out_link(self):
         self.client.post("/account/login/", {"login": "admin", "password": "secret"})
         response = self.client.get("/")
-        self.assertNotContains(
-            response, 'href="%s"' % reverse("account_login"), html=True
-        )
-        self.assertContains(
-            response, 'href="%s"' % reverse("account_logout"), html=True
-        )
+        self.assertNotIn(reverse("account_login"), response.content.decode("ascii"))
+        self.assertIn(reverse("account_logout"), response.content.decode("ascii"))
 
 
 # TODO: these could use some fleshing out
