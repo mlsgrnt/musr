@@ -68,13 +68,13 @@ def populate():
 
 
 def add_user(userName, firstName, lastName):
-    u = User.objects.create_user(
+    u, was_created = User.objects.get_or_create(
         username=userName, password="password", email="test@email.com"
     )
     u.first_name = firstName
     u.last_name = lastName
     u.save()
-    add_profile(u, firstName, lastName)
+   # add_profile(u, firstName, lastName)
     return u
 
 
@@ -97,10 +97,10 @@ def add_following(follower, followee):
 def add_post(posterParam, original_posterParam, Song_IdParam):
     po = Post.objects.create(
         poster=Profile.objects.get(user=User.objects.get(username=posterParam)),
-        Original_Poster_Id=Profile.objects.get(
+        original_poster=Profile.objects.get(
             user=User.objects.get(username=original_posterParam)
         ),
-        Song_Id=Song_IdParam,
+        song_id=Song_IdParam,
         date=datetime.datetime.now(),
     )
     return po
