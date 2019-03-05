@@ -74,7 +74,7 @@ def add_user(userName, firstName, lastName):
     u.first_name = firstName
     u.last_name = lastName
     u.save()
-   # add_profile(u, firstName, lastName)
+    # add_profile(u, firstName, lastName)
     return u
 
 
@@ -85,7 +85,9 @@ def add_profile(User, firstName, lastName):
         b"\x02\x4c\x01\x00\x3b"
     )
     uploaded = SimpleUploadedFile("small.gif", small_gif, content_type="image/gif")
-    p = Profile.objects.get_or_create(user=User, picture=uploaded)
+    p = Profile.objects.get(user=User)
+    p.picture = uploaded
+    p.save()
     return p
 
 
