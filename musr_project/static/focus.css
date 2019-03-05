@@ -122,7 +122,7 @@ body {
   border-radius: 6px;
 }
 
-.primaryAction {
+.button {
   font: inherit;
   appearance: none;
   -webkit-appearance: none;
@@ -141,28 +141,22 @@ body {
   white-space: nowrap;
 }
 
-.primaryAction:focus {
+.button:focus {
   outline: none;
   box-shadow: 0 0 0 2px var(--c-primary);
 }
 
-.primaryAction--type-primary {
+.button--type-primary {
   background-color: var(--c-grey-1);
   color: var(--c-grey-8);
 }
 
-.primaryAction--type-highlighted, .login button {
+.button--type-highlighted {
   background-color: var(--c-primary);
   color: var(--c-primary-2xdark);
-
-  transition: 0.2s all ease-out;
-}
-.primaryAction--type-highlighted, .login button:hover {
-  background-color: var(--c-primary-light);
-  color: var(--c-grey-7);
 }
 
-.textInput, .container .login input {
+.textInput {
   --borderWidth: 2px;
 
   font: inherit;
@@ -176,7 +170,7 @@ body {
   border-radius: var(--textboxBorderRadius);
 }
 
-.textInput:focus, .container .login input:focus {
+.textInput:focus {
   outline: none;
   border-color: var(--c-primary);
   color: var(--c-grey-1);
@@ -237,7 +231,7 @@ body {
   flex-wrap: wrap;
 }
 
-.textboXSection .primaryAction {
+.textboXSection .button {
   margin-right: var(--space-s);
   margin-bottom: var(--space-s);
 }
@@ -538,7 +532,7 @@ body {
   margin-right: var(--space-s);
 }
 
-.container {
+.mainContainer {
   max-width: var(--space-5xl);
   margin: 0 auto;
 }
