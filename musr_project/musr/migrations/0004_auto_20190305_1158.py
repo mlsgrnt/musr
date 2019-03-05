@@ -6,18 +6,15 @@ import django.utils.timezone
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('musr', '0003_auto_20190302_1244'),
-    ]
+    dependencies = [("musr", "0003_auto_20190302_1244")]
 
     operations = [
         migrations.AlterModelOptions(
-            name='post',
-            options={'ordering': ('-date', '-post_id')},
+            name="post", options={"ordering": ("-date", "-post_id")}
         ),
         migrations.AlterField(
-            model_name='post',
-            name='date',
+            model_name="post",
+            name="date",
             field=models.DateField(default=django.utils.timezone.now),
         ),
     ]
