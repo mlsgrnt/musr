@@ -74,11 +74,11 @@ def add_user(userName, firstName, lastName):
     u.first_name = firstName
     u.last_name = lastName
     u.save()
-    # add_profile(u, firstName, lastName)
+    add_profile(u)
     return u
 
 
-def add_profile(User, firstName, lastName):
+def add_profile(User):
     small_gif = (
         b"\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x00\x00\x00\x21\xf9\x04"
         b"\x01\x0a\x00\x01\x00\x2c\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02"
