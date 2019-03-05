@@ -78,12 +78,24 @@ a:hover {
   background-color: #eee;
 }
 
-/* Login */
+/* SocialAccount buttons */
 ul.socialaccount_providers {
   list-style-type: none;
   display: flex;
 }
+ul.socialaccount_providers li::before {
+  content: 'Login with ';
+  display: inline;
+}
 
+ul.socialaccount_providers li {
+  padding: 0 var(--space-s);
+}
+ul.socialaccount_providers li:first-of-type {
+  padding: 0 var(--space-s) 0 0;
+}
+
+/* Login */
 .button--type-highlighted {
   display: block;
   transition: all 0.2s ease-out;
