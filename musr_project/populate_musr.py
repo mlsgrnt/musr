@@ -12,6 +12,8 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 
 
 def populate():
+    setUpAllAuth()
+
     musers = [
         {"user": "Drake", "firstName": "Drake", "lastName": "Graham"},
         {"user": "Beethoven", "firstName": "Ludwig", "lastName": "Beethoven"},
@@ -104,15 +106,15 @@ def add_post(posterParam, original_posterParam, Song_IdParam):
     return po
 
 
-def setUp(self):
-    self.current_site = Site.objects.get_current()
-    self.SocialApp1 = self.current_site.socialapp_set.create(
+def setUpAllAuth():
+    current_site = Site.objects.get_current()
+    current_site.socialapp_set.create(
         provider="facebook",
         name="facebook",
         client_id="1234567890",
         secret="0987654321",
     )
-    self.SocialApp2 = self.current_site.socialapp_set.create(
+    current_site.socialapp_set.create(
         provider="google", name="google", client_id="1234567890", secret="0987654321"
     )
 
