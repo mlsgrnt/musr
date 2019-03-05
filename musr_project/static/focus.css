@@ -58,7 +58,7 @@ body {
 
   background-color: var(--c-grey-8);
   margin: 0;
-  padding: var(--space-xl);
+  padding: var(--space-l) var(--space-xl);
   font-family: var(--fontFamily);
   font-size: var(--fontSize-s);
   line-height: var(--lineHeight-s);

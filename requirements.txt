@@ -5,3 +5,4 @@ pre-commit==1.14.4
 black==18.9b0
 django-allauth==0.38.0
 Pillow==5.4.1
+django-widget-tweaks==1.4.3

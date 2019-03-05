@@ -62,6 +62,10 @@
 .spacerLeft-l {margin-left: var(--space-l)}
 .spacerLeft-xl {margin-left: var(--space-xl)}
 
+@media (max-width: 720px) {
+  .spacerLeft-xl {margin-left: var(--space-m)}
+}
+
 .spacerTop-s {margin-top: var(--space-s)}
 .spacerTop-m {margin-top: var(--space-m)}
 .spacerTop-l {margin-top: var(--space-l)}

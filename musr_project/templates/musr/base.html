@@ -11,13 +11,15 @@
     <link rel="stylesheet" type="text/css" href="{% static 'poco-utilities.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'focus.css' %}">
     <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,500,700" rel="stylesheet">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
     <div class="container">
       <div class="header c-grey-1">
         <ul class="center nav">
-          {% if user.is_authenticated %}
             <li class="{% current 'whats_hot' %}"><a href="{% url 'whats_hot' %}">Whats's Hot</a> </li>
+          {% if user.is_authenticated %}
             <li class="{% current 'feed' %}"><a href="{% url 'feed' %}">Feed</a></li>
             <li><a href="{% url 'own_profile' %}">Your Profile</a></li> <!-- own profile doens't get highlighted because the link will bea  photo -->
             <li class="{% current 'account' %}"><a href="{% url 'account' %}">Account</a></li>
@@ -54,7 +56,7 @@
           </ul>
         </div>
       {% endif %}
-      <div>
+      <div class="spacerLeft-xl">
         {% block content %}
         {% endblock %}
       </div>
