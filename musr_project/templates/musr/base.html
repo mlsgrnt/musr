@@ -44,20 +44,20 @@
           {% endif %}
         </div>
       </div>
-    </div>
 
-    {% if messages %}
+      {% if messages %}
+        <div class="messages">
+          <ul>
+            {% for message in messages %}
+              <li>{{message}}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
       <div>
-        <ul>
-          {% for message in messages %}
-            <li>{{message}}</li>
-          {% endfor %}
-        </ul>
+        {% block content %}
+        {% endblock %}
       </div>
-    {% endif %}
-    <div>
-      {% block content %}
-      {% endblock %}
     </div>
 
     <script type="text/javascript" src="{% static 'add-post.js' %}" ></script>
