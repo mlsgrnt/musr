@@ -106,13 +106,13 @@ ul.socialaccount_providers li:first-of-type {
   color: var(--c-primary-2xdark);
 }
 
-form.login .textInput {
+form .textInput {
   margin: var(--space-s) 0;
 }
 
-form.login,
+form,
 .socialaccount_providers {
-  max-width: var(--space-3xl);
+  max-width: var(--space-4xl);
 }
 
 .formSubmitButtons {
@@ -125,4 +125,8 @@ div.login {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+}
+
+.errorlist {
+  list-style-type: none;
 }
