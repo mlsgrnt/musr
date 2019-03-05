@@ -71,6 +71,7 @@
 .spacerTop-l {margin-top: var(--space-l)}
 .spacerTop-xl {margin-top: var(--space-xl)}
 
+.spacerBottom-0 {margin-bottom: 0}
 .spacerBottom-s {margin-bottom: var(--space-s)}
 .spacerBottom-m {margin-bottom: var(--space-m)}
 .spacerBottom-l {margin-bottom: var(--space-l)}
