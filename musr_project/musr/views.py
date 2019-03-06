@@ -68,4 +68,4 @@ def photo_upload(request):
             profile.picture = request.FILES["photoUpload"]
             profile.save()
 
-    return render(request, "musr/photo-upload.html", {"profile": profile})
+    return render(request, "musr/photo_upload.html", {"profile": profile})
