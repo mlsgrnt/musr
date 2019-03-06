@@ -2,14 +2,18 @@
 {% load staticfiles %}
 
 {% block content %}
-  <h1 class="textSize-xl">uploading photo for {{ user }}</h1>
-  {% if profile.picture %}
-    current photo:
-    <img src="{{ profile.picture.url }}" />
-  {% endif %}
-  <form id="photoUpload" method="post" action="{% url 'account_photo_upload' %}" enctype="multipart/form-data">
-    {% csrf_token %}
-    <input type="file" name="photoUpload" id="photoUpload"/>
-    <input type="submit" name="submit" value="Upload Photo"/>
-  </form>
+  <div class="maxWidth-4xl">
+    <h1 class="textSize-xl">Change profile picture</h1>
+    {% if profile.picture %}
+      <div class="currentProfilePicture spacerBottom-m">
+        <span class="spacerRight-m">Current photo:</span>
+        <img class="maxHeight-2xl" src="{{ profile.picture.url }}" />
+      </div>
+    {% endif %}
+    <form id="photoUpload" method="post" action="{% url 'account_photo_upload' %}" enctype="multipart/form-data">
+      {% csrf_token %}
+      <input class="" type="file" name="photoUpload" id="photoUpload"/>
+      <input class="button button--type-highlighted spacerTop-s spacerBottom-s" type="submit" name="submit" value="Upload Photo"/>
+    </form>
+  </div>
 {% endblock %}
