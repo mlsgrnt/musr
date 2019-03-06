@@ -1,0 +1,37 @@
+{% extends "account/base.html" %}
+{% load widget_tweaks %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Signup" %}{% endblock %}
+
+{% block content %}
+<h1 class="textSize-xl c-primary-dark spacerBottom-0 spacerTop-0">{% trans "Sign Up" %}</h1>
+
+<p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
+
+<form class="signup card" id="signup_form" method="post" action="{% url 'account_signup' %}">
+  {% csrf_token %}
+  {{ form.non_field_errors }}
+
+  {% for hidden_field in form.hidden_fields %}
+    {{ hidden_field.errors }}
+    {{ hidden_field }}
+  {% endfor %}
+
+  {{ form.username|add_class:"textInput" }}
+  {{ form.email|add_class:"textInput" }}
+  {{ form.password1.errors }}
+  {{ form.password1|add_class:"textInput" }}
+  {{ form.password2.errors }}
+  {{ form.password2|add_class:"textInput" }}
+
+  {% if redirect_field_value %}
+    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  {% endif %}
+  <div class="formSubmitButtons">
+    <button class="button button--type-highlighted spacerTop-s spacerBottom-s" type="submit">{% trans "Sign Up" %}</button>
+  </div>
+</form>
+
+{% endblock %}

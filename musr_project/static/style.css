@@ -1,10 +1,78 @@
-/* TEMPORARY */
-.addPostForm {
-  display: none;
+/* General */
+a {
+  color: var(--c-primary-2xlight);
+  text-decoration: none;
+
+  transition: color 0.1s ease-in-out;
+}
+a:hover {
+  color: var(--c-primary-xlight);
+  text-decoration: none;
+}
+
+/* Nav */
+
+.header {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+}
+
+@media (max-width: 720px) {
+  .header {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+  }
+}
+
+.nav,
+.errorlist {
+  list-style-type: none;
+}
+.nav > li {
+  display: block;
+  padding: 0 10px;
+  white-space: nowrap;
+}
+.nav > li > a {
+  color: var(--c-primary-2xlight);
+  text-decoration: none;
+
+  transition: color 0.1s ease-in-out;
+}
+.nav > li > a:hover {
+  color: var(--c-primary-xlight);
+  text-decoration: none;
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 720px) {
+  .center {
+    padding: 0;
+    margin: 0;
+  }
+}
+
+.headerItem {
+  white-space: nowrap;
+  text-decoration: none;
 }
 
 .active {
-  font-weight: 900;
+  /* Ironically only Safari doens't use the -webkit prefix */
+  -webkit-text-stroke: 1px;
+  text-stroke: 1px;
+}
+
+/* TEMPORARY */
+.addPostForm {
+  display: none;
 }
 
 .song {
@@ -12,4 +80,64 @@
 }
 .song:hover {
   background-color: #eee;
+}
+
+/* Messages */
+.messages {
+  float: right;
+}
+
+/* SocialAccount buttons */
+ul.socialaccount_providers {
+  list-style-type: none;
+  display: flex;
+}
+ul.socialaccount_providers li::before {
+  content: 'Login with ';
+  display: inline;
+}
+
+ul.socialaccount_providers li {
+  padding: 0 var(--space-s);
+}
+ul.socialaccount_providers li:first-of-type {
+  padding: 0 var(--space-s) 0 0;
+}
+
+/* Login */
+.button--type-highlighted {
+  display: block;
+  transition: all 0.2s ease-out;
+}
+
+.button--type-highlighted:hover {
+  background-color: var(--c-primary-light);
+  color: var(--c-primary-2xdark);
+}
+
+form .textInput {
+  margin: var(--space-s) 0;
+}
+
+form,
+.socialaccount_providers {
+  max-width: var(--space-4xl);
+}
+
+.formSubmitButtons {
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+}
+
+div.login {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Profile picture */
+.currentProfilePicture {
+  display: flex;
+  align-items: center;
 }

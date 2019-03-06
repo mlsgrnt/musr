@@ -21,7 +21,15 @@ def profile(request, username):
     user = User.objects.get(username=username)
     profile = Profile.objects.get(user=user)
     profilePosts = Post.objects.filter(poster=profile)
-    return render(request, "musr/profile.html", {"posts": profilePosts})
+    return render(
+        request, "musr/profile.html", {"profile": user, "posts": profilePosts}
+    )
+
+
+# Account info
+@login_required
+def account(request):
+    return render(request, "musr/account.html")
 
 
 # Feed view
@@ -60,4 +68,4 @@ def photo_upload(request):
             profile.picture = request.FILES["photoUpload"]
             profile.save()
 
-    return render(request, "musr/photo-upload.html", {"profile": profile})
+    return render(request, "musr/photo_upload.html", {"profile": profile})
