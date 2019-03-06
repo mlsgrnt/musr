@@ -48,12 +48,10 @@
       </div>
 
       {% if messages %}
-        <div class="messages">
-          <ul>
+        <div class="messages dialog">
             {% for message in messages %}
-              <li>{{message}}</li>
+              <span class="">{{message}}</span>
             {% endfor %}
-          </ul>
         </div>
       {% endif %}
       <div class="spacerLeft-xl">
