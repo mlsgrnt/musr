@@ -1,14 +1,24 @@
 import os
 
+
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "musr_project.settings")
 
 import django
 import datetime
+import base64
+import binascii
+import functools
+import hashlib
+import importlib
+import warnings
 
 django.setup()
 from django.contrib.sites.models import Site
 from musr.models import Profile, Following, Post, User
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.conf import settings
+from django.utils.module_loading import import_string
+from django.utils.crypto import constant_time_compare, get_random_string, pbkdf2
 
 
 def populate():
@@ -36,40 +46,37 @@ def populate():
 
     posts = [
         {"poster": "Drake", "original": "Drake", "Song_Id": 639437722},
-        {"poster": "Ludwig", "original": "Drake", "Song_Id": 639437722},
+        {"poster": "Beethoven", "original": "Drake", "Song_Id": 639437722},
         {"poster": "PostMalone", "original": "Drake", "Song_Id": 639437722},
         {"poster": "MichaelScott", "original": "Drake", "Song_Id": 639437722},
         {"poster": "PeterParker", "original": "Drake", "Song_Id": 639437722},
         {"poster": "FreddieMercury", "original": "Drake", "Song_Id": 639437722},
-        {"poster": "Ludwig", "original": "Ludwig", "Song_Id": 5707517},
-        {"poster": "Drake", "original": "Ludwig", "Song_Id": 5707517},
+        {"poster": "Beethoven", "original": "Beethoven", "Song_Id": 5707517},
+        {"poster": "Drake", "original": "Beethoven", "Song_Id": 5707517},
         {"poster": "PostMalone", "original": "PostMalone", "Song_Id": 3135556},
         {"poster": "PeterParker", "original": "PostMalone", "Song_Id": 3135556},
     ]
 
-    x = 0
-    for users in musers:
-        value = musers[x]
-        x = x + 1
+    for user in musers:
+        value = user
         add_user(value["user"], value["firstName"], value["lastName"])
 
-    y = 0
-    for users in followers:
-        value = followers[y]
+    for user in followers:
+        value = user
         add_following(
             Profile.objects.get(user=User.objects.get(username=value["follower"])),
             Profile.objects.get(user=User.objects.get(username=value["followee"])),
         )
-        y = y + 1
-    z = 0
     for post in posts:
-        value = posts[z]
+        value = post
         add_post(value["poster"], value["original"], value["Song_Id"])
 
 
 def add_user(userName, firstName, lastName):
     u, was_created = User.objects.get_or_create(
-        username=userName, password="password", email="test@email.com"
+        username=userName,
+        password=make_password("testpassword123"),
+        email="test@email.com",
     )
     u.first_name = firstName
     u.last_name = lastName
@@ -119,6 +126,69 @@ def setUpAllAuth():
     current_site.socialapp_set.create(
         provider="google", name="google", client_id="1234567890", secret="0987654321"
     )
+
+
+# https://docs.djangoproject.com/en/2.1/_modules/django/contrib/auth/hashers/
+@functools.lru_cache()
+def get_hashers():
+    hashers = []
+    for hasher_path in settings.PASSWORD_HASHERS:
+        hasher_cls = import_string(hasher_path)
+        hasher = hasher_cls()
+        if not getattr(hasher, "algorithm"):
+            raise ImproperlyConfigured(
+                "hasher doesn't specify an " "algorithm name: %s" % hasher_path
+            )
+        hashers.append(hasher)
+    return hashers
+
+
+@functools.lru_cache()
+def get_hashers_by_algorithm():
+    return {hasher.algorithm: hasher for hasher in get_hashers()}
+
+
+def get_hasher(algorithm="default"):
+    """
+    Return an instance of a loaded password hasher.
+
+    If algorithm is 'default', return the default hasher. Lazily import hashers
+    specified in the project's settings file if needed.
+    """
+    if hasattr(algorithm, "algorithm"):
+        return algorithm
+
+    elif algorithm == "default":
+        return get_hashers()[0]
+
+    else:
+        hashers = get_hashers_by_algorithm()
+        try:
+            return hashers[algorithm]
+        except KeyError:
+            raise ValueError(
+                "Unknown password hashing algorithm '%s'. "
+                "Did you specify it in the PASSWORD_HASHERS "
+                "setting?" % algorithm
+            )
+
+
+def make_password(password, salt=None, hasher="default"):
+    """
+    Turn a plain-text password into a hash for database storage
+
+    Same as encode() but generate a new random salt. If password is None then
+    return a concatenation of UNUSABLE_PASSWORD_PREFIX and a random string,
+    which disallows logins. Additional random string reduces chances of gaining
+    access to staff or superuser accounts. See ticket #20079 for more info.
+    """
+    if password is None:
+        return UNUSABLE_PASSWORD_PREFIX + get_random_string(
+            UNUSABLE_PASSWORD_SUFFIX_LENGTH
+        )
+    hasher = get_hasher(hasher)
+    salt = salt or hasher.salt()
+    return hasher.encode(password, salt)
 
 
 if __name__ == "__main__":
