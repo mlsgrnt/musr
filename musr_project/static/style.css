@@ -85,6 +85,15 @@ a:hover {
   transform: scale(0.97);
 }
 
+/* List of search result scrolls up */
+.songSearchResults {
+  min-height: 0px;
+  transition: all 0.3s ease-in;
+}
+.songSearchResults.loaded {
+  min-height: 100vh;
+}
+
 /* Button */
 
 .button.addPostButton {

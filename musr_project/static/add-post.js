@@ -56,6 +56,10 @@ const selectSong = e => {
 };
 
 const updateResults = query => {
+  const songSearchResults = document.querySelector('.songSearchResults');
+  // Move up search box in anticipation
+  songSearchResults.classList.add('loaded');
+
   fetch(`https://deezer-proxy.glitch.me/search?q="${query}"`, {
     singal
   }).then(async result => {
@@ -74,8 +78,7 @@ const updateResults = query => {
         `;
       })
       .join('');
-
-    document.querySelector('.songSearchResults').innerHTML = html;
+    songSearchResults.innerHTML = html;
   });
 };
 
