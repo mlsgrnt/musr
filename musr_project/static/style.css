@@ -70,17 +70,101 @@ a:hover {
   text-stroke: 1px;
 }
 
-/* TEMPORARY */
+/* Add Post */
+
 .addPostForm {
   display: none;
 }
+.addPost .textInput {
+  background: rgba(0, 0, 0, 0.4);
+}
 
-.song {
+/* Background on form appearance */
+.container {
+  transition: all 0.2s ease-in-out;
+}
+.container.addingPost {
+  filter: blur(4px);
+  transform: scale(0.97);
+}
+
+/* List of search result scrolls up */
+.songSearchResults {
+  min-height: 0px;
+  transition: all 0.3s ease-in;
+  list-style-type: none;
+}
+.songSearchResults.loaded {
+  min-height: 100vh;
+}
+
+/* Song results */
+
+.songSearchResult {
   cursor: pointer;
+  display: flex;
+
+  border-radius: var(--textboxBorderRadius);
+
+  transition: 0.2s all ease-in-out;
 }
-.song:hover {
-  background-color: #eee;
+.songSearchResult:hover {
+  background-color: rgba(0, 0, 0, 0.4);
 }
+
+.songSearchResult img {
+  object-fit: contain;
+  width: 25vw; /* TODO: this isn't great/doens't work well on mobile... find another solution? */
+}
+
+.songInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.songInfo .songInfo--artistAlbum,
+.songInfo strong {
+  line-height: 1.25;
+}
+
+/* Button */
+
+.button.addPostButton {
+  min-width: var(--space-xl);
+  height: var(--space-l);
+}
+
+/* Add post Form */
+.container ~ .addPost {
+  z-index: -99;
+  opacity: 0;
+  transition: all 0.2s ease-in;
+}
+.container.addingPost ~ .addPost {
+  opacity: 1;
+  z-index: 99;
+}
+.addPost {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  width: 100vw;
+  min-height: 100vh;
+}
+
+.songSearchWrapper {
+  display: flex;
+  width: 100%;
+}
+
+/* TEMPORARY */
 
 /* Messages */
 .messages {
