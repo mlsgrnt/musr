@@ -75,6 +75,9 @@ a:hover {
 .addPostForm {
   display: none;
 }
+.addPost .textInput {
+  background: rgba(0, 0, 0, 0.4);
+}
 
 /* Background on form appearance */
 .container {
@@ -89,9 +92,40 @@ a:hover {
 .songSearchResults {
   min-height: 0px;
   transition: all 0.3s ease-in;
+  list-style-type: none;
 }
 .songSearchResults.loaded {
   min-height: 100vh;
+}
+
+/* Song results */
+
+.song {
+  cursor: pointer;
+  display: flex;
+
+  border-radius: var(--textboxBorderRadius);
+
+  transition: 0.2s all ease-in-out;
+}
+.song:hover {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.song img {
+  object-fit: contain;
+  width: 25vw;
+}
+
+.songInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.songInfo .songInfo--artistAlbum,
+.songInfo strong {
+  line-height: 1.25;
 }
 
 /* Button */
@@ -101,7 +135,7 @@ a:hover {
   height: var(--space-l);
 }
 
-/* Form */
+/* Add post Form */
 .container ~ .addPost {
   z-index: -99;
   opacity: 0;
@@ -114,8 +148,8 @@ a:hover {
 .addPost {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
 
   position: absolute;
   left: 0;
@@ -126,13 +160,6 @@ a:hover {
 }
 
 /* TEMPORARY */
-
-.song {
-  cursor: pointer;
-}
-.song:hover {
-  background-color: #eee;
-}
 
 /* Messages */
 .messages {

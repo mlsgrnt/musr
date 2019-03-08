@@ -11,6 +11,13 @@ function hookForm() {
   songSearchResults.onclick = selectSong;
 
   document.querySelector('.addPostButton').onclick = addPostButtonClickHandler;
+
+  // Handle escape key
+  document.onkeyup = e => {
+    if (e.keyCode == 27) {
+      document.querySelector('.container').classList.remove('addingPost');
+    }
+  };
 }
 
 const addPostButtonClickHandler = e => {
@@ -68,11 +75,15 @@ const updateResults = query => {
       .map(song => {
         return `
             <li id="${song.id}">
-              <div class="song">
+              <div class="song textSize-m">
                 <img src="${song.album.cover_small}" />
-                <span>${song.title}</span>
-                <span>${song.artist.name}</span>
-                <span>${song.album.title}</span>
+                <div class="songInfo minHeight-xl c-grey-1">
+                  <strong>${song.title}</strong>
+                  <div class="songInfo--artistAlbum textSize-s spacerBottom-s">
+                    <div class="">${song.artist.name}</div>
+                    <div>${song.album.title}</div>
+                  </div>
+                </div>
               </div>
             </li>
         `;
