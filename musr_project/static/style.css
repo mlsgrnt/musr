@@ -100,7 +100,7 @@ a:hover {
 
 /* Song results */
 
-.song {
+.songSearchResult {
   cursor: pointer;
   display: flex;
 
@@ -108,11 +108,11 @@ a:hover {
 
   transition: 0.2s all ease-in-out;
 }
-.song:hover {
+.songSearchResult:hover {
   background-color: rgba(0, 0, 0, 0.4);
 }
 
-.song img {
+.songSearchResult img {
   object-fit: contain;
   width: 25vw;
 }
@@ -148,7 +148,7 @@ a:hover {
 .addPost {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: flex-start;
 
   position: absolute;
@@ -159,7 +159,7 @@ a:hover {
   min-height: 100vh;
 }
 
-.songSearch {
+.songSearchWrapper {
   display: flex;
   width: 100%;
 }

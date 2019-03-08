@@ -58,10 +58,10 @@ const selectSong = e => {
     document.querySelector('.songSearchResults').innerHTML = 'Song added!';
     document.querySelector('.songSearch').value = '';
 
-    // reload the window in case we are on profile page
+    // Remove ourselves -- and reload if we're on the profile page
     window.setTimeout(() => {
-      location.reload();
-    }, 300);
+      document.querySelector('.container').classList.remove('addingPost');
+    }, 500);
   });
 };
 
@@ -78,7 +78,7 @@ const updateResults = query => {
       .map(song => {
         return `
             <li id="${song.id}">
-              <div class="song textSize-m">
+              <div class="songSearchResult textSize-m">
                 <img src="${song.album.cover_small}" />
                 <div class="songInfo minHeight-xl c-grey-1">
                   <strong>${song.title}</strong>
