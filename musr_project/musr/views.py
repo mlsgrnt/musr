@@ -74,7 +74,16 @@ def photo_upload(request):
 
 def search_account(request):
     usr_name = request.POST["usr_name"]
-    us = User.objects.filter(first_name=usr_name)
+    search = usr_name
+    usr_name = usr_name.split(" ")
+    firstName = usr_name[0]
+    if len(usr_name) == 2:
+        us = User.objects.filter(first_name=usr_name[0], last_name=usr_name[1])
+    else:
+        us = User.objects.filter(first_name=usr_name[0])
+        if not us:
+            us = User.objects.filter(username=search.lower())
+
     return render(
-        request, "musr/search_account.html", {"query": us, "search": usr_name}
+        request, "musr/search_account.html", {"query": us, "search": search.lower()}
     )
