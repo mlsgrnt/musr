@@ -8,7 +8,13 @@ function hookForm() {
 
   const songSearchResults = document.querySelector('.songSearchResults');
   songSearchResults.onclick = selectSong;
+
+  document.querySelector('.addPostButton').onclick = addPostButtonClickHandler;
 }
+
+const addPostButtonClickHandler = e => {
+  document.querySelector('.container').classList.add('addingPost');
+};
 
 const onChangeHandler = e => {
   controller.abort();

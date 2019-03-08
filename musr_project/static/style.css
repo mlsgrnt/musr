@@ -70,10 +70,53 @@ a:hover {
   text-stroke: 1px;
 }
 
-/* TEMPORARY */
+/* Add Post */
+
 .addPostForm {
   display: none;
 }
+
+/* Background on form appearance */
+.container {
+  transition: all 0.2s ease-in-out;
+}
+.container.addingPost {
+  filter: blur(4px);
+  transform: scale(0.975);
+}
+
+/* Button */
+
+.button.addPostButton {
+  min-width: var(--space-xl);
+  height: var(--space-l);
+}
+
+/* Form */
+.container ~ .addPost {
+  z-index: -99;
+  opacity: 0;
+  transition: all 0.2s ease-in;
+}
+.container.addingPost ~ .addPost {
+  opacity: 1;
+  z-index: 99;
+}
+.addPost {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  width: 100vw;
+  min-height: 100vh;
+}
+
+/* TEMPORARY */
 
 .song {
   cursor: pointer;

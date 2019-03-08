@@ -18,7 +18,7 @@
     <div class="container">
       <div class="header c-grey-1">
         <ul class="center nav">
-            <li class="{% current 'whats_hot' %}"><a href="{% url 'whats_hot' %}">Whats's Hot</a> </li>
+          <li class="{% current 'whats_hot' %}"><a href="{% url 'whats_hot' %}">Whats's Hot</a> </li>
           {% if user.is_authenticated %}
             <li class="{% current 'feed' %}"><a href="{% url 'feed' %}">Feed</a></li>
             <li><a href="{% url 'own_profile' %}">Your Profile</a></li> <!-- own profile doens't get highlighted because the link will bea  photo -->
@@ -38,8 +38,7 @@
             <span class="headerItem">Hey {{ user }}</span>
             <span class="spacerLeft-s {% current 'account_logout' %}"><a class="logout headerItem" href="{% url 'account_logout' %}">Logout</a></span>
             <div class="spacerLeft-s">
-              Add Post:
-              {% add_post %}
+              <button class="addPostButton button button--type-highlighted">Add Post</button>
             </div>
           {% else %}
             <span>You are not logged in</span>
@@ -49,15 +48,20 @@
 
       {% if messages %}
         <div class="messages dialog">
-            {% for message in messages %}
-              <span class="">{{message}}</span>
-            {% endfor %}
+          {% for message in messages %}
+            <span class="">{{message}}</span>
+          {% endfor %}
         </div>
       {% endif %}
+
       <div class="spacerLeft-xl">
         {% block content %}
         {% endblock %}
       </div>
+    </div>
+
+    <div class="addPost spaceframe-l">
+      {% add_post %}
     </div>
 
     <!-- maybe reimplement debounce without lodash? TODO -->
