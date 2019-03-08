@@ -114,7 +114,7 @@ a:hover {
 
 .songSearchResult img {
   object-fit: contain;
-  width: 25vw;
+  width: 25vw; /* TODO: this isn't great/doens't work well on mobile... find another solution? */
 }
 
 .songInfo {

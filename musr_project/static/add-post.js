@@ -78,7 +78,7 @@ const updateResults = query => {
       .map(song => {
         return `
             <li id="${song.id}">
-              <div class="songSearchResult textSize-m">
+              <div class="songSearchResult textSize-m spaceframe-m">
                 <img src="${song.album.cover_small}" />
                 <div class="songInfo minHeight-xl c-grey-1">
                   <strong>${song.title}</strong>
