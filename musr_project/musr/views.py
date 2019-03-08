@@ -3,7 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.shortcuts import redirect
-
+from django.template import loader, Context
+from django.template import RequestContext
 from .models import Profile, Post, Following
 
 # Index view (Whats hot)
@@ -69,3 +70,11 @@ def photo_upload(request):
             profile.save()
 
     return render(request, "musr/photo_upload.html", {"profile": profile})
+
+
+def search_account(request):
+    usr_name = request.POST["usr_name"]
+    us = User.objects.filter(first_name=usr_name)
+    return render(
+        request, "musr/search_account.html", {"query": us, "search": usr_name}
+    )

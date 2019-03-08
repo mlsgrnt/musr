@@ -27,6 +27,13 @@
             <li class="{% current 'account_login' %}"><a href="{% url 'account_login' %}">Login</a></li>
             <li class="{% current 'account_signup' %}"><a href="{% url 'account_signup' %}">Sign Up</a></li>
           {% endif %}
+            <li>
+              <form class="{% current 'search_account' %}" action="{% url 'search_account' %}" method='post'>
+              {% csrf_token %}
+              <input type="search" placeholder="Search for users" name="usr_name" value='{{ query }}' required>
+              <button type="submit">Search</button>
+              </form>
+            </li>
         </ul>
 
         <div class="center">
