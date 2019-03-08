@@ -20,6 +20,7 @@ class ViewsTestCase(TestCase):
     def test_404_when_user_does_not_exist(self):
         resp = self.client.get("profile/madeupuser")
         self.assertEqual(resp.status_code, 404)
+        self.assertContains(resp, "User does not exist")
 
 
 class ModelTestCase(TestCase):
