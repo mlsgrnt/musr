@@ -13,12 +13,15 @@ function hookForm() {
   document.querySelector('.addPostButton').onclick = addPostButtonClickHandler;
 
   // Handle escape key
-  document.onkeyup = e => {
-    if (e.keyCode == 27) {
-      document.querySelector('.container').classList.remove('addingPost');
-    }
-  };
+  document.onkeyup = closeAddPostForm;
+  document.querySelector('.closeSongSearchButton').onclick = closeAddPostForm;
 }
+
+const closeAddPostForm = e => {
+  if (!e.keyCode || e.keyCode == 27) {
+    document.querySelector('.container').classList.remove('addingPost');
+  }
+};
 
 const addPostButtonClickHandler = e => {
   document.querySelector('.songSearch').focus();

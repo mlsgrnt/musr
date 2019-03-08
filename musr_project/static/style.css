@@ -159,6 +159,11 @@ a:hover {
   min-height: 100vh;
 }
 
+.songSearch {
+  display: flex;
+  width: 100%;
+}
+
 /* TEMPORARY */
 
 /* Messages */
