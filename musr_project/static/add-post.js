@@ -1,3 +1,4 @@
+// REORGANIZE THIS FILE! TODO TODO TODO
 // AbortController for the fetch
 const controller = new AbortController();
 const singal = controller.signal;
@@ -13,6 +14,7 @@ function hookForm() {
 }
 
 const addPostButtonClickHandler = e => {
+  document.querySelector('.songSearch').focus();
   document.querySelector('.container').classList.add('addingPost');
 };
 
@@ -53,7 +55,7 @@ const selectSong = e => {
   });
 };
 
-updateResults = query => {
+const updateResults = query => {
   fetch(`https://deezer-proxy.glitch.me/search?q="${query}"`, {
     singal
   }).then(async result => {
