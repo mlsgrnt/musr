@@ -16,6 +16,12 @@ class TravisTesterTestCase(TestCase):
         self.assertEqual(test_value, 5)
 
 
+class ViewsTestCase(TestCase):
+    def test_404_when_user_does_not_exist(self):
+        resp = self.client.get("profile/madeupuser")
+        self.assertEqual(resp.status_code, 404)
+
+
 class ModelTestCase(TestCase):
     def test_post_can_be_created_with_just_song_id_and_user(self):
         self.user = User.objects.create_user(username="testuser", password="password")
