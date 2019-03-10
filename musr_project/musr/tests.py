@@ -18,7 +18,7 @@ class TravisTesterTestCase(TestCase):
 
 class ViewsTestCase(TestCase):
     def test_404_when_user_does_not_exist(self):
-        resp = self.client.get("profile/madeupuser")
+        resp = self.client.get("/profile/madeupuser/", follow=True)
         self.assertEqual(resp.status_code, 404)
 
 
@@ -29,6 +29,18 @@ class ProfileTestCase(TestCase):
         profile = Profile.objects.get(user=self.user)
 
         self.assertEqual(profile.picture.name, "profile_images/default.jpg")
+
+    def test_user_profile_urls_ignore_case(self):
+        self.user = User.objects.create_user(username="testuser", password="password")
+        profile = Profile.objects.get(user=self.user)
+        post = Post.objects.create(poster=profile, song_id=27)
+
+        request = self.client.get("/profile/testuser/", follow=True)
+        request1 = self.client.get("/profile/testUsER/", follow=True)
+        request2 = self.client.get("/profile/TESTUSER/", follow=True)
+
+        self.assertEqual(request.content, request1.content)
+        self.assertEqual(request.content, request2.content)
 
 
 class ModelTestCase(TestCase):
