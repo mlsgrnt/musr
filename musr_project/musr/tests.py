@@ -16,6 +16,15 @@ class TravisTesterTestCase(TestCase):
         self.assertEqual(test_value, 5)
 
 
+class ProfileTestCase(TestCase):
+    # TODO!
+    def test_user_created_with_built_in_django_methods_has_user_profile_picture(self):
+        self.user = User.objects.create_user(username="testuser", password="password")
+        profile = Profile.objects.get(user=self.user)
+
+        self.assertEqual(profile.picture.name, "profile_images/default.jpg")
+
+
 class ModelTestCase(TestCase):
     def test_post_can_be_created_with_just_song_id_and_user(self):
         self.user = User.objects.create_user(username="testuser", password="password")
