@@ -13,7 +13,9 @@ class Profile(models.Model):
     user = models.OneToOneField(User, primary_key=True, on_delete=models.CASCADE)
 
     # store user image
-    picture = models.ImageField(upload_to="profile_images", blank=True)
+    picture = models.ImageField(
+        upload_to="profile_images", blank=True, default="profile_images/default.jpg"
+    )
 
     def __str__(self):
         if self.user.first_name:

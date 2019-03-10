@@ -16,11 +16,22 @@ class TravisTesterTestCase(TestCase):
         self.assertEqual(test_value, 5)
 
 
+
 class ViewsTestCase(TestCase):
     def test_404_when_user_does_not_exist(self):
         resp = self.client.get("profile/madeupuser")
         self.assertEqual(resp.status_code, 404)
-        self.assertContains(resp, "User does not exist")
+        self.assertContains(resp, "User does not exist", status_code=404)
+
+        
+class ProfileTestCase(TestCase):
+    # TODO!
+    def test_user_created_with_built_in_django_methods_has_user_profile_picture(self):
+        self.user = User.objects.create_user(username="testuser", password="password")
+        profile = Profile.objects.get(user=self.user)
+
+        self.assertEqual(profile.picture.name, "profile_images/default.jpg")
+
 
 
 class ModelTestCase(TestCase):
@@ -126,22 +137,14 @@ class baseLinksTestCase(TestCase):
 
     def test_logged_out_user_sees_sign_in_link(self):
         response = self.client.get("/", follow=True)
-        self.assertContains(
-            response, '<a href="%s">Login</a>' % reverse("account_login"), html=True
-        )
-        self.assertNotContains(
-            response, '<a href="%s">Logout</a>' % reverse("account_logout"), html=True
-        )
+        self.assertIn(reverse("account_login"), response.content.decode("ascii"))
+        self.assertNotIn(reverse("account_logout"), response.content.decode("ascii"))
 
     def test_normally_logged_in_user_sees_sign_out_link(self):
         self.client.post("/account/login/", {"login": "admin", "password": "secret"})
         response = self.client.get("/")
-        self.assertNotContains(
-            response, '<a href="%s">Login</a>' % reverse("account_login"), html=True
-        )
-        self.assertContains(
-            response, '<a href="%s">Logout</a>' % reverse("account_logout"), html=True
-        )
+        self.assertNotIn(reverse("account_login"), response.content.decode("ascii"))
+        self.assertIn(reverse("account_logout"), response.content.decode("ascii"))
 
 
 # TODO: these could use some fleshing out

@@ -1,15 +1,227 @@
-/* TEMPORARY */
-.addPostForm {
-  display: none;
+/* General */
+a {
+  color: var(--c-primary-2xlight);
+  text-decoration: none;
+
+  transition: color 0.1s ease-in-out;
+}
+a:hover {
+  color: var(--c-primary-xlight);
+  text-decoration: none;
+}
+
+/* Nav */
+
+.header {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+}
+
+@media (max-width: 720px) {
+  .header {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+  }
+}
+
+.nav,
+.errorlist {
+  list-style-type: none;
+}
+.nav > li {
+  display: block;
+  padding: 0 10px;
+  white-space: nowrap;
+}
+.nav > li > a {
+  color: var(--c-primary-2xlight);
+  text-decoration: none;
+
+  transition: color 0.1s ease-in-out;
+}
+.nav > li > a:hover {
+  color: var(--c-primary-xlight);
+  text-decoration: none;
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 720px) {
+  .center {
+    padding: 0;
+    margin: 0;
+  }
+}
+
+.headerItem {
+  white-space: nowrap;
+  text-decoration: none;
 }
 
 .active {
-  font-weight: 900;
+  /* Ironically only Safari doens't use the -webkit prefix */
+  -webkit-text-stroke: 1px;
+  text-stroke: 1px;
 }
 
-.song {
-  cursor: pointer;
+/* Add Post */
+
+.addPostForm {
+  display: none;
 }
-.song:hover {
-  background-color: #eee;
+.addPost .textInput {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+/* Background on form appearance */
+.container {
+  transition: all 0.2s ease-in-out;
+}
+.container.addingPost {
+  filter: blur(4px);
+  transform: scale(0.97);
+}
+
+/* List of search result scrolls up */
+.songSearchResults {
+  min-height: 0px;
+  transition: all 0.3s ease-in;
+  list-style-type: none;
+}
+.songSearchResults.loaded {
+  min-height: 100vh;
+}
+
+/* Song results */
+
+.songSearchResult {
+  cursor: pointer;
+  display: flex;
+
+  border-radius: var(--textboxBorderRadius);
+
+  transition: 0.2s all ease-in-out;
+}
+.songSearchResult:hover {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.songSearchResult img {
+  object-fit: contain;
+  width: 25vw; /* TODO: this isn't great/doens't work well on mobile... find another solution? */
+}
+
+.songInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.songInfo .songInfo--artistAlbum,
+.songInfo strong {
+  line-height: 1.25;
+}
+
+/* Button */
+
+.button.addPostButton {
+  min-width: var(--space-xl);
+  height: var(--space-l);
+}
+
+/* Add post Form */
+.container ~ .addPost {
+  z-index: -99;
+  opacity: 0;
+  transition: all 0.2s ease-in;
+}
+.container.addingPost ~ .addPost {
+  opacity: 1;
+  z-index: 99;
+}
+.addPost {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  width: 100vw;
+  min-height: 100vh;
+}
+
+.songSearchWrapper {
+  display: flex;
+  width: 100%;
+}
+
+/* TEMPORARY */
+
+/* Messages */
+.messages {
+  float: right;
+}
+
+/* SocialAccount buttons */
+ul.socialaccount_providers {
+  list-style-type: none;
+  display: flex;
+}
+ul.socialaccount_providers li::before {
+  content: 'Login with ';
+  display: inline;
+}
+
+ul.socialaccount_providers li {
+  padding: 0 var(--space-s);
+}
+ul.socialaccount_providers li:first-of-type {
+  padding: 0 var(--space-s) 0 0;
+}
+
+/* Login */
+.button--type-highlighted {
+  display: block;
+  transition: all 0.2s ease-out;
+}
+
+.button--type-highlighted:hover {
+  background-color: var(--c-primary-light);
+  color: var(--c-primary-2xdark);
+}
+
+form .textInput {
+  margin: var(--space-s) 0;
+}
+
+form,
+.socialaccount_providers {
+  max-width: var(--space-4xl);
+}
+
+.formSubmitButtons {
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+}
+
+div.login {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Profile picture */
+.currentProfilePicture {
+  display: flex;
+  align-items: center;
 }

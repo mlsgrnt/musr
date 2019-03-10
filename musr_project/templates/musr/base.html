@@ -7,56 +7,69 @@
   <head>
     <title>{% block title%}MUSR{% endblock %}</title>
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'poco.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'poco-utilities.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'focus.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,500,700" rel="stylesheet">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
-    <div>
-      <h1>MUSR</h1>
-      <ul>
-        {% if user.is_authenticated %}
-          <li class="{% current 'account_logout' %}"><a href="{% url 'account_logout' %}">Logout</a></li>
+    <div class="container">
+      <div class="header c-grey-1">
+        <ul class="center nav">
           <li class="{% current 'whats_hot' %}"><a href="{% url 'whats_hot' %}">Whats's Hot</a> </li>
-          <li class="{% current 'feed' %}"><a href="{% url 'feed' %}">Feed</a></li>
-          <li><a href="{% url 'own_profile' %}">Profile</a></li> <!-- own profile doens't get highlighted because the link will bea  photo -->
-          <li>
-            <ul>
-              <li class="{% current 'account_photo_upload' %}"><a href="{% url 'account_photo_upload' %}">Profile Photo</a></li>
-              <li class="{% current 'account_change_password' %}"><a href="{% url 'account_change_password' %}">Change Password</a></li>
-              <li class="{% current 'account_email' %}"><a href="{% url 'account_email' %}">Change Email</a></li>
-              <li class="{% current 'socialaccount_connections' %}"><a href="{% url 'socialaccount_connections' %}">Change Social Connections</a></li>
-            </ul>
-          </li>
-        {% else %}
-          <li class="{% current 'account_login' %}"><a href="{% url 'account_login' %}">Login</a></li>
-          <li class="{% current 'account_signup' %}"><a href="{% url 'account_signup' %}">Sign Up</a></li>
-        {% endif %}
-      </ul>
-      {% if user.is_authenticated %}
-        <span>You are logged in as {{ user }}</span>
-        <div>
-          Add Post:
-          {% add_post %}
-        </div>
-      {% else %}
-        <span>You are not logged in</span>
-      {% endif %}
-    </div>
-
-    {% if messages %}
-      <div>
-        <ul>
-          {% for message in messages %}
-            <li>{{message}}</li>
-          {% endfor %}
+          {% if user.is_authenticated %}
+            <li class="{% current 'feed' %}"><a href="{% url 'feed' %}">Feed</a></li>
+            <li><a href="{% url 'own_profile' %}">Your Profile</a></li> <!-- own profile doens't get highlighted because the link will bea  photo -->
+            <li class="{% current 'account' %}"><a href="{% url 'account' %}">Account</a></li>
+          {% else %}
+            <li class="{% current 'account_login' %}"><a href="{% url 'account_login' %}">Login</a></li>
+            <li class="{% current 'account_signup' %}"><a href="{% url 'account_signup' %}">Sign Up</a></li>
+          {% endif %}
         </ul>
+
+        <div class="center">
+          <h1 class="textSize-xl c-primary-light">MUSR</h1>
+        </div>
+
+        <div class="center c-grey-1">
+          {% if user.is_authenticated %}
+            <span class="headerItem">Hey {{ user }}</span>
+            <span class="spacerLeft-s {% current 'account_logout' %}"><a class="logout headerItem" href="{% url 'account_logout' %}">Logout</a></span>
+            <div class="spacerLeft-s">
+              <button class="addPostButton button button--type-highlighted">Add Post</button>
+            </div>
+          {% else %}
+            <span>You are not logged in</span>
+          {% endif %}
+        </div>
       </div>
-    {% endif %}
-    <div>
-      {% block content %}
-      {% endblock %}
+
+      {% if messages %}
+        <div class="messages dialog">
+          {% for message in messages %}
+            <span class="">{{message}}</span>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      <div class="spacerLeft-xl">
+        {% block content %}
+        {% endblock %}
+      </div>
     </div>
 
-    <script type="text/javascript" src="{% static 'add-post.js' %}" ></script>
+    <div class="addPost spaceframe-l">
+      {% add_post %}
+    </div>
+
     <!-- maybe reimplement debounce without lodash? TODO -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lodash@4.17.11/lodash.min.js"></script>
+    {% if user.is_authenticated %}
+      {% csrf_token %}
+      <script type="text/javascript" src="{% static 'add-post.js' %}"></script>
+      <script type="text/javascript" src="{% static 'postify-logout-link.js' %}""></script>
+    {% endif %}
   </body>
 </html>

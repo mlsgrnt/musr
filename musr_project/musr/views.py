@@ -24,7 +24,15 @@ def profile(request, username):
         raise Http404("User does not exist!")
     profile = Profile.objects.get(user=user)
     profilePosts = Post.objects.filter(poster=profile)
-    return render(request, "musr/profile.html", {"posts": profilePosts})
+    return render(
+        request, "musr/profile.html", {"profile": user, "posts": profilePosts}
+    )
+
+
+# Account info
+@login_required
+def account(request):
+    return render(request, "musr/account.html")
 
 
 # Feed view
@@ -60,7 +68,15 @@ def photo_upload(request):
 
     if request.method == "POST":
         if profile and "photoUpload" in request.FILES:
-            profile.picture = request.FILES["photoUpload"]
-            profile.save()
+            if (
+                request.FILES["photoUpload"].name.lower().endswith(".jpg")
+                and request.FILES["photoUpload"].size < 512000
+            ):
+                profile.picture = request.FILES["photoUpload"]
+                profile.save()
+            else:
+                return HttpResponse(
+                    "You can only upload .jpg files smaller than 512KB as a profile picture"
+                )
 
-    return render(request, "musr/photo-upload.html", {"profile": profile})
+    return render(request, "musr/photo_upload.html", {"profile": profile})

@@ -9,10 +9,14 @@ branches:
 
 install:
   - pip install -r requirements.txt
+  - pip install codecov
 
 before_install:
   - export DEBUG=True
 
+after_success:
+  - codecov --token=274bb4bb-7a58-437f-9340-ad61d7e549f4
+
 script:
-  - cd musr_project
-  - python manage.py test
+  - black musr_project/ --check
+  - coverage run --source='.' musr_project/manage.py test musr
