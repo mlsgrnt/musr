@@ -19,6 +19,7 @@
     {{ hidden_field }}
   {% endfor %}
 
+  {{ form.username.errors }}
   {{ form.username|add_class:"textInput" }}
   {{ form.email|add_class:"textInput" }}
   {{ form.password1.errors }}
