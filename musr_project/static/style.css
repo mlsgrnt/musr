@@ -85,7 +85,7 @@ a:hover {
 }
 .container.addingPost {
   filter: blur(4px);
-  transform: scale(0.97);
+  transform: scale(0.97, 0.97);
 }
 
 /* List of search result scrolls up */
