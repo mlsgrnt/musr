@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.shortcuts import redirect
 
 from .models import Profile, Post, Following
@@ -18,7 +18,10 @@ def own_profile(request):
 
 
 def profile(request, username):
-    user = User.objects.get(username=username)
+    try:
+        user = User.objects.get(username__iexact=username)
+    except User.DoesNotExist:
+        raise Http404("User does not exist!")
     profile = Profile.objects.get(user=user)
     profilePosts = Post.objects.filter(poster=profile)
     return render(
