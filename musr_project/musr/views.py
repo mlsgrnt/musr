@@ -19,7 +19,7 @@ def own_profile(request):
 
 def profile(request, username):
     try:
-        user = User.objects.get(username=username)
+        user = User.objects.get(username__iexact=username)
     except User.DoesNotExist:
         raise Http404("User does not exist!")
     profile = Profile.objects.get(user=user)
