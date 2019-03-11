@@ -1,5 +1,7 @@
 {% load musr_template_tags %}
 
-{% for post in posts %}
-  {% song post %}
-{% endfor %}
+<div class="horizontal">
+  {% for post in posts %}
+    {% song post %}
+  {% endfor %}
+</div>

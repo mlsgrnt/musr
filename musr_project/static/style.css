@@ -70,6 +70,17 @@ a:hover {
   text-stroke: 1px;
 }
 
+/* Posts */
+.horizontal {
+  transform: rotate(-90deg);
+  transform-origin: right top;
+}
+
+.post {
+  transform: rotate(90deg);
+  transform-origin: right top;
+}
+
 /* Add Post */
 
 .addPostForm {
