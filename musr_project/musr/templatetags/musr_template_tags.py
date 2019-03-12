@@ -46,7 +46,8 @@ def song(post):
         poster = Profile.objects.get(user=post.original_poster)
 
     # Grab data from deezer
-    url = "https://api.deezer.com/track/" + str(post.song_id)
+    # url = "https://api.deezer.com/track/" + str(post.song_id)
+    url = "https://deezer-proxy.glitch.me/track/" + str(post.song_id)
     req = urllib.request.Request(url)
     r = urllib.request.urlopen(req).read()
     data = json.loads(r.decode("utf-8"))

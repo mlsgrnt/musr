@@ -126,4 +126,6 @@
     var(--greySaturation),
     calc(var(--initialGreyLightness) - var(--greyscaleLightnessIncrement) * 7)
   );
+
+  --songPost-height: 600px;
 }
