@@ -69,7 +69,7 @@
     {% if user.is_authenticated %}
       {% csrf_token %}
       <script type="text/javascript" src="{% static 'add-post.js' %}"></script>
-      <script type="text/javascript" src="{% static 'postify-logout-link.js' %}""></script>
+      <script type="text/javascript" src="{% static 'postify-logout-link.js' %}"></script>
     {% endif %}
   </body>
 </html>
