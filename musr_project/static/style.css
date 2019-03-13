@@ -116,7 +116,7 @@ a:hover {
   transition: all 0.2s ease-in-out;
 }
 .container.addingPost {
-  filter: blur(4px);
+  filter: blur(4px) brightness(33%);
   transform: scale(0.97, 0.97);
 }
 
