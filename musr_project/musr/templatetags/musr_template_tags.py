@@ -23,6 +23,12 @@ def add_post():
     return {}
 
 
+# Feed view "component"
+@register.inclusion_tag("musr/songs.html")
+def songs(posts):
+    return {"posts": posts}
+
+
 # Post "component"
 @register.inclusion_tag("musr/song.html")
 def song(post):

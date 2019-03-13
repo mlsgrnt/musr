@@ -1,0 +1,9 @@
+{% load musr_template_tags %}
+
+<div class="hoizontalContainer">
+  <div class="horizontal">
+    {% for post in posts %}
+      {% song post %}
+    {% endfor %}
+  </div>
+</div>
