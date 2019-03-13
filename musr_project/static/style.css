@@ -101,7 +101,7 @@ a:hover {
 
   margin: var(--space-l);
 
-  width: 300px;
+  width: 350px;
 }
 
 /* TODO: line height is a little ugly */
@@ -124,7 +124,7 @@ a:hover {
 .post--song img {
   left: calc(var(--space-l) * -1);
   position: relative;
-  width: 300px;
+  width: 350px;
 }
 
 .post--song--info {
