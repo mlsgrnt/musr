@@ -72,11 +72,34 @@ a:hover {
 
 /* Posts */
 .hoizontalContainer {
+  position: relative;
+  left: calc(var(--space-2xl) * -1);
+  width: 100vw;
 }
+
+/* Nasty little hack to correct positioning on mobile */
+@media (max-width: 720px) {
+  .hoizontalContainer {
+    left: calc(var(--space-xl) * -1 + var(--space-m));
+  }
+}
+
 .horizontal {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: scroll;
+
+  -webkit-overflow-scrolling: touch;
+}
+
+.horizontal:first-child {
+  padding-left: var(--space-xl);
 }
 
 .post {
+  flex: 0 0 auto;
+
+  margin: var(--space-l);
 }
 
 /* Add Post */
