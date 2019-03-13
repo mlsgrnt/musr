@@ -30,7 +30,7 @@
             <li>
               <form class="{% current 'search_account' %}" action="{% url 'search_account' %}" method='post'>
               {% csrf_token %}
-              <input type="search" placeholder="Search for users" name="usr_name" value='{{ query }}' required>
+              <input type="search" placeholder="Search for users" name="usr_name" value='{{ query }}' required autocomplete="false" >
               <button type="submit">Search</button>
               </form>
             </li>
