@@ -18,7 +18,7 @@ class Profile(models.Model):
     )
 
     def __str__(self):
-        if self.user.first_name:
+        if self.user.first_name is not None:
             return self.user.first_name + " " + self.user.last_name
 
         return self.user.username
