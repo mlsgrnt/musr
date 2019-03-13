@@ -100,6 +100,44 @@ a:hover {
   flex: 0 0 auto;
 
   margin: var(--space-l);
+
+  width: 300px;
+}
+
+/* TODO: line height is a little ugly */
+
+.post--poster {
+  display: flex;
+  align-items: self-start;
+}
+.post--poster img {
+  max-width: 100px;
+}
+.post--poster--info {
+  display: flex;
+  flex-direction: column;
+}
+.post--poster--info span {
+  line-height: var(--lineHeight-xs);
+}
+
+.post--song img {
+  left: calc(var(--space-l) * -1);
+  position: relative;
+  width: 300px;
+}
+
+.post--song--info {
+  display: flex;
+  flex-direction: column;
+}
+.post--song--info span {
+  line-height: var(--lineHeight-s);
+}
+
+.post--song--wrapper {
+  display: flex;
+  align-items: flex-start;
 }
 
 /* Add Post */

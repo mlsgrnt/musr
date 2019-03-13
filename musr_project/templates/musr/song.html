@@ -1,19 +1,26 @@
-<div class="post">
-  <div class="post--poster">
-    <img src="{{ poster.picture.url }}" />
-    <span>{{ poster }}</span>
-    {% if re_poster %}
-      <span>Reposted by {{ re_poster }}</span>
-    {% endif %}
-    <span>Posted {{ song.date }}</span>
+<div class="post card">
+  <div class="post--poster spaceframe-s">
+    <img src="{{ poster.picture.url }}" class="spaceframe-s"/>
+    <div class="post--poster--info">
+      <span class="textSize-s spacerBottom-s">{{ poster }}</span>
+      {% if re_poster %}
+        <span>Reposted by {{ re_poster }}</span>
+      {% endif %}
+      <span class="textSize-xs">Posted {{ song.date }}</span>
+    </div>
   </div>
   <div class="post--song">
     <img src="{{ song.album_art }}" />
-    <div>
-      <span>{{ song.title }}</span>
-      <span>{{ song.artist }}</span>
-      <span>{{ song.album }}</span>
-      <audio src="{{ song.preview }}" controls />
+    <div class="post--song--wrapper spacerTop-s">
+      <div class="post--song--info">
+        <span class="textSize-m fontWeight-700">{{ song.title }}</span>
+        <span class="textSize-s">{{ song.artist }}</span>
+        <span class="textSize-s">{{ song.album }}</span>
+      </div>
+      <div class="post--song--play-button">
+        <button>play</button>
+      </div>
     </div>
+    <audio src="{{ song.preview }}"  />
   </div>
 </div>
