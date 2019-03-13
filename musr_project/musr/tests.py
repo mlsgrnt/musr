@@ -42,6 +42,23 @@ class ProfileTestCase(TestCase):
         self.assertEqual(request.content, request1.content)
         self.assertEqual(request.content, request2.content)
 
+    def test_profile_to_string_returns_correctly(self):
+        user1 = User.objects.create_user(username="testuser1", password="password")
+        user2 = User.objects.create_user(username="testuser2", password="password")
+        user2.first_name = "Bilbo"
+        user2.last_name = "Baggins"
+        user2.save()
+
+        profile1 = Profile.objects.get(user=user1)
+        profile2 = Profile.objects.get(user=user2)
+
+        self.assertEqual(profile1.__str__(), profile1.user.username)
+        self.assertEqual(
+            profile2.__str__(), profile2.user.first_name + " " + profile2.user.last_name
+        )
+
+    # TODO test profile view
+
 
 class ModelTestCase(TestCase):
     def test_post_can_be_created_with_just_song_id_and_user(self):
