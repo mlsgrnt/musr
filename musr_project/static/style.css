@@ -79,13 +79,14 @@ a:hover {
   transform-origin: top left;
 
   position: relative;
-  top: calc(var(--songPost-height) * 2);
-  width: var(--songPost-height);
+  top: 100vh;
+  left: -100px;
+  width: 50vh;
   height: 90vw;
 }
 .horizontal {
   -webkit-overflow-scrolling: touch;
-  transform: rotate(90deg) translateY(calc(var(--songPost-height) * -1));
+  transform: rotate(90deg) translateY(-50vh);
   transform-origin: top left;
   white-space: nowrap;
 }
