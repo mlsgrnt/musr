@@ -196,8 +196,6 @@ a:hover {
   width: 100%;
 }
 
-/* TEMPORARY */
-
 /* Messages */
 .messages {
   float: right;
@@ -256,4 +254,12 @@ div.login {
 .currentProfilePicture {
   display: flex;
   align-items: center;
+}
+
+/* Profile page */
+.profile {
+  /* CSS Grid may be a better solution for this */
+  display: flex;
+  align-items: center;
+  justify-content: space-around; /* temporary for now */
 }

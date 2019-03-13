@@ -23,9 +23,20 @@ def profile(request, username):
     except User.DoesNotExist:
         raise Http404("User does not exist!")
     profile = Profile.objects.get(user=user)
-    profilePosts = Post.objects.filter(poster=profile)
+    profile_posts = Post.objects.filter(poster=profile)
+
+    follower_count = 0  # TODO FIX THIS (may be quite involved)
+
     return render(
-        request, "musr/profile.html", {"profile": profile, "posts": profilePosts}
+        request,
+        "musr/profile.html",
+        {
+            "profile": profile,
+            "posts": profile_posts,
+            "follower_count": follower_count,
+            "post_count": profile_posts.count,
+            "posting_since": profile.user.date_joined,
+        },
     )
 
 
