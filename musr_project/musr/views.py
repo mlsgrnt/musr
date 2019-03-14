@@ -90,6 +90,7 @@ def repost(request):
     newpost.save()
     return HttpResponse("OK")
 
+
 # Follow
 @login_required
 def follow(request):
