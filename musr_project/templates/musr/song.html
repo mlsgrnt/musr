@@ -12,13 +12,13 @@
   <div class="post--song">
     <img src="{{ song.album_art }}" />
     <div class="post--song--wrapper spacerTop-s">
-      <div class="post--song--info">
-        <span class="textSize-m fontWeight-700">{{ song.title }}</span>
-        <span class="textSize-s">{{ song.artist }}</span>
-        <span class="textSize-s">{{ song.album }}</span>
-      </div>
       <div class="post--song--play-button">
         <button>play</button>
+      </div>
+      <div class="post--song--info">
+        <span class="textSize-m fontWeight-700 c-primary-xlight">{{ song.title }}</span>
+        <span class="textSize-s c-primary-2xlight">{{ song.artist }}</span>
+        <span class="textSize-s ">{{ song.album }}</span>
       </div>
     </div>
     <audio src="{{ song.preview }}"  />
