@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from django.utils import timezone
 
 # Create your models here.
@@ -37,6 +38,10 @@ class Following(models.Model):
     followee = models.ForeignKey(
         Profile, on_delete=models.CASCADE, related_name="followee"
     )
+
+    def clean(self):
+        if self.followee == self.follower:
+            raise ValidationError("User may not follow themselves.")
 
     # set the pair to function as a multi attribute primary key
     class Meta:
