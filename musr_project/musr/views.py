@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponse, Http404
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect
 
 from .models import Profile, Post, Following
@@ -68,6 +69,24 @@ def add_post(request):
 
     newpost = Post.objects.create(poster=profile, song_id=song_id)
 
+    return HttpResponse("OK")
+
+
+# Delete post
+@login_required
+def delete_post(request):
+    if request.method != "POST":
+        return redirect("/")
+    post_id = request.POST["post"]
+    post = Post.objects.get(post_id=post_id)
+
+    user = Profile.objects.get(user=request.user)
+    poster = post.poster
+
+    if user != poster:
+        raise PermissionDenied
+
+    post.delete()
     return HttpResponse("OK")
 
 

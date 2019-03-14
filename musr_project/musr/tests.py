@@ -305,6 +305,42 @@ class AddPostTestCase(TestCase):
         self.assertIsNotNone(testpost)
 
 
+class DeletePostTestCase(TestCase):
+    @classmethod
+    def setUp(self):
+        user = User.objects.create_user(username="admin", password="admin")
+        user.save()
+        profile = Profile.objects.get(user=user)
+        profile.save()
+        user1 = User.objects.create_user(username="jeoff", password="paosswoord")
+        user1.save()
+        profile1 = Profile.objects.get(user=user1)
+        profile1.save()
+        post = Post.objects.create(poster=profile, song_id="1")
+        post.save()
+
+    def test_can_delete_your_post(self):
+        login = self.client.login(username="admin", password="admin")
+
+        post = Post.objects.get(song_id="1")
+
+        response = self.client.post(reverse("delete_post"), {"post": post.post_id})
+        posts = Post.objects.filter(song_id="1").count()
+        self.assertEquals(posts, 0)
+        self.assertContains(response, "OK")
+
+    def test_cannot_delete_others_posts(self):
+        self.client.login(username="jeoff", password="paosswoord")
+
+        post = Post.objects.get(song_id="1")
+
+        response = self.client.post(reverse("delete_post"), {"post": post.post_id})
+
+        posts = Post.objects.filter(song_id="1").count()
+        self.assertEquals(posts, 1)
+        self.assertEqual(response.status_code, 403)
+
+
 class SongTemplateTagTestCase(TestCase):
     def render_template(self, string, context=None):
         context = context or {}
