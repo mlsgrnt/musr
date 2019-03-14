@@ -305,7 +305,6 @@ class AddPostTestCase(TestCase):
         self.assertIsNotNone(testpost)
 
 
-
 class FollowTestCase(TestCase):
     @classmethod
     def setUp(self):
@@ -324,7 +323,7 @@ class FollowTestCase(TestCase):
         followers = Following.objects.filter(followee=profile2).count()
 
         self.assertEquals(followers, 1)
-        self.assertContains(response, "you are now following them")
+        self.assertContains(response, "OK")
 
     def test_cannot_follow_twice(self):
         login = self.client.login(username="admin", password="password")
@@ -332,7 +331,11 @@ class FollowTestCase(TestCase):
 
         response2 = self.client.post(reverse("follow"), {"user": "thisLad"})
 
-        self.assertContains(response2, "you are already following them")
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "OK")
+
+        self.assertEqual(response2.status_code, 400)
+
 
 class DeletePostTestCase(TestCase):
     @classmethod
@@ -368,7 +371,6 @@ class DeletePostTestCase(TestCase):
         posts = Post.objects.filter(song_id="1").count()
         self.assertEquals(posts, 1)
         self.assertEqual(response.status_code, 403)
-
 
 
 class SongTemplateTagTestCase(TestCase):
