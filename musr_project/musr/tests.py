@@ -351,11 +351,11 @@ class DeletePostTestCase(TestCase):
         post.save()
 
         self.client.login(username="jeoff", password="paosswoord")
-        response = self.client.post(reverse("repost"), {"post": post.post_id})
+        response = self.client.post(reverse("repost_post"), {"post": post.post_id})
 
         repost = Post.objects.get(poster=profile1, song_id="1")
         self.assertEquals(repost.original_poster, profile)
-        self.assertContains(response, "reposted")
+        self.assertContains(response, "OK")
 
 
 class SongTemplateTagTestCase(TestCase):
