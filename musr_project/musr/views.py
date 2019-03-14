@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponse, Http404
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect
 
 from .models import Profile, Post, Following
@@ -83,10 +84,10 @@ def delete_post(request):
     poster = post.poster
 
     if user != poster:
-        return HttpResponse("Nuh uh")
-    else:
-        post.delete()
-        return HttpResponse("ok")
+        raise PermissionDenied
+
+    post.delete()
+    return HttpResponse("OK")
 
 
 # Account photo upload

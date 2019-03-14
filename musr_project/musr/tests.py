@@ -312,7 +312,7 @@ class DeletePostTestCase(TestCase):
         response = self.client.post(reverse("delete_post"), {"post": post.post_id})
         posts = Post.objects.filter(song_id="1").count()
         self.assertEquals(posts, 0)
-        self.assertContains(response, "ok")
+        self.assertContains(response, "OK")
 
     def test_cannot_delete_others_posts(self):
         self.client.login(username="jeoff", password="paosswoord")
@@ -323,7 +323,7 @@ class DeletePostTestCase(TestCase):
 
         posts = Post.objects.filter(song_id="1").count()
         self.assertEquals(posts, 1)
-        self.assertContains(response, "Nuh uh")
+        self.assertEqual(response.status_code, 403)
 
 
 class SongTemplateTagTestCase(TestCase):
