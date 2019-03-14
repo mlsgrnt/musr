@@ -17,6 +17,10 @@ class Profile(models.Model):
         upload_to="profile_images", blank=True, default="profile_images/default.jpg"
     )
 
+    def number_of_followers(self):
+        followedBy = Following.objects.filter(followee=self)
+        return followedBy.count()
+
     def __str__(self):
         if self.user.first_name is not "":
             return self.user.first_name + " " + self.user.last_name
