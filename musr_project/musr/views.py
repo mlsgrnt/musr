@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponse, Http404
 from django.shortcuts import redirect
-
+from django.db import IntegrityError
 from .models import Profile, Post, Following
 
 # Index view (Whats hot)
@@ -69,6 +69,30 @@ def add_post(request):
     newpost = Post.objects.create(poster=profile, song_id=song_id)
 
     return HttpResponse("OK")
+
+
+# Follow
+@login_required
+def follow(request):
+    if request.method != "POST":
+        return redirect("/")
+
+    username = request.POST["user"]
+
+    followee_user = User.objects.get(username=username)
+    followee_profile = Profile.objects.get(user=followee_user)
+
+    follower_user = request.user
+    follower_profile = Profile.objects.get(user=follower_user)
+
+    try:
+        newFollowing = Following.objects.create(
+            follower=follower_profile, followee=followee_profile
+        )
+        newFollowing.save()
+        return HttpResponse("you are now following them")
+    except IntegrityError:
+        return HttpResponse("you are already following them")
 
 
 # Account photo upload
