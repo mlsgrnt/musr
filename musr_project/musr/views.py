@@ -71,6 +71,24 @@ def add_post(request):
     return HttpResponse("OK")
 
 
+# Delete post
+@login_required
+def delete_post(request):
+    if request.method != "POST":
+        return redirect("/")
+    post_id = request.POST["post"]
+    post = Post.objects.get(post_id=post_id)
+
+    user = Profile.objects.get(user=request.user)
+    poster = post.poster
+
+    if user != poster:
+        return HttpResponse("Nuh uh")
+    else:
+        post.delete()
+        return HttpResponse("ok")
+
+
 # Account photo upload
 @login_required
 def photo_upload(request):
