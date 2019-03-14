@@ -120,9 +120,10 @@ def follow(request):
         newFollowing = Following.objects.create(
             follower=follower_profile, followee=followee_profile
         )
+        newFollowing.clean()
         newFollowing.save()
         return HttpResponse("OK")
-    except IntegrityError:
+    except:
         return HttpResponseBadRequest()
 
 
