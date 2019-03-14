@@ -5,11 +5,45 @@ from django.http import HttpResponse, Http404, HttpResponseBadRequest
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect
 from django.db import IntegrityError
+from django.utils import timezone
 from .models import Profile, Post, Following
+from math import log10
+from datetime import timedelta
 
 # Index view (Whats hot)
 def whats_hot(request):
-    return render(request, "musr/whats_hot.html", {})
+    # Get all posts made within the last month
+    current_time = timezone.now()
+    four_weeks_ago = current_time - timedelta(days=28)
+    all_posts = Post.objects.filter(date__gte=four_weeks_ago).order_by("-date")
+
+    song_ids = []
+    unique_posts = []
+
+    for post in all_posts:
+        if post.song_id not in song_ids:
+            song_ids.append(post.song_id)
+            unique_posts.append(post)
+
+    # Get all original posts made within the last month
+    post_rankings = {post: 1 for post in unique_posts}
+
+    # Increase rankings each time we find a duplicate
+    for post in all_posts:
+        if post in post_rankings:
+            post_rankings[post] += 1
+
+    # Decay the longer ago a post was reposted
+    for post in post_rankings.keys():
+        days_since_posting = (current_time.date() - post.date).days
+        post_rankings[post] = post_rankings[post] / log10(
+            (4 + days_since_posting) / 3.2
+        )
+
+    sorted_posts = sorted(post_rankings.items(), key=lambda x: x[1], reverse=True)
+    sorted_posts = [i[0] for i in sorted_posts]
+
+    return render(request, "musr/whats_hot.html", {"posts": sorted_posts[:6]})
 
 
 # Profile views (including redirect to own)
