@@ -78,7 +78,7 @@ def repost(request):
     if request.method != "POST":
         return redirect("/")
 
-    originalPost = Post.objects.get(post_id=request.POST["post"])
+    originalPost = Post.objects.get(post_id=request.POST["post_id"])
 
     profile = Profile.objects.get(user=request.user)
 
@@ -121,7 +121,7 @@ def delete_post(request):
     if request.method != "POST":
         return redirect("/")
 
-    post_id = request.POST["post"]
+    post_id = request.POST["post_id"]
     post = Post.objects.get(post_id=post_id)
 
     user = Profile.objects.get(user=request.user)
