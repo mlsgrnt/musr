@@ -57,6 +57,21 @@ class ProfileTestCase(TestCase):
             profile2.__str__(), profile2.user.first_name + " " + profile2.user.last_name
         )
 
+    def test_number_of_followers(self):
+        user1 = User.objects.create_user(username="testuser1", password="password")
+        user2 = User.objects.create_user(username="testuser2", password="password")
+        user1.save()
+        user2.save()
+        profile1 = Profile.objects.get(user=user1)
+        profile2 = Profile.objects.get(user=user2)
+        profile1.save()
+        profile2.save()
+
+        following1 = Following.objects.create(follower=profile2, followee=profile1)
+        following1.save()
+
+        self.assertEqual(1, profile1.number_of_followers())
+
     # TODO test profile view
 
 

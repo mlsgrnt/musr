@@ -25,7 +25,7 @@ def profile(request, username):
     profile = Profile.objects.get(user=user)
     profile_posts = Post.objects.filter(poster=profile)
 
-    follower_count = 0  # TODO FIX THIS (may be quite involved)
+    follower_count = profile.number_of_followers()
 
     return render(
         request,
