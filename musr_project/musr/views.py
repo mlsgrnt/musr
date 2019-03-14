@@ -84,12 +84,11 @@ def repost(request):
 
     song_id = originalPost.song_id
 
-    # newpost = Post.objects.create(poster=profile,original_post = originalPost, song_id = song_id)
     newpost = Post.objects.create(
         poster=profile, original_poster=originalPost.poster, song_id=song_id
     )
     newpost.save()
-    return HttpResponse("reposted")
+    return HttpResponse("OK")
 
 
 # Delete post
