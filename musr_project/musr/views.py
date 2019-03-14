@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponse, Http404
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect
 from django.db import IntegrityError
 from .models import Profile, Post, Following
@@ -25,7 +26,7 @@ def profile(request, username):
     profile = Profile.objects.get(user=user)
     profile_posts = Post.objects.filter(poster=profile)
 
-    follower_count = 0  # TODO FIX THIS (may be quite involved)
+    follower_count = profile.number_of_followers()
 
     return render(
         request,
@@ -93,6 +94,23 @@ def follow(request):
         return HttpResponse("you are now following them")
     except IntegrityError:
         return HttpResponse("you are already following them")
+
+# Delete post
+@login_required
+def delete_post(request):
+    if request.method != "POST":
+        return redirect("/")
+    post_id = request.POST["post"]
+    post = Post.objects.get(post_id=post_id)
+
+    user = Profile.objects.get(user=request.user)
+    poster = post.poster
+
+    if user != poster:
+        raise PermissionDenied
+
+    post.delete()
+    return HttpResponse("OK")
 
 
 # Account photo upload

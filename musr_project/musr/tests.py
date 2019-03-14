@@ -57,6 +57,21 @@ class ProfileTestCase(TestCase):
             profile2.__str__(), profile2.user.first_name + " " + profile2.user.last_name
         )
 
+    def test_number_of_followers(self):
+        user1 = User.objects.create_user(username="testuser1", password="password")
+        user2 = User.objects.create_user(username="testuser2", password="password")
+        user1.save()
+        user2.save()
+        profile1 = Profile.objects.get(user=user1)
+        profile2 = Profile.objects.get(user=user2)
+        profile1.save()
+        profile2.save()
+
+        following1 = Following.objects.create(follower=profile2, followee=profile1)
+        following1.save()
+
+        self.assertEqual(1, profile1.number_of_followers())
+
     # TODO test profile view
 
 
@@ -290,6 +305,7 @@ class AddPostTestCase(TestCase):
         self.assertIsNotNone(testpost)
 
 
+
 class FollowTestCase(TestCase):
     @classmethod
     def setUp(self):
@@ -317,6 +333,42 @@ class FollowTestCase(TestCase):
         response2 = self.client.post(reverse("follow"), {"user": "thisLad"})
 
         self.assertContains(response2, "you are already following them")
+
+class DeletePostTestCase(TestCase):
+    @classmethod
+    def setUp(self):
+        user = User.objects.create_user(username="admin", password="admin")
+        user.save()
+        profile = Profile.objects.get(user=user)
+        profile.save()
+        user1 = User.objects.create_user(username="jeoff", password="paosswoord")
+        user1.save()
+        profile1 = Profile.objects.get(user=user1)
+        profile1.save()
+        post = Post.objects.create(poster=profile, song_id="1")
+        post.save()
+
+    def test_can_delete_your_post(self):
+        login = self.client.login(username="admin", password="admin")
+
+        post = Post.objects.get(song_id="1")
+
+        response = self.client.post(reverse("delete_post"), {"post": post.post_id})
+        posts = Post.objects.filter(song_id="1").count()
+        self.assertEquals(posts, 0)
+        self.assertContains(response, "OK")
+
+    def test_cannot_delete_others_posts(self):
+        self.client.login(username="jeoff", password="paosswoord")
+
+        post = Post.objects.get(song_id="1")
+
+        response = self.client.post(reverse("delete_post"), {"post": post.post_id})
+
+        posts = Post.objects.filter(song_id="1").count()
+        self.assertEquals(posts, 1)
+        self.assertEqual(response.status_code, 403)
+
 
 
 class SongTemplateTagTestCase(TestCase):
