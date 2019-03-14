@@ -100,6 +100,57 @@ a:hover {
   flex: 0 0 auto;
 
   margin: var(--space-l);
+
+  width: 350px;
+}
+
+/* Individual post cards */
+
+.post.card {
+  padding: var(--space-s) var(--space-m);
+}
+.post--poster {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.post--poster img {
+  max-width: 40%;
+}
+.post--poster--info {
+  display: flex;
+  flex-direction: column;
+}
+.post--poster--info span {
+  line-height: var(--lineHeight-xs);
+}
+
+.post--song img {
+  left: calc(var(--space-m) * -1);
+  position: relative;
+  width: 350px;
+}
+
+.post--song--info {
+  display: flex;
+  flex-direction: column;
+}
+.post--song--info span {
+  line-height: var(--lineHeight-xs);
+  padding-bottom: var(--space-s);
+  max-width: var(--space-3xl);
+}
+
+.post--song--wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: right;
+}
+
+.post--song--play-button button {
+  background: transparent;
+  border: none;
 }
 
 /* Add Post */

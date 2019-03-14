@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpResponseBadRequest
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect
-
+from django.db import IntegrityError
 from .models import Profile, Post, Following
 
 # Index view (Whats hot)
@@ -90,12 +90,36 @@ def repost(request):
     newpost.save()
     return HttpResponse("OK")
 
+# Follow
+@login_required
+def follow(request):
+    if request.method != "POST":
+        return redirect("/")
+
+    followee_username = request.POST["user"]
+
+    followee_user = User.objects.get(username=followee_username)
+    followee_profile = Profile.objects.get(user=followee_user)
+
+    follower_user = request.user
+    follower_profile = Profile.objects.get(user=follower_user)
+
+    try:
+        newFollowing = Following.objects.create(
+            follower=follower_profile, followee=followee_profile
+        )
+        newFollowing.save()
+        return HttpResponse("OK")
+    except IntegrityError:
+        return HttpResponseBadRequest()
+
 
 # Delete post
 @login_required
 def delete_post(request):
     if request.method != "POST":
         return redirect("/")
+
     post_id = request.POST["post"]
     post = Post.objects.get(post_id=post_id)
 

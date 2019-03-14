@@ -305,6 +305,38 @@ class AddPostTestCase(TestCase):
         self.assertIsNotNone(testpost)
 
 
+class FollowTestCase(TestCase):
+    @classmethod
+    def setUp(self):
+        user1 = User.objects.create_user(username="admin", password="password")
+        user1.save()
+        user2 = User.objects.create_user(username="thisLad", password="password")
+        user2.save()
+        profile1 = Profile.objects.get(user=user1)
+
+    def test_can_follow_user(self):
+        login = self.client.login(username="admin", password="password")
+
+        response = self.client.post(reverse("follow"), {"user": "thisLad"})
+        user2 = User.objects.get(username="thisLad")
+        profile2 = Profile.objects.get(user=user2)
+        followers = Following.objects.filter(followee=profile2).count()
+
+        self.assertEquals(followers, 1)
+        self.assertContains(response, "OK")
+
+    def test_cannot_follow_twice(self):
+        login = self.client.login(username="admin", password="password")
+        response = self.client.post(reverse("follow"), {"user": "thisLad"})
+
+        response2 = self.client.post(reverse("follow"), {"user": "thisLad"})
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "OK")
+
+        self.assertEqual(response2.status_code, 400)
+
+
 class DeletePostTestCase(TestCase):
     @classmethod
     def setUp(self):
