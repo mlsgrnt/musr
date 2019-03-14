@@ -104,7 +104,7 @@ a:hover {
   width: 350px;
 }
 
-/* TODO: line height is a little ugly */
+/* Individual post cards */
 
 .post.card {
   padding: var(--space-s) var(--space-m);
@@ -136,7 +136,9 @@ a:hover {
   flex-direction: column;
 }
 .post--song--info span {
-  line-height: var(--lineHeight-s);
+  line-height: var(--lineHeight-xs);
+  padding-bottom: var(--space-s);
+  max-width: var(--space-3xl);
 }
 
 .post--song--wrapper {
