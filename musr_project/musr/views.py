@@ -24,18 +24,19 @@ def profile(request, username):
     except User.DoesNotExist:
         raise Http404("User does not exist!")
 
-    own_profile = Profile.objects.get(user=request.user)
-
     profile = Profile.objects.get(user=user)
     profile_posts = Post.objects.filter(poster=profile)
 
     follower_count = profile.number_of_followers()
 
-    follow_button_text = (
-        "Unfollow"
-        if Following.objects.filter(follower=own_profile, followee=profile).exists()
-        else "Follow"
-    )
+    follow_button_text = ""
+    if request.user.is_authenticated:
+        own_profile = Profile.objects.get(user=request.user)
+        follow_button_text = (
+            "Unfollow"
+            if Following.objects.filter(follower=own_profile, followee=profile).exists()
+            else "Follow"
+        )
 
     return render(
         request,
