@@ -1,4 +1,11 @@
 <div class="post card">
+  {% if poster.user == user or re_poster.user == user %}
+    <div class="post--post-button delete textSize-xs"><button>Delete</button></div>
+  {% else %}
+    {% if user.is_authenticated %}
+      <div class="post--post-button repost textSize-xs"><button>Repost</button></div>
+    {% endif %}
+  {% endif %}
   <div class="post--poster spaceframe-s">
     <img src="{{ poster.picture.url }}" class="spaceframe-s"/>
     <div class="post--poster--info">

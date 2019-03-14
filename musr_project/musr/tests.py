@@ -398,14 +398,18 @@ class SongTemplateTagTestCase(TestCase):
 
     def test_tag_handles_empty_context_dict(self):
         with self.assertRaises(SuspiciousOperation):
-            self.render_template("{% load musr_template_tags %}{% song post %}", {})
+            self.render_template(
+                "{% load musr_template_tags %}{% song post user %}", {}
+            )
 
     def test_tag_handles_invalid_deezer_song_id(self):
         user = User.objects.create_user(username="admin", password="secret")
         profile = Profile.objects.get(user=user)
         post = Post.objects.create(post_id=1, poster=profile, song_id=27)
         with self.assertRaises(SuspiciousOperation):
-            self.render_template("{% load musr_template_tags %}{% song post %}", {})
+            self.render_template(
+                "{% load musr_template_tags %}{% song post user %}", {}
+            )
 
     def test_tag_pulls_song_info_from_deezer(self):
         user = User.objects.create_user(username="admin", password="secret")
@@ -421,7 +425,7 @@ class SongTemplateTagTestCase(TestCase):
         profile.save()
         post = Post.objects.create(post_id=1, poster=profile, song_id=3135556)
         response = self.render_template(
-            "{% load musr_template_tags %}{% song post %}", {"post": post}
+            "{% load musr_template_tags %}{% song post user %}", {"post": post}
         )
 
         self.assertInHTML("Harder Better Faster Stronger", response)

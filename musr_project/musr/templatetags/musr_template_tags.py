@@ -25,13 +25,13 @@ def add_post():
 
 # Feed view "component"
 @register.inclusion_tag("musr/songs.html")
-def songs(posts):
-    return {"posts": posts}
+def songs(posts, user):
+    return {"posts": posts, "user": user}
 
 
 # Post "component"
 @register.inclusion_tag("musr/song.html")
-def song(post):
+def song(post, user):
     if not post:
         raise SuspiciousOperation(
             "Invalid request; song can't be displayed without song id"
@@ -60,4 +60,4 @@ def song(post):
     post.album_art = data["album"]["cover_big"]
     post.preview = data["preview"]
 
-    return {"song": post, "poster": poster, "re_poster": re_poster}
+    return {"song": post, "poster": poster, "re_poster": re_poster, "user": user}
