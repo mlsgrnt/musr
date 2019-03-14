@@ -148,6 +148,11 @@ a:hover {
   text-align: right;
 }
 
+.post--song--play-button button {
+  background: transparent;
+  border: none;
+}
+
 /* Add Post */
 
 .addPostForm {
