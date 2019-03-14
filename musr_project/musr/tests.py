@@ -311,11 +311,9 @@ class DeletePostTestCase(TestCase):
         user = User.objects.create_user(username="admin", password="admin")
         user.save()
         profile = Profile.objects.get(user=user)
-        profile.save()
         user1 = User.objects.create_user(username="jeoff", password="paosswoord")
         user1.save()
         profile1 = Profile.objects.get(user=user1)
-        profile1.save()
         post = Post.objects.create(poster=profile, song_id="1")
         post.save()
 
@@ -339,6 +337,25 @@ class DeletePostTestCase(TestCase):
         posts = Post.objects.filter(song_id="1").count()
         self.assertEquals(posts, 1)
         self.assertEqual(response.status_code, 403)
+
+
+class DeletePostTestCase(TestCase):
+    def test_can_repost_post(self):
+        user = User.objects.create_user(username="admin", password="admin")
+        user.save()
+        profile = Profile.objects.get(user=user)
+        user1 = User.objects.create_user(username="jeoff", password="paosswoord")
+        user1.save()
+        profile1 = Profile.objects.get(user=user1)
+        post = Post.objects.create(poster=profile, song_id="1")
+        post.save()
+
+        self.client.login(username="jeoff", password="paosswoord")
+        response = self.client.post(reverse("repost"), {"post": post.post_id})
+
+        repost = Post.objects.get(poster=profile1, song_id="1")
+        self.assertEquals(repost.original_poster, profile)
+        self.assertContains(response, "reposted")
 
 
 class SongTemplateTagTestCase(TestCase):

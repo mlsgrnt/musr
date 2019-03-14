@@ -10,4 +10,5 @@ urlpatterns = [
     path("profile/<slug:username>/", views.profile, name="profile"),
     path("add-post", views.add_post, name="add_post"),
     path("delete-post", views.delete_post, name="delete_post"),
+    path("repost", views.repost, name="repost"),
 ]

@@ -72,6 +72,26 @@ def add_post(request):
     return HttpResponse("OK")
 
 
+# repost
+@login_required
+def repost(request):
+    if request.method != "POST":
+        return redirect("/")
+
+    originalPost = Post.objects.get(post_id=request.POST["post"])
+
+    profile = Profile.objects.get(user=request.user)
+
+    song_id = originalPost.song_id
+
+    # newpost = Post.objects.create(poster=profile,original_post = originalPost, song_id = song_id)
+    newpost = Post.objects.create(
+        poster=profile, original_poster=originalPost.poster, song_id=song_id
+    )
+    newpost.save()
+    return HttpResponse("reposted")
+
+
 # Delete post
 @login_required
 def delete_post(request):
