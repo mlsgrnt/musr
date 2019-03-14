@@ -2,7 +2,7 @@
   <div class="post--poster spaceframe-s">
     <img src="{{ poster.picture.url }}" class="spaceframe-s"/>
     <div class="post--poster--info">
-      <span class="textSize-s spacerBottom-s">{{ poster }}</span>
+      <span class="textSize-s ">{{ poster }}</span>
       {% if re_poster %}
         <span>Reposted by {{ re_poster }}</span>
       {% endif %}
@@ -16,8 +16,8 @@
         <button>play</button>
       </div>
       <div class="post--song--info">
-        <span class="textSize-m fontWeight-700 c-primary-xlight">{{ song.title }}</span>
-        <span class="textSize-s c-primary-2xlight">{{ song.artist }}</span>
+        <span class="textSize-m fontWeight-700 c-primary-2xlight">{{ song.title }}</span>
+        <span class="textSize-s">{{ song.artist }}</span>
         <span class="textSize-s ">{{ song.album }}</span>
       </div>
     </div>
