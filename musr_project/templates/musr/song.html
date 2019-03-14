@@ -13,7 +13,7 @@
     <img src="{{ song.album_art }}" />
     <div class="post--song--wrapper spacerTop-s">
       <div class="post--song--play-button">
-        <button>play</button>
+        <button id="{{ song.song_id }}" class="play c-primary-xdark textSize-l">▶</button>
       </div>
       <div class="post--song--info">
         <span class="textSize-m fontWeight-700 c-primary-2xlight">{{ song.title }}</span>
@@ -21,6 +21,6 @@
         <span class="textSize-s ">{{ song.album }}</span>
       </div>
     </div>
-    <audio src="{{ song.preview }}"  />
+    <audio id="audio-{{ song.song_id }}" src="{{ song.preview }}"  />
   </div>
 </div>
