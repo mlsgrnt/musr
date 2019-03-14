@@ -4,7 +4,7 @@
 {% block content %}
   <h1 class="textSize-xl c-primary-dark spacerBottom-0 spacerTop-0">{{ profile }}'s profile</h1>
   {% if posts %}
-    {% songs posts %}
+    {% songs posts user %}
   {% else %}
     I have no posts yet!
   {% endif %}

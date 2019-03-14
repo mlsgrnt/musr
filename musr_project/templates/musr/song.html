@@ -1,4 +1,7 @@
 <div class="post card">
+  {% if poster.user == user %}
+    delete
+  {% endif %}
   <div class="post--poster spaceframe-s">
     <img src="{{ poster.picture.url }}" class="spaceframe-s"/>
     <div class="post--poster--info">
