@@ -109,7 +109,24 @@ a:hover {
 .post.card {
   padding: var(--space-s) var(--space-m);
 }
+
+.post--post-button {
+  display: inline;
+  float: right;
+}
+.post--post-button button {
+  background: none;
+  border: none;
+  color: var(--c-primary-light);
+  transition: all 0.1s ease-in-out;
+}
+.post--post-button button:hover {
+  color: var(--c-primary-dark);
+  cursor: pointer;
+}
+
 .post--poster {
+  height: var(--space-xl);
   display: flex;
   align-items: center;
   justify-content: flex-start;
