@@ -222,6 +222,7 @@ body {
 .songSearchResult img {
   object-fit: contain;
   width: 25vw; /* TODO: this isn't great/doens't work well on mobile... find another solution? */
+  max-height: 100px;
 }
 
 .songInfo {
