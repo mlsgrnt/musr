@@ -89,14 +89,14 @@ def repost(request):
     if request.method != "POST":
         return redirect("/")
 
-    originalPost = Post.objects.get(post_id=request.POST["post"])
+    original_post = Post.objects.get(post_id=request.POST["post_id"])
 
     profile = Profile.objects.get(user=request.user)
 
-    song_id = originalPost.song_id
+    song_id = original_post.song_id
 
     newpost = Post.objects.create(
-        poster=profile, original_poster=originalPost.poster, song_id=song_id
+        poster=profile, original_poster=original_post.poster, song_id=song_id
     )
     newpost.save()
     return HttpResponse("OK")
@@ -117,11 +117,13 @@ def follow(request):
     follower_profile = Profile.objects.get(user=follower_user)
 
     try:
-        newFollowing = Following.objects.create(
+        new_following = Following.objects.create(
             follower=follower_profile, followee=followee_profile
         )
-        newFollowing.clean()
-        newFollowing.save()
+
+        new_following.clean()
+        new_following.save()
+
         return HttpResponse("OK")
     except:
         return HttpResponseBadRequest()
@@ -133,7 +135,7 @@ def delete_post(request):
     if request.method != "POST":
         return redirect("/")
 
-    post_id = request.POST["post"]
+    post_id = request.POST["post_id"]
     post = Post.objects.get(post_id=post_id)
 
     user = Profile.objects.get(user=request.user)
