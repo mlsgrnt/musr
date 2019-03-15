@@ -5,11 +5,50 @@ from django.http import HttpResponse, Http404, HttpResponseBadRequest
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect
 from django.db import IntegrityError
+from django.utils import timezone
 from .models import Profile, Post, Following
+from math import log10
+from datetime import timedelta
 
 # Index view (Whats hot)
 def whats_hot(request):
-    return render(request, "musr/whats_hot.html", {})
+    # Get all posts made within the last month
+    current_time = timezone.now()
+    four_weeks_ago = current_time - timedelta(days=28)
+    all_posts = Post.objects.filter(date__gte=four_weeks_ago).order_by("date")
+
+    song_ids = []
+
+    for post in all_posts:
+        if post.song_id not in song_ids:
+            song_ids.append(post.song_id)
+
+    # Get all original posts made within the last month
+    song_rankings = {song_id: 1 for song_id in song_ids}
+
+    # Increase rankings each time we find a duplicate
+    for post in all_posts:
+        if post.song_id in song_rankings:
+            song_rankings[post.song_id] += 1
+
+    # Decay the longer ago a post was reposted
+    for song_id in song_rankings.keys():
+        days_since_posting = (current_time.date() - post.date).days
+        song_rankings[song_id] = song_rankings[song_id] / log10(
+            (4 + days_since_posting) / 3.2
+        )
+
+    sorted_songs = sorted(song_rankings.items(), key=lambda x: x[1], reverse=True)
+    sorted_posts = []
+
+    for song in sorted_songs:
+        sorted_posts.append(
+            Post.objects.filter(date__gte=four_weeks_ago, song_id=song[0]).order_by(
+                "date"
+            )[0]
+        )
+
+    return render(request, "musr/whats_hot.html", {"posts": sorted_posts[:6]})
 
 
 # Profile views (including redirect to own)
