@@ -1,9 +1,9 @@
 <div class="post card">
   {% if poster.user == user or re_poster.user == user %}
-    <div class="post--post-button delete textSize-xs"><button>Delete</button></div>
+    <div class="post--post-button textSize-xs"><button class="deleteButton" id="{{ song.post_id }}">Delete</button></div>
   {% else %}
     {% if user.is_authenticated %}
-      <div class="post--post-button repost textSize-xs"><button>Repost</button></div>
+      <div class="post--post-button textSize-xs"><button class="repostButton" id="{{ song.post_id }}">Repost</button></div>
     {% endif %}
   {% endif %}
   <div class="post--poster spaceframe-s">

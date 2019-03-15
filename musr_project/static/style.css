@@ -120,7 +120,7 @@ a:hover {
   color: var(--c-primary-light);
   transition: all 0.1s ease-in-out;
 }
-.post--post-button button:hover {
+.post--post-button button:hover:not(.reposted) {
   color: var(--c-primary-dark);
   cursor: pointer;
 }
