@@ -19,7 +19,7 @@ function handleClick(e) {
 
     audioElementCurrentlyPlaying = document.getElementById(`audio-${songId}`);
     audioElementCurrentlyPlaying.addEventListener('play', () => {
-      this.innerHTML = '❚';
+      this.innerHTML = '❚❚';
     });
     audioElementCurrentlyPlaying.addEventListener('pause', () => {
       this.innerHTML = '▶';
