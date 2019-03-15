@@ -5,7 +5,7 @@ from django.http import HttpResponse, Http404, HttpResponseBadRequest
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect
 from django.db.models import Q
-from django.template import loader, Context, RequestContext
+from django.template import loader, Context
 from django.db import IntegrityError
 from django.utils import timezone
 from .models import Profile, Post, Following
@@ -212,8 +212,8 @@ def photo_upload(request):
     return render(request, "musr/photo_upload.html", {"profile": profile})
 
 
-def search_account(request):
-    search = request.POST["usr_name"]
+def search(request):
+    search = request.POST["query"]
     us = User.objects.filter(
         Q(username__contains=search)
         | Q(first_name__contains=search)

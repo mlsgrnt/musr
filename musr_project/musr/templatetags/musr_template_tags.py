@@ -60,7 +60,6 @@ def song(post, user):
     post.album_art = data["album"]["cover_big"]
     post.preview = data["preview"]
 
-
     return {"song": post, "poster": poster, "re_poster": re_poster, "user": user}
 
 
