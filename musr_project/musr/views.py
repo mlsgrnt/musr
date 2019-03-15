@@ -3,9 +3,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.shortcuts import redirect
+from django.db.models import Q
 from django.template import loader, Context
 from django.template import RequestContext
 from .models import Profile, Post, Following
+
 
 # Index view (Whats hot)
 def whats_hot(request):
@@ -73,16 +75,12 @@ def photo_upload(request):
 
 
 def search_account(request):
-    usr_name = request.POST["usr_name"]
-    search = usr_name
-    usr_name = usr_name.split(" ")
-    firstName = usr_name[0]
-    if len(usr_name) == 2:
-        us = User.objects.filter(first_name=usr_name[0], last_name=usr_name[1])
-    else:
-        us = User.objects.filter(first_name=usr_name[0])
-        if not us:
-            us = User.objects.filter(username=search.lower())
+    search = request.POST["usr_name"]
+    us = User.objects.filter(
+        Q(username__contains=search)
+        | Q(first_name__contains=search)
+        | Q(last_name__contains=search)
+    )
 
     return render(
         request, "musr/search_account.html", {"query": us, "search": search.lower()}

@@ -4,9 +4,11 @@
 {% block content %}
  <h1> Search Results for "{{ search }}"</h1>
     {% if query %}
-        {% for query in query %}
+        {% for query_result in query %}
             <ul>
-                <li><a href="{% url 'profile' query.username %}">{{ query.first_name }} {{ query.last_name }}</a></li>
+                <li><a href="{% url 'profile' query_result.username %}"> {{ query_result }}</a>
+                {% search_result query_result %}
+                </li>
             </ul>
         {% endfor %}
     {% else %}
