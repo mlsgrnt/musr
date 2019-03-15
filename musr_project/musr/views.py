@@ -15,7 +15,7 @@ def whats_hot(request):
     # Get all posts made within the last month
     current_time = timezone.now()
     four_weeks_ago = current_time - timedelta(days=28)
-    all_posts = Post.objects.filter(date__gte=four_weeks_ago).order_by("-date")
+    all_posts = Post.objects.filter(date__gte=four_weeks_ago).order_by("date")
 
     song_ids = []
     unique_posts = []
