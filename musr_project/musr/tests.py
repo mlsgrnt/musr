@@ -361,7 +361,7 @@ class FollowTestCase(TestCase):
     def test_can_follow_user(self):
         login = self.client.login(username="admin", password="password")
 
-        response = self.client.post(reverse("follow"), {"user": "thisLad"})
+        response = self.client.post(reverse("follow"), {"username": "thisLad"})
         user2 = User.objects.get(username="thisLad")
         profile2 = Profile.objects.get(user=user2)
         followers = Following.objects.filter(followee=profile2).count()
@@ -371,9 +371,9 @@ class FollowTestCase(TestCase):
 
     def test_cannot_follow_twice(self):
         login = self.client.login(username="admin", password="password")
-        response = self.client.post(reverse("follow"), {"user": "thisLad"})
+        response = self.client.post(reverse("follow"), {"username": "thisLad"})
 
-        response2 = self.client.post(reverse("follow"), {"user": "thisLad"})
+        response2 = self.client.post(reverse("follow"), {"username": "thisLad"})
 
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "OK")
@@ -391,8 +391,8 @@ class UnfollowTestCase(TestCase):
 
     def test_can_unfollow_user(self):
         self.client.login(username="admin", password="password")
-        self.client.post(reverse("follow"), {"user": "thisLad"})
-        response = self.client.post(reverse("unfollow"), {"user": "thisLad"})
+        self.client.post(reverse("follow"), {"username": "thisLad"})
+        response = self.client.post(reverse("unfollow"), {"username": "thisLad"})
         user = User.objects.select_related("profile").get(username="admin")
         profile = user.profile
         following = Following.objects.filter(follower=profile).count()
@@ -402,7 +402,7 @@ class UnfollowTestCase(TestCase):
 
     def test_cannot_unfollow_user_not_following(self):
         self.client.login(username="admin", password="password")
-        response = self.client.post(reverse("unfollow"), {"user": "thisLad"})
+        response = self.client.post(reverse("unfollow"), {"username": "thisLad"})
 
         self.assertEqual(response.status_code, 400)
 

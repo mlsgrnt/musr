@@ -1,4 +1,3 @@
-const logoutLink = document.querySelector('a.logout');
 const csrftoken = document.querySelector('input[name="csrfmiddlewaretoken"]')
   .value;
 
@@ -7,11 +6,6 @@ const form = new FormData();
 form.append('csrfmiddlewaretoken', csrftoken);
 
 // Logout link
-logoutLink.onclick = e => {
-  e.preventDefault();
-  logout();
-};
-
 const logout = () => {
   fetch('/account/logout/', {
     method: 'POST',
@@ -19,6 +13,11 @@ const logout = () => {
   }).then(() => {
     window.location.href = '/';
   });
+};
+
+document.querySelector('a.logout').onclick = e => {
+  e.preventDefault();
+  logout();
 };
 
 // Delete buttons
@@ -51,3 +50,19 @@ const repostPost = e => {
 Array.from(document.querySelectorAll('.repostButton')).forEach(
   button => (button.onclick = repostPost)
 );
+
+// Follow/Unfollow button
+const followButtonHandler = e => {
+  form.append('username', e.target.id);
+  // This is quite unsafe
+  // TODO
+  fetch(`/${e.target.innerHTML.toLowerCase()}`, {
+    method: 'POST',
+    body: form
+  }).then(() => {
+    e.target.innerHTML += 'ed!';
+    window.location.reload();
+  });
+};
+const followButton = document.querySelector('.profile--buttons--followButton');
+followButton.onclick = followButtonHandler;
