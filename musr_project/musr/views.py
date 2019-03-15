@@ -171,6 +171,27 @@ def follow(request):
         return HttpResponseBadRequest()
 
 
+# Unfollow
+@login_required
+def unfollow(request):
+    if request.method != "POST":
+        return redirect("/")
+
+    unfollow_username = request.POST["user"]
+
+    unfollow_user = User.objects.get(username=unfollow_username)
+    unfollow_profile = Profile.objects.get(user=unfollow_user)
+
+    profile = Profile.objects.get(user=request.user)
+    try:
+        following = Following.objects.get(follower=profile, followee=unfollow_profile)
+
+        following.delete()
+        return HttpResponse("OK")
+    except:
+        return HttpResponseBadRequest()
+
+
 # Delete post
 @login_required
 def delete_post(request):
@@ -188,6 +209,28 @@ def delete_post(request):
 
     post.delete()
     return HttpResponse("OK")
+
+
+# Change first or last name
+@login_required
+def change_name(request):
+    if request.method != "POST":
+        redirect("/")
+    user = request.user
+
+    if (
+        request.POST["name_to_change"] != "first_name"
+        and request.POST["name_to_change"] != "last_name"
+    ):
+        raise PermissionDenied
+
+    try:
+
+        setattr(user, request.POST["name_to_change"], request.POST["new_name"])
+        user.save()
+        return HttpResponse("OK")
+    except:
+        return HttpResponseBadRequest()
 
 
 # Account photo upload
