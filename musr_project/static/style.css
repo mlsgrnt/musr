@@ -96,7 +96,7 @@ body {
   -webkit-overflow-scrolling: touch;
 }
 .horizontal::-webkit-scrollbar {
-  background: transparent; /* optional: just make scrollbar invisible */
+  background: transparent;
 }
 
 .horizontal:first-child {
