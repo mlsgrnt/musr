@@ -168,6 +168,27 @@ def follow(request):
         return HttpResponseBadRequest()
 
 
+# Unfollow
+@login_required
+def unfollow(request):
+    if request.method != "POST":
+        return redirect("/")
+
+    unfollow_username = request.POST["user"]
+
+    unfollow_user = User.objects.get(username=unfollow_username)
+    unfollow_profile = Profile.objects.get(user=unfollow_user)
+
+    profile = Profile.objects.get(user=request.user)
+    try:
+        following = Following.objects.get(follower=profile, followee=unfollow_profile)
+
+        following.delete()
+        return HttpResponse("OK")
+    except:
+        return HttpResponseBadRequest()
+
+
 # Delete post
 @login_required
 def delete_post(request):

@@ -355,6 +355,32 @@ class FollowTestCase(TestCase):
         self.assertEqual(response2.status_code, 400)
 
 
+class UnfollowTestCase(TestCase):
+    @classmethod
+    def setUp(self):
+        user1 = User.objects.create_user(username="admin", password="password")
+        user1.save()
+        user2 = User.objects.create_user(username="thisLad", password="password")
+        user2.save()
+
+    def test_can_unfollow_user(self):
+        self.client.login(username="admin", password="password")
+        self.client.post(reverse("follow"), {"user": "thisLad"})
+        response = self.client.post(reverse("unfollow"), {"user": "thisLad"})
+        user = User.objects.select_related("profile").get(username="admin")
+        profile = user.profile
+        following = Following.objects.filter(follower=profile).count()
+
+        self.assertEqual(following, 0)
+        self.assertContains(response, "OK")
+
+    def test_cannot_unfollow_user_not_following(self):
+        self.client.login(username="admin", password="password")
+        response = self.client.post(reverse("unfollow"), {"user": "thisLad"})
+
+        self.assertEqual(response.status_code, 400)
+
+
 class DeletePostTestCase(TestCase):
     @classmethod
     def setUp(self):
