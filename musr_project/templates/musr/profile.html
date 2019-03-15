@@ -2,11 +2,22 @@
 {% load musr_template_tags %}
 
 {% block content %}
-  <h1 class="textSize-xl c-primary-dark spacerBottom-0 spacerTop-0">{{ profile }}'s profile</h1>
+  <div class="profile">
+    <img class="maxHeight-xl" src="{{ profile.picture.url }}" />
+    <h1 class="textSize-xl c-primary-dark spacerBottom-0 spacerTop-0">{{ profile }}'s profile</h1>
+    <div class="profile--details">
+      <h3 class="textSize-s c-primary-xdark spacerBottom-0 spacerTop-0">{{ follower_count }} follower{{follower_count|pluralize}}</h3>
+      <h3 class="textSize-s c-primary-xdark spacerBottom-0 spacerTop-0">{{ post_count }} post{{post_count|pluralize}}</h3>
+      <h3 class="textSize-s c-primary-xdark spacerBottom-0 spacerTop-0">Posting since {{ posting_since }}</h3>
+    </div>
+    <div class="profile--buttons">
+      {% if user.is_authenticated and profile.user != user %}
+        <button class="profile--buttons--followButton button button--type-highlighted">{{ follow_button_text }}</button>
+      {% endif %}
+    </div>
+  </div>
   {% if posts %}
-    {% for post in posts %}
-      {% song post %}
-    {% endfor %}
+    {% songs posts user %}
   {% else %}
     I have no posts yet!
   {% endif %}

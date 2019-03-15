@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from django.utils import timezone
 
 # Create your models here.
@@ -13,10 +14,16 @@ class Profile(models.Model):
     user = models.OneToOneField(User, primary_key=True, on_delete=models.CASCADE)
 
     # store user image
-    picture = models.ImageField(upload_to="profile_images", blank=True)
+    picture = models.ImageField(
+        upload_to="profile_images", blank=True, default="profile_images/default.jpg"
+    )
+
+    def number_of_followers(self):
+        followedBy = Following.objects.filter(followee=self)
+        return followedBy.count()
 
     def __str__(self):
-        if self.user.first_name:
+        if self.user.first_name is not "":
             return self.user.first_name + " " + self.user.last_name
 
         return self.user.username
@@ -31,6 +38,10 @@ class Following(models.Model):
     followee = models.ForeignKey(
         Profile, on_delete=models.CASCADE, related_name="followee"
     )
+
+    def clean(self):
+        if self.followee == self.follower:
+            raise ValidationError("User may not follow themselves.")
 
     # set the pair to function as a multi attribute primary key
     class Meta:

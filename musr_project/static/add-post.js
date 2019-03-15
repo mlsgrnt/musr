@@ -1,3 +1,4 @@
+// REORGANIZE THIS FILE! TODO TODO TODO
 // AbortController for the fetch
 const controller = new AbortController();
 const singal = controller.signal;
@@ -8,7 +9,24 @@ function hookForm() {
 
   const songSearchResults = document.querySelector('.songSearchResults');
   songSearchResults.onclick = selectSong;
+
+  document.querySelector('.addPostButton').onclick = addPostButtonClickHandler;
+
+  // Handle escape key
+  document.onkeyup = closeAddPostForm;
+  document.querySelector('.closeSongSearchButton').onclick = closeAddPostForm;
 }
+
+const closeAddPostForm = e => {
+  if (!e.keyCode || e.keyCode == 27) {
+    document.querySelector('.container').classList.remove('addingPost');
+  }
+};
+
+const addPostButtonClickHandler = e => {
+  document.querySelector('.songSearch').focus();
+  document.querySelector('.container').classList.add('addingPost');
+};
 
 const onChangeHandler = e => {
   controller.abort();
@@ -40,14 +58,18 @@ const selectSong = e => {
     document.querySelector('.songSearchResults').innerHTML = 'Song added!';
     document.querySelector('.songSearch').value = '';
 
-    // reload the window in case we are on profile page
+    // Remove ourselves -- and reload if we're on the profile page
     window.setTimeout(() => {
-      location.reload();
-    }, 300);
+      document.querySelector('.container').classList.remove('addingPost');
+    }, 500);
   });
 };
 
-updateResults = query => {
+const updateResults = query => {
+  const songSearchResults = document.querySelector('.songSearchResults');
+  // Move up search box in anticipation
+  songSearchResults.classList.add('loaded');
+
   fetch(`https://deezer-proxy.glitch.me/search?q="${query}"`, {
     singal
   }).then(async result => {
@@ -56,18 +78,21 @@ updateResults = query => {
       .map(song => {
         return `
             <li id="${song.id}">
-              <div class="song">
+              <div class="songSearchResult textSize-m spaceframe-m">
                 <img src="${song.album.cover_small}" />
-                <span>${song.title}</span>
-                <span>${song.artist.name}</span>
-                <span>${song.album.title}</span>
+                <div class="songInfo minHeight-xl c-grey-1">
+                  <strong>${song.title}</strong>
+                  <div class="songInfo--artistAlbum textSize-s spacerBottom-s">
+                    <div class="">${song.artist.name}</div>
+                    <div>${song.album.title}</div>
+                  </div>
+                </div>
               </div>
             </li>
         `;
       })
       .join('');
-
-    document.querySelector('.songSearchResults').innerHTML = html;
+    songSearchResults.innerHTML = html;
   });
 };
 

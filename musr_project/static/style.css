@@ -70,16 +70,198 @@ a:hover {
   text-stroke: 1px;
 }
 
-/* TEMPORARY */
+/* Posts */
+.hoizontalContainer {
+  position: relative;
+  left: calc(var(--space-2xl) * -1);
+  width: 100vw;
+}
+
+/* Nasty little hack to correct positioning on mobile */
+@media (max-width: 720px) {
+  .hoizontalContainer {
+    left: calc(var(--space-xl) * -1 + var(--space-m));
+  }
+}
+
+.horizontal {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: scroll;
+
+  -webkit-overflow-scrolling: touch;
+}
+
+.horizontal:first-child {
+  padding-left: var(--space-xl);
+}
+
+.post {
+  flex: 0 0 auto;
+
+  margin: var(--space-l);
+
+  width: 350px;
+}
+
+/* Individual post cards */
+
+.post.card {
+  padding: var(--space-s) var(--space-m);
+}
+
+.post--post-button {
+  display: inline;
+  float: right;
+}
+.post--post-button button {
+  background: none;
+  border: none;
+  color: var(--c-primary-light);
+  transition: all 0.1s ease-in-out;
+}
+.post--post-button button:hover:not(.reposted) {
+  color: var(--c-primary-dark);
+  cursor: pointer;
+}
+
+.post--poster {
+  height: var(--space-xl);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.post--poster img {
+  max-width: 40%;
+}
+.post--poster--info {
+  display: flex;
+  flex-direction: column;
+}
+.post--poster--info span {
+  line-height: var(--lineHeight-xs);
+}
+
+.post--song img {
+  left: calc(var(--space-m) * -1);
+  position: relative;
+  width: 350px;
+}
+
+.post--song--info {
+  display: flex;
+  flex-direction: column;
+}
+.post--song--info span {
+  line-height: var(--lineHeight-xs);
+  padding-bottom: var(--space-s);
+  max-width: var(--space-3xl);
+}
+
+.post--song--wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: right;
+}
+
+.post--song--play-button button {
+  background: transparent;
+  border: none;
+}
+
+/* Add Post */
+
 .addPostForm {
   display: none;
 }
-
-.song {
-  cursor: pointer;
+.addPost .textInput {
+  background: rgba(0, 0, 0, 0.4);
 }
-.song:hover {
-  background-color: #eee;
+
+/* Background on form appearance */
+.container {
+  transition: all 0.2s ease-in-out;
+}
+.container.addingPost {
+  filter: blur(4px) brightness(33%);
+  transform: scale(0.97, 0.97);
+}
+
+/* List of search result scrolls up */
+.songSearchResults {
+  min-height: 0px;
+  transition: all 0.3s ease-in;
+  list-style-type: none;
+}
+.songSearchResults.loaded {
+  min-height: 100vh;
+}
+
+/* Song results */
+
+.songSearchResult {
+  cursor: pointer;
+  display: flex;
+
+  border-radius: var(--textboxBorderRadius);
+
+  transition: 0.2s all ease-in-out;
+}
+.songSearchResult:hover {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.songSearchResult img {
+  object-fit: contain;
+  width: 25vw; /* TODO: this isn't great/doens't work well on mobile... find another solution? */
+}
+
+.songInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.songInfo .songInfo--artistAlbum,
+.songInfo strong {
+  line-height: 1.25;
+}
+
+/* Button */
+
+.button.addPostButton {
+  min-width: var(--space-xl);
+  height: var(--space-l);
+}
+
+/* Add post Form */
+.container ~ .addPost {
+  z-index: -99;
+  opacity: 0;
+  transition: all 0.2s ease-in;
+}
+.container.addingPost ~ .addPost {
+  opacity: 1;
+  z-index: 99;
+}
+.addPost {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  width: 100vw;
+  min-height: 100vh;
+}
+
+.songSearchWrapper {
+  display: flex;
+  width: 100%;
 }
 
 /* Messages */
@@ -140,4 +322,28 @@ div.login {
 .currentProfilePicture {
   display: flex;
   align-items: center;
+}
+
+/* Profile page */
+.profile {
+  /* CSS Grid may be a better solution for this */
+  display: flex;
+  align-items: center;
+}
+@media (max-width: 720px) {
+  .profile {
+    flex-direction: column;
+  }
+}
+
+.profile * {
+  padding-right: var(--space-l);
+}
+
+/* TODO: is this the best position for the follow button? */
+.profile--buttons {
+  flex: 2;
+}
+.profile--buttons--followButton {
+  float: right;
 }

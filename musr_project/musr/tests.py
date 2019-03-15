@@ -3,7 +3,7 @@ from django.contrib.sites.models import Site
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.template import Context, Template
-from django.core.exceptions import SuspiciousOperation
+from django.core.exceptions import SuspiciousOperation, ValidationError
 from django.core.files.uploadedfile import SimpleUploadedFile
 
 from .models import Profile, Post, Following
@@ -14,6 +14,65 @@ class TravisTesterTestCase(TestCase):
         """Unit tests run and are able to pass"""
         test_value = 5
         self.assertEqual(test_value, 5)
+
+
+class ViewsTestCase(TestCase):
+    def test_404_when_user_does_not_exist(self):
+        resp = self.client.get("/profile/madeupuser/", follow=True)
+        self.assertEqual(resp.status_code, 404)
+
+
+class ProfileTestCase(TestCase):
+    # TODO!
+    def test_user_created_with_built_in_django_methods_has_user_profile_picture(self):
+        self.user = User.objects.create_user(username="testuser", password="password")
+        profile = Profile.objects.get(user=self.user)
+
+        self.assertEqual(profile.picture.name, "profile_images/default.jpg")
+
+    def test_user_profile_urls_ignore_case(self):
+        self.user = User.objects.create_user(username="testuser", password="password")
+        profile = Profile.objects.get(user=self.user)
+        post = Post.objects.create(poster=profile, song_id=27)
+
+        request = self.client.get("/profile/testuser/", follow=True)
+        request1 = self.client.get("/profile/testUsER/", follow=True)
+        request2 = self.client.get("/profile/TESTUSER/", follow=True)
+
+        self.assertEqual(request.content, request1.content)
+        self.assertEqual(request.content, request2.content)
+
+    def test_profile_to_string_returns_correctly(self):
+        user1 = User.objects.create_user(username="testuser1", password="password")
+        user2 = User.objects.create_user(username="testuser2", password="password")
+        user2.first_name = "Bilbo"
+        user2.last_name = "Baggins"
+        user2.save()
+
+        profile1 = Profile.objects.get(user=user1)
+        profile2 = Profile.objects.get(user=user2)
+
+        self.assertEqual(profile1.__str__(), profile1.user.username)
+        self.assertEqual(
+            profile2.__str__(), profile2.user.first_name + " " + profile2.user.last_name
+        )
+
+    def test_number_of_followers(self):
+        user1 = User.objects.create_user(username="testuser1", password="password")
+        user2 = User.objects.create_user(username="testuser2", password="password")
+        user1.save()
+        user2.save()
+        profile1 = Profile.objects.get(user=user1)
+        profile2 = Profile.objects.get(user=user2)
+        profile1.save()
+        profile2.save()
+
+        following1 = Following.objects.create(follower=profile2, followee=profile1)
+        following1.save()
+
+        self.assertEqual(1, profile1.number_of_followers())
+
+    # TODO test profile view
 
 
 class ModelTestCase(TestCase):
@@ -69,6 +128,24 @@ class ModelTestCase(TestCase):
         self.following.save()
 
         self.assertTrue(isinstance(self.following, Following))
+
+    def test_user_can_not_follow_themselves(self):
+        self.follower = User.objects.create_user(
+            username="testuser", password="password"
+        )
+        self.follower.save()
+
+        self.follower_profile = Profile.objects.get(user=self.follower)
+        self.follower_profile.save()
+
+        self.followee_profile = Profile.objects.get(user=self.follower)
+        self.followee_profile.save()
+
+        self.following = Following.objects.create(
+            follower=self.follower_profile, followee=self.followee_profile
+        )
+        with self.assertRaises(ValidationError):
+            self.following.clean()
 
     def test_user_deletion_cascades_following(self):
         self.follower = User.objects.create_user(
@@ -246,6 +323,91 @@ class AddPostTestCase(TestCase):
         self.assertIsNotNone(testpost)
 
 
+class FollowTestCase(TestCase):
+    @classmethod
+    def setUp(self):
+        user1 = User.objects.create_user(username="admin", password="password")
+        user1.save()
+        user2 = User.objects.create_user(username="thisLad", password="password")
+        user2.save()
+        profile1 = Profile.objects.get(user=user1)
+
+    def test_can_follow_user(self):
+        login = self.client.login(username="admin", password="password")
+
+        response = self.client.post(reverse("follow"), {"user": "thisLad"})
+        user2 = User.objects.get(username="thisLad")
+        profile2 = Profile.objects.get(user=user2)
+        followers = Following.objects.filter(followee=profile2).count()
+
+        self.assertEquals(followers, 1)
+        self.assertContains(response, "OK")
+
+    def test_cannot_follow_twice(self):
+        login = self.client.login(username="admin", password="password")
+        response = self.client.post(reverse("follow"), {"user": "thisLad"})
+
+        response2 = self.client.post(reverse("follow"), {"user": "thisLad"})
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "OK")
+
+        self.assertEqual(response2.status_code, 400)
+
+
+class DeletePostTestCase(TestCase):
+    @classmethod
+    def setUp(self):
+        user = User.objects.create_user(username="admin", password="admin")
+        user.save()
+        profile = Profile.objects.get(user=user)
+        user1 = User.objects.create_user(username="jeoff", password="paosswoord")
+        user1.save()
+        profile1 = Profile.objects.get(user=user1)
+        post = Post.objects.create(poster=profile, song_id="1")
+        post.save()
+
+    def test_can_delete_your_post(self):
+        login = self.client.login(username="admin", password="admin")
+
+        post = Post.objects.get(song_id="1")
+
+        response = self.client.post(reverse("delete_post"), {"post_id": post.post_id})
+        posts = Post.objects.filter(song_id="1").count()
+        self.assertEquals(posts, 0)
+        self.assertContains(response, "OK")
+
+    def test_cannot_delete_others_posts(self):
+        self.client.login(username="jeoff", password="paosswoord")
+
+        post = Post.objects.get(song_id="1")
+
+        response = self.client.post(reverse("delete_post"), {"post_id": post.post_id})
+
+        posts = Post.objects.filter(song_id="1").count()
+        self.assertEquals(posts, 1)
+        self.assertEqual(response.status_code, 403)
+
+
+class DeletePostTestCase(TestCase):
+    def test_can_repost_post(self):
+        user = User.objects.create_user(username="admin", password="admin")
+        user.save()
+        profile = Profile.objects.get(user=user)
+        user1 = User.objects.create_user(username="jeoff", password="paosswoord")
+        user1.save()
+        profile1 = Profile.objects.get(user=user1)
+        post = Post.objects.create(poster=profile, song_id="1")
+        post.save()
+
+        self.client.login(username="jeoff", password="paosswoord")
+        response = self.client.post(reverse("repost_post"), {"post_id": post.post_id})
+
+        repost = Post.objects.get(poster=profile1, song_id="1")
+        self.assertEquals(repost.original_poster, profile)
+        self.assertContains(response, "OK")
+
+
 class SongTemplateTagTestCase(TestCase):
     def render_template(self, string, context=None):
         context = context or {}
@@ -254,14 +416,18 @@ class SongTemplateTagTestCase(TestCase):
 
     def test_tag_handles_empty_context_dict(self):
         with self.assertRaises(SuspiciousOperation):
-            self.render_template("{% load musr_template_tags %}{% song post %}", {})
+            self.render_template(
+                "{% load musr_template_tags %}{% song post user %}", {}
+            )
 
     def test_tag_handles_invalid_deezer_song_id(self):
         user = User.objects.create_user(username="admin", password="secret")
         profile = Profile.objects.get(user=user)
         post = Post.objects.create(post_id=1, poster=profile, song_id=27)
         with self.assertRaises(SuspiciousOperation):
-            self.render_template("{% load musr_template_tags %}{% song post %}", {})
+            self.render_template(
+                "{% load musr_template_tags %}{% song post user %}", {}
+            )
 
     def test_tag_pulls_song_info_from_deezer(self):
         user = User.objects.create_user(username="admin", password="secret")
@@ -277,7 +443,7 @@ class SongTemplateTagTestCase(TestCase):
         profile.save()
         post = Post.objects.create(post_id=1, poster=profile, song_id=3135556)
         response = self.render_template(
-            "{% load musr_template_tags %}{% song post %}", {"post": post}
+            "{% load musr_template_tags %}{% song post user %}", {"post": post}
         )
 
         self.assertInHTML("Harder Better Faster Stronger", response)
