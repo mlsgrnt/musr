@@ -10,6 +10,10 @@ a:hover {
   text-decoration: none;
 }
 
+body {
+  overflow-y: overlay;
+}
+
 /* Nav */
 
 .header {
@@ -91,6 +95,9 @@ a:hover {
 
   -webkit-overflow-scrolling: touch;
 }
+.horizontal::-webkit-scrollbar {
+  background: transparent;
+}
 
 .horizontal:first-child {
   padding-left: var(--space-xl);
@@ -160,7 +167,7 @@ a:hover {
 
 .post--song--wrapper {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   text-align: right;
 }
@@ -215,6 +222,7 @@ a:hover {
 .songSearchResult img {
   object-fit: contain;
   width: 25vw; /* TODO: this isn't great/doens't work well on mobile... find another solution? */
+  max-height: 100px;
 }
 
 .songInfo {
@@ -328,7 +336,7 @@ div.login {
 .profile {
   /* CSS Grid may be a better solution for this */
   display: flex;
-  align-items: center;
+  align-items: flex-start;
 }
 @media (max-width: 720px) {
   .profile {

@@ -24,9 +24,6 @@ function handleClick(e) {
     audioElementCurrentlyPlaying.addEventListener('pause', () => {
       this.innerHTML = '▶';
     });
-    audioElementCurrentlyPlaying.addEventListener('waiting', () => {
-      this.innerHTML = '⌛';
-    });
 
     // After set up, actually play
     audioElementCurrentlyPlaying.play();
