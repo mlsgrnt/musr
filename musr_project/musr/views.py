@@ -102,7 +102,7 @@ def account(request):
 def feed(request):
     user = request.user
     profile = Profile.objects.get(user=user)
-    profilesFollowed = Profile.objects.filter(follower__followee=profile)
+    profilesFollowed = Profile.objects.filter(followee__follower=profile)
     posts = Post.objects.filter(poster__in=profilesFollowed)
     return render(request, "musr/feed.html", {"posts": posts})
 
@@ -147,7 +147,7 @@ def follow(request):
     if request.method != "POST":
         return redirect("/")
 
-    followee_username = request.POST["user"]
+    followee_username = request.POST["username"]
 
     followee_user = User.objects.get(username=followee_username)
     followee_profile = Profile.objects.get(user=followee_user)
@@ -174,7 +174,7 @@ def unfollow(request):
     if request.method != "POST":
         return redirect("/")
 
-    unfollow_username = request.POST["user"]
+    unfollow_username = request.POST["username"]
 
     unfollow_user = User.objects.get(username=unfollow_username)
     unfollow_profile = Profile.objects.get(user=unfollow_user)

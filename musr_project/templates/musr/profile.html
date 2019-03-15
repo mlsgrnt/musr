@@ -12,7 +12,7 @@
     </div>
     <div class="profile--buttons">
       {% if user.is_authenticated and profile.user != user %}
-        <button class="profile--buttons--followButton button button--type-highlighted">{{ follow_button_text }}</button>
+        <button id="{{ profile.user.username }}" class="profile--buttons--followButton button button--type-highlighted">{{ follow_button_text }}</button>
       {% endif %}
     </div>
   </div>
