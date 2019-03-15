@@ -18,30 +18,35 @@ def whats_hot(request):
     all_posts = Post.objects.filter(date__gte=four_weeks_ago).order_by("date")
 
     song_ids = []
-    unique_posts = []
 
     for post in all_posts:
         if post.song_id not in song_ids:
             song_ids.append(post.song_id)
-            unique_posts.append(post)
 
     # Get all original posts made within the last month
-    post_rankings = {post: 1 for post in unique_posts}
+    song_rankings = {song_id: 1 for song_id in song_ids}
 
     # Increase rankings each time we find a duplicate
     for post in all_posts:
-        if post in post_rankings:
-            post_rankings[post] += 1
+        if post.song_id in song_rankings:
+            song_rankings[post.song_id] += 1
 
     # Decay the longer ago a post was reposted
-    for post in post_rankings.keys():
+    for song_id in song_rankings.keys():
         days_since_posting = (current_time.date() - post.date).days
-        post_rankings[post] = post_rankings[post] / log10(
+        song_rankings[song_id] = song_rankings[song_id] / log10(
             (4 + days_since_posting) / 3.2
         )
 
-    sorted_posts = sorted(post_rankings.items(), key=lambda x: x[1], reverse=True)
-    sorted_posts = [i[0] for i in sorted_posts]
+    sorted_songs = sorted(song_rankings.items(), key=lambda x: x[1], reverse=True)
+    sorted_posts = []
+
+    for song in sorted_songs:
+        sorted_posts.append(
+            Post.objects.filter(date__gte=four_weeks_ago, song_id=song[0]).order_by(
+                "date"
+            )[0]
+        )
 
     return render(request, "musr/whats_hot.html", {"posts": sorted_posts[:6]})
 
