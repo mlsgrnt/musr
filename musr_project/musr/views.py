@@ -208,6 +208,28 @@ def delete_post(request):
     return HttpResponse("OK")
 
 
+# Change first or last name
+@login_required
+def change_name(request):
+    if request.method != "POST":
+        redirect("/")
+    user = request.user
+
+    if (
+        request.POST["name_to_change"] != "first_name"
+        and request.POST["name_to_change"] != "last_name"
+    ):
+        raise PermissionDenied
+
+    try:
+
+        setattr(user, request.POST["name_to_change"], request.POST["new_name"])
+        user.save()
+        return HttpResponse("OK")
+    except:
+        return HttpResponseBadRequest()
+
+
 # Account photo upload
 @login_required
 def photo_upload(request):

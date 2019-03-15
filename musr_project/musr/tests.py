@@ -22,6 +22,32 @@ class ViewsTestCase(TestCase):
         self.assertEqual(resp.status_code, 404)
 
 
+class ChangeNameTestCase(TestCase):
+    def test_can_change_first_name(self):
+        user = User.objects.create_user(username="user", password="password")
+        user.save()
+        self.client.login(username="user", password="password")
+        response = self.client.post(
+            reverse("change_name"), {"name_to_change": "first_name", "new_name": "fred"}
+        )
+
+        user_firstname = User.objects.get(username="user").first_name
+
+        self.assertContains(response, "OK")
+        self.assertEqual(user_firstname, "fred")
+
+    def test_cannot_change_username(self):
+        user = User.objects.create_user(username="user", password="password")
+        user.save()
+        self.client.login(username="user", password="password")
+
+        response = self.client.post(
+            reverse("change_name"), {"name_to_change": "username", "new_name": "fred"}
+        )
+
+        self.assertEqual(response.status_code, 403)
+
+
 class ProfileTestCase(TestCase):
     # TODO!
     def test_user_created_with_built_in_django_methods_has_user_profile_picture(self):
