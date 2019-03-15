@@ -11,7 +11,9 @@
       <h3 class="textSize-s c-primary-xdark spacerBottom-0 spacerTop-0">Posting since {{ posting_since }}</h3>
     </div>
     <div class="profile--buttons">
-      <!-- TODO: but follow buttons here -->
+      {% if user.is_authenticated and profile.user != user %}
+        <button class="profile--buttons--followButton button button--type-highlighted">{{ follow_button_text }}</button>
+      {% endif %}
     </div>
   </div>
   {% if posts %}

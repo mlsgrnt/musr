@@ -329,5 +329,21 @@ div.login {
   /* CSS Grid may be a better solution for this */
   display: flex;
   align-items: center;
-  justify-content: space-around; /* temporary for now */
+}
+@media (max-width: 720px) {
+  .profile {
+    flex-direction: column;
+  }
+}
+
+.profile * {
+  padding-right: var(--space-l);
+}
+
+/* TODO: is this the best position for the follow button? */
+.profile--buttons {
+  flex: 2;
+}
+.profile--buttons--followButton {
+  float: right;
 }

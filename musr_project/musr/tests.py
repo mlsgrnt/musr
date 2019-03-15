@@ -3,7 +3,7 @@ from django.contrib.sites.models import Site
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.template import Context, Template
-from django.core.exceptions import SuspiciousOperation
+from django.core.exceptions import SuspiciousOperation, ValidationError
 from django.core.files.uploadedfile import SimpleUploadedFile
 
 from .models import Profile, Post, Following
@@ -128,6 +128,24 @@ class ModelTestCase(TestCase):
         self.following.save()
 
         self.assertTrue(isinstance(self.following, Following))
+
+    def test_user_can_not_follow_themselves(self):
+        self.follower = User.objects.create_user(
+            username="testuser", password="password"
+        )
+        self.follower.save()
+
+        self.follower_profile = Profile.objects.get(user=self.follower)
+        self.follower_profile.save()
+
+        self.followee_profile = Profile.objects.get(user=self.follower)
+        self.followee_profile.save()
+
+        self.following = Following.objects.create(
+            follower=self.follower_profile, followee=self.followee_profile
+        )
+        with self.assertRaises(ValidationError):
+            self.following.clean()
 
     def test_user_deletion_cascades_following(self):
         self.follower = User.objects.create_user(
