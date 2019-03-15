@@ -328,7 +328,7 @@ div.login {
 .profile {
   /* CSS Grid may be a better solution for this */
   display: flex;
-  align-items: center;
+  align-items: flex-start;
 }
 @media (max-width: 720px) {
   .profile {
