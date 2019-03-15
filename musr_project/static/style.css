@@ -10,6 +10,10 @@ a:hover {
   text-decoration: none;
 }
 
+body {
+  overflow-y: overlay;
+}
+
 /* Nav */
 
 .header {
@@ -90,6 +94,9 @@ a:hover {
   overflow-x: scroll;
 
   -webkit-overflow-scrolling: touch;
+}
+.horizontal::-webkit-scrollbar {
+  background: transparent; /* optional: just make scrollbar invisible */
 }
 
 .horizontal:first-child {
