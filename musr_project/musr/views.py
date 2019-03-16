@@ -241,12 +241,17 @@ def photo_upload(request):
 
     if request.method == "POST":
         if profile and "photoUpload" in request.FILES:
-            if request.FILES["photoUpload"].size < 4096000:
+            if (
+                request.FILES["photoUpload"].name.lower().endswith(".jpg")
+                or request.FILES["photoUpload"].name.lower().endswith(".png")
+                or request.FILES["photoUpload"].name.lower().endswith(".gif")
+                and request.FILES["photoUpload"].size < 4096000
+            ):
                 profile.picture = request.FILES["photoUpload"]
                 profile.save()
             else:
                 return HttpResponse(
-                    "You can only upload files smaller than 4MB as a profile picture"
+                    "You can only upload .jpg, .png or .gif files smaller than 4MB as a profile picture"
                 )
 
     return render(request, "musr/photo_upload.html", {"profile": profile})
