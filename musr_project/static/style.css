@@ -131,8 +131,8 @@ body {
 .post--post-button button {
   background: none;
   border: none;
-  color: var(--c-primary-light);
-  transition: all 0.1s ease-in-out;
+  color: var(--c-gray-1);
+  transition: all 0.2s ease-in-out;
 }
 .post--post-button button:hover:not(.reposted) {
   color: var(--c-primary-dark);
