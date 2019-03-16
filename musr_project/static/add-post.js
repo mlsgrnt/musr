@@ -40,6 +40,8 @@ const searchFieldChangeHandler = e => {
 };
 
 const selectSong = e => {
+  window.scrollTo(0, 0);
+
   // Browser compatibility
   const path = e.path || (e.composedPath && e.composedPath());
   // traverse tree of clicked elements to find the li so we can grab the ID
@@ -67,7 +69,7 @@ const selectSong = e => {
     // Remove ourselves -- and reload if we're on the profile page
     window.setTimeout(() => {
       document.querySelector('.container').classList.remove('addingPost');
-    }, 500);
+    }, 750);
   });
 };
 
