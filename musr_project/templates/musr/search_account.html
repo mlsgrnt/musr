@@ -1,0 +1,17 @@
+{% extends "musr/base.html" %}
+{% load musr_template_tags %}
+
+{% block content %}
+ <h1> Search Results for "{{ search }}"</h1>
+    {% if query %}
+        {% for query_result in query %}
+            <ul>
+                <li><a href="{% url 'profile' query_result.username %}"> {{ query_result }}</a>
+                {% search_result query_result %}
+                </li>
+            </ul>
+        {% endfor %}
+    {% else %}
+       User does not exist.
+    {% endif %}
+{% endblock %}

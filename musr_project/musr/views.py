@@ -4,11 +4,14 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse, Http404, HttpResponseBadRequest
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect
+from django.db.models import Q
+from django.template import loader, Context
 from django.db import IntegrityError
 from django.utils import timezone
 from .models import Profile, Post, Following
 from math import log10
 from datetime import timedelta
+
 
 # Index view (Whats hot)
 def whats_hot(request):
@@ -250,3 +253,16 @@ def photo_upload(request):
                 )
 
     return render(request, "musr/photo_upload.html", {"profile": profile})
+
+
+def search(request):
+    search = request.POST["query"]
+    us = User.objects.filter(
+        Q(username__contains=search)
+        | Q(first_name__contains=search)
+        | Q(last_name__contains=search)
+    )
+
+    return render(
+        request, "musr/search_account.html", {"query": us, "search": search.lower()}
+    )

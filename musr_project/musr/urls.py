@@ -2,6 +2,7 @@ from django.urls import path
 from django.conf.urls import url
 from . import views
 
+
 urlpatterns = [
     path("", views.whats_hot, name="whats_hot"),
     path("account/", views.account, name="account"),
@@ -12,6 +13,7 @@ urlpatterns = [
     path("follow", views.follow, name="follow"),
     path("delete-post", views.delete_post, name="delete_post"),
     path("repost-post", views.repost, name="repost_post"),
+    path("search", views.search, name="search"),
     path("change-name", views.change_name, name="change_name"),
     path("unfollow", views.unfollow, name="unfollow"),
 ]

@@ -61,3 +61,8 @@ def song(post, user):
     post.preview = data["preview"]
 
     return {"song": post, "poster": poster, "re_poster": re_poster, "user": user}
+
+
+@register.inclusion_tag("musr/search_result.html")
+def search_result(user):
+    return {"user": user}

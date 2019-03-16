@@ -501,3 +501,33 @@ class SongTemplateTagTestCase(TestCase):
         self.assertInHTML("Harder Better Faster Stronger", response)
         self.assertInHTML("Discovery", response)
         self.assertInHTML("Daft Punk", response)
+
+
+class SearchForUsers(TestCase):
+    @classmethod
+    def setUp(self):
+        user = User.objects.create_user(username="admin", password="admin")
+        user.save()
+        profile = Profile.objects.get(user=user)
+        user1 = User.objects.create_user(username="jeoff", password="paosswoord")
+        user1.save()
+        profile1 = Profile.objects.get(user=user1)
+        post = Post.objects.create(poster=profile, song_id="1")
+        post.save()
+
+    def test_search_for_existing_user(self):
+        response = self.client.post("/search", {"query": "jeoff"})
+        self.assertContains(
+            response, "jeoff", count=None, status_code=200, msg_prefix="", html=False
+        )
+
+    def test_search_for_non_existing_user(self):
+        response = self.client.post("/search", {"query": "thisSurelyDoesntExit"})
+        self.assertContains(
+            response,
+            "User does not exist.",
+            count=None,
+            status_code=200,
+            msg_prefix="",
+            html=False,
+        )
