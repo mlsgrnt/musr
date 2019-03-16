@@ -250,8 +250,13 @@ def photo_upload(request):
                 profile.picture = request.FILES["photoUpload"]
                 profile.save()
             else:
-                return HttpResponse(
-                    "You can only upload .jpg, .png or .gif files smaller than 4MB as a profile picture"
+                return render(
+                    request,
+                    "musr/photo_upload.html",
+                    {
+                        "profile": profile,
+                        "error": "You can only upload .jpg, .png or .gif files smaller than 4MB as a profile picture!",
+                    },
                 )
 
     return render(request, "musr/photo_upload.html", {"profile": profile})
