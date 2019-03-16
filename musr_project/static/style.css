@@ -283,8 +283,11 @@ body {
 }
 
 /* Messages */
-.messages {
-  float: right;
+.dialog.messages {
+  position: absolute;
+  right: var(--space-l);
+  box-shadow: var(--boxShadow-l);
+  z-index: 2;
 }
 
 /* SocialAccount buttons */
