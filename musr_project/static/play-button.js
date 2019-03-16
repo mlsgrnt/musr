@@ -26,7 +26,10 @@ function handleClick(e) {
     });
 
     // After set up, actually play
-    audioElementCurrentlyPlaying.play();
+    audioElementCurrentlyPlaying.play().catch(error => {
+      this.classList.add('textSize-s'); // Make the error a little more appealing
+      this.innerHTML = 'Preview not available';
+    });
   }
 
   // TODO: add event listeners for reacting to other playback events (buffering etc)
