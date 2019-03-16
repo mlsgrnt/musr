@@ -7,6 +7,8 @@ form.append('csrfmiddlewaretoken', csrftoken);
 
 // Logout link
 const logout = () => {
+  logoutLink.innerHTML = 'Logging out...';
+
   fetch('/account/logout/', {
     method: 'POST',
     body: form
@@ -15,7 +17,8 @@ const logout = () => {
   });
 };
 
-document.querySelector('a.logout').onclick = e => {
+const logoutLink = document.querySelector('a.logout');
+logoutLink.onclick = e => {
   e.preventDefault();
   logout();
 };
@@ -65,4 +68,6 @@ const followButtonHandler = e => {
   });
 };
 const followButton = document.querySelector('.profile--buttons--followButton');
-followButton.onclick = followButtonHandler;
+if (followButton) {
+  followButton.onclick = followButtonHandler;
+}

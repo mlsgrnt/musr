@@ -542,10 +542,6 @@ body {
   line-height: var(--lineHeight-xs);
 }
 
-.textSize-s {
-  font-size: var(--fontSize-s);
-  line-height: var(--lineHeight-s);
-}
 
 .textSize-m {
   font-size: var(--fontSize-m);
@@ -565,6 +561,11 @@ body {
 .textSize-2xl {
   font-size: var(--fontSize-2xl);
   line-height: var(--lineHeight-2xl);
+}
+
+.textSize-s {
+  font-size: var(--fontSize-s);
+  line-height: var(--lineHeight-s);
 }
 
 .textDemoPrimary {
