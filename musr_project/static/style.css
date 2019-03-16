@@ -147,6 +147,12 @@ body {
 }
 .post--poster img {
   max-width: 40%;
+
+  /* Normalize height */
+  -webkit-clip-path: circle(30% at 50% 50%);
+  clip-path: circle(30% at 50% 50%);
+  height: auto;
+  max-height: 170%;
 }
 .post--poster--info {
   display: flex;
@@ -355,6 +361,10 @@ div.login {
   .profile {
     flex-direction: column;
   }
+}
+
+.profile img {
+  /* TODO: clip path here? */
 }
 
 .profile * {
