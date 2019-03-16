@@ -65,4 +65,6 @@ const followButtonHandler = e => {
   });
 };
 const followButton = document.querySelector('.profile--buttons--followButton');
-followButton.onclick = followButtonHandler;
+if (followButton) {
+  followButton.onclick = followButtonHandler;
+}
