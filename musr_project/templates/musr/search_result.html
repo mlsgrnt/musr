@@ -1,4 +1,8 @@
-
-
-{{ user.first_name}}
-{{ user.last_name}}
+<div class="userSearchResults--result">
+  <img src="{{ profile.picture.url }}" class="spaceframe-s"/>
+  <div class="userSearchResults--result--info">
+    <a class="fontWeight-700" href="{% url 'profile' profile.user.username %}">{{ profile }}</a>
+    <span>{{ follower_count }} follower{{follower_count|pluralize}}</span>
+    <span>{{ post_count }} post{{post_count|pluralize}}</span>
+  </div>
+</div>

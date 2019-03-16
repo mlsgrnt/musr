@@ -30,8 +30,7 @@
             <li>
               <form action="{% url 'search' %}" method='post'>
               {% csrf_token %}
-              <input type="search" placeholder="Search for users" name="query" value='{{ search }}' required autocomplete="false" >
-              <button type="submit">Search</button>
+              <input class="textInput userSearch {% current 'search' %}"type="search" placeholder="Search for users" name="query" value='{{ search }}' required autocomplete="off" >
               </form>
             </li>
         </ul>

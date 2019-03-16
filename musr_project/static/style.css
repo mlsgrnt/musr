@@ -68,10 +68,25 @@ body {
   text-decoration: none;
 }
 
-.active {
+li.active {
   /* Ironically only Safari doens't use the -webkit prefix */
   -webkit-text-stroke: 1px;
   text-stroke: 1px;
+}
+
+.textInput.userSearch {
+  width: 88px; /* width of "Search" in IBM Plex Sans */
+  border-width: 0;
+
+  transition: all 0.35s ease-in-out;
+}
+.textInput.userSearch::placeholder {
+  color: var(--c-grey-2);
+}
+.textInput.userSearch:focus,
+.textInput.userSearch.active {
+  width: 300px;
+  border-width: 2px;
 }
 
 /* Posts */
@@ -377,4 +392,30 @@ div.login {
 }
 .profile--buttons--followButton {
   float: right;
+}
+
+/* User Search Results */
+.userSearchResults {
+  list-style-type: none;
+}
+
+.userSearchResults--result {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  max-width: var(--space-3xl);
+}
+
+/* TODO: possible code duplication? */
+/* See profile page */
+.userSearchResults--result img {
+  -webkit-clip-path: circle(30% at 50% 50%);
+  clip-path: circle(30% at 50% 50%);
+  height: auto;
+  max-width: var(--space-2xl);
+}
+
+.userSearchResults--result--info {
+  display: flex;
+  flex-direction: column;
 }
