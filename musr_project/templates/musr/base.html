@@ -70,8 +70,7 @@
       {% add_post %}
     </div>
 
-    <!-- maybe reimplement debounce without lodash? TODO -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lodash@4.17.11/lodash.min.js"></script>
+    <script type="text/javascript" src="{% static 'lodash.custom.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'scrolling.js' %}"></script>
     <script type="text/javascript" src="{% static 'play-button.js' %}"></script>
 
