@@ -1,21 +1,27 @@
-// REORGANIZE THIS FILE! TODO TODO TODO
 // AbortController for the fetch
 const controller = new AbortController();
 const singal = controller.signal;
 
 function hookForm() {
+  // Hook input that appears after click
   const input = document.querySelector('.songSearch');
-  input.onkeyup = _.debounce(onChangeHandler, 50);
+  input.onkeyup = _.debounce(searchFieldChangeHandler, 250);
 
+  // Hook song search results
   const songSearchResults = document.querySelector('.songSearchResults');
   songSearchResults.onclick = selectSong;
 
+  // Hook add post button
   document.querySelector('.addPostButton').onclick = addPostButtonClickHandler;
 
   // Handle escape key
   document.onkeyup = closeAddPostForm;
+
+  // Handle cancel button next to input
   document.querySelector('.closeSongSearchButton').onclick = closeAddPostForm;
 }
+
+window.onload = hookForm;
 
 const closeAddPostForm = e => {
   if (!e.keyCode || e.keyCode == 27) {
@@ -28,7 +34,7 @@ const addPostButtonClickHandler = e => {
   document.querySelector('.container').classList.add('addingPost');
 };
 
-const onChangeHandler = e => {
+const searchFieldChangeHandler = e => {
   controller.abort();
   updateResults(e.target.value);
 };
@@ -95,5 +101,3 @@ const updateResults = query => {
     songSearchResults.innerHTML = html;
   });
 };
-
-window.onload = hookForm;
