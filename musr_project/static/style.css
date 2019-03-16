@@ -68,7 +68,7 @@ body {
   text-decoration: none;
 }
 
-.active {
+li.active {
   /* Ironically only Safari doens't use the -webkit prefix */
   -webkit-text-stroke: 1px;
   text-stroke: 1px;
@@ -83,7 +83,8 @@ body {
 .textInput.userSearch::placeholder {
   color: var(--c-grey-2);
 }
-.textInput.userSearch:focus {
+.textInput.userSearch:focus,
+.textInput.userSearch.active {
   width: 300px;
   border-width: 2px;
 }
