@@ -9,7 +9,7 @@
   <div class="post--poster spaceframe-s">
     <img src="{{ poster.picture.url }}" class="spaceframe-s"/>
     <div class="post--poster--info">
-      <span class="textSize-s ">{{ poster }}</span>
+      <a class="textSize-s " href="{% url 'profile' poster.user.username %}">{{ poster }}</a>
       {% if re_poster %}
         <span class="textSize-xs">Reposted by {{ re_poster }}</span>
       {% endif %}
