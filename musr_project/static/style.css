@@ -74,6 +74,20 @@ body {
   text-stroke: 1px;
 }
 
+.textInput.userSearch {
+  width: 88px; /* width of "Search" in IBM Plex Sans */
+  border-width: 0;
+
+  transition: all 0.35s ease-in-out;
+}
+.textInput.userSearch::placeholder {
+  color: var(--c-grey-2);
+}
+.textInput.userSearch:focus {
+  width: 300px;
+  border-width: 2px;
+}
+
 /* Posts */
 .hoizontalContainer {
   position: relative;
