@@ -12,6 +12,8 @@
 
 :root {
   --boxShadow-s: 0 4px 8px rgba(0, 0, 0, 0.1);
+  --boxShadow-l: 0 4px 8px rgba(0, 0, 0, 0.5);
+
 
   --textboxHeight: calc(var(--unit) * 5);
   --textboxHorizontalSpace: 12px;
