@@ -76,6 +76,8 @@ const updateResults = query => {
   // Move up search box in anticipation
   songSearchResults.classList.add('loaded');
 
+  songSearchResults.innerHTML = 'Loading...';
+
   fetch(`https://deezer-proxy.glitch.me/search?q="${query}"`, {
     singal
   }).then(async result => {

@@ -212,6 +212,9 @@ body {
   min-height: 100vh;
 }
 
+.songSearchResults.loaded:empty::before {
+  content: 'No results found!';
+}
 /* Song results */
 
 .songSearchResult {
