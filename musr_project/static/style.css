@@ -379,3 +379,29 @@ div.login {
 .profile--buttons--followButton {
   float: right;
 }
+
+/* User Search Results */
+.userSearchResults {
+  list-style-type: none;
+}
+
+.userSearchResults--result {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  max-width: var(--space-3xl);
+}
+
+/* TODO: possible code duplication? */
+/* See profile page */
+.userSearchResults--result img {
+  -webkit-clip-path: circle(30% at 50% 50%);
+  clip-path: circle(30% at 50% 50%);
+  height: auto;
+  max-width: var(--space-2xl);
+}
+
+.userSearchResults--result--info {
+  display: flex;
+  flex-direction: column;
+}

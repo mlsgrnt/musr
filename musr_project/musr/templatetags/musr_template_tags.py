@@ -4,7 +4,7 @@ import json
 from django import template
 from django.core.exceptions import SuspiciousOperation
 from django.contrib.auth.models import User
-from musr.models import Profile
+from musr.models import Profile, Post
 
 register = template.Library()
 
@@ -65,4 +65,11 @@ def song(post, user):
 
 @register.inclusion_tag("musr/search_result.html")
 def search_result(user):
-    return {"user": user}
+    profile = Profile.objects.get(user=user)
+    follower_count = profile.number_of_followers()
+    post_count = Post.objects.filter(poster=profile).count
+    return {
+        "profile": profile,
+        "follower_count": follower_count,
+        "post_count": post_count,
+    }
