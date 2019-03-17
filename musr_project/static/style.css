@@ -205,6 +205,36 @@ li.active {
   border: none;
 }
 
+/* Follower Page */
+.follower--profile img {
+  left: calc(var(--space-m) * -1);
+  position: relative;
+  width: 350px;
+}
+.follower--profile--info {
+  margin-right: 20px;
+  display: flex;
+  flex-direction: column;
+}
+.follower--profile--info span {
+  line-height: var(--lineHeight-xs);
+  padding-bottom: var(--space-s);
+  max-width: var(--space-3xl);
+}
+.follower--profile--info--wrapper {
+  display: flow-root;
+  align-items: flex-start;
+  justify-content: space-between;
+  text-align: right;
+}
+.user--button--container{
+  margin-bottom: 60px;
+}
+.user--button--container button{
+  min-width: 50px;
+}
+
+
 /* Add Post */
 
 .addPostForm {
