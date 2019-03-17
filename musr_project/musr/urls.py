@@ -16,4 +16,7 @@ urlpatterns = [
     path("search", views.search, name="search"),
     path("change-name", views.change_name, name="change_name"),
     path("unfollow", views.unfollow, name="unfollow"),
+    path(
+        "profile/<slug:username>/followers", views.get_followers, name="get_followers"
+    ),
 ]

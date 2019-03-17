@@ -255,6 +255,21 @@ def photo_upload(request):
     return render(request, "musr/photo_upload.html", {"profile": profile})
 
 
+# Get All Followers
+@login_required
+def get_followers(request):
+    try:
+        user = User.objects.select_related("profile").get(username=request.POST["user"])
+    except User.DoesNotExist:
+        raise Http404("User does not exist!")
+
+    profile = user.profile
+
+    followers = Following.objects.filter(followee=profile)
+
+    return render(request, "musr/followers.html", {"followers": followers})
+
+
 def search(request):
     search = request.POST["query"]
     us = User.objects.filter(
