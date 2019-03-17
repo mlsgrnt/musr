@@ -4,9 +4,30 @@ import json
 from django import template
 from django.core.exceptions import SuspiciousOperation
 from django.contrib.auth.models import User
-from musr.models import Profile, Post
+from musr.models import Profile, Post, Following
 
 register = template.Library()
+
+# Followers "users" component
+@register.inclusion_tag("musr/users.html")
+def users(followers, user):
+    return {"users": followers, "user": user}
+
+
+# Followers "user" component
+@register.inclusion_tag("musr/user.html")
+def user(profile, user):
+    followers = profile.number_of_followers()
+
+    try:
+        current_user = Profile.objects.get(user=user)
+        if Following.objects.filter(follower=current_user, followee=profile).exists():
+            button_text = "unfollow"
+        else:
+            button_text = "follow"
+    except:
+        button_text = ""
+    return {"profile": profile, "followers": followers, "button_text": button_text}
 
 
 # Used to highlight currently active page
