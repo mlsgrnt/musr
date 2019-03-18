@@ -4,7 +4,7 @@ import json
 from django import template
 from django.core.exceptions import SuspiciousOperation
 from django.contrib.auth.models import User
-from musr.models import Profile, Post, Following
+from musr.models import Profile, Post
 
 register = template.Library()
 # User List

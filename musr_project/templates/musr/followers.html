@@ -12,10 +12,10 @@
       </ul>
     {% endfor %}
   {% else %}
-    {% if request_user != user %}
-       {{ request_user }} has no follower's
+    {% if user.is_authenticated and request_user == user %}
+       You have no followers
     {% else %}
-       You have no follower's
+       {{ request_user }} has no followers
     {% endif %}
   {% endif %}
 {% endblock %}

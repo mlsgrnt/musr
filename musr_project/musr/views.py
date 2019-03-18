@@ -94,6 +94,23 @@ def profile(request, username):
     )
 
 
+# Get All Followers of a user
+def get_followers(request, username):
+    try:
+        user = User.objects.select_related("profile").get(username__iexact=username)
+    except User.DoesNotExist:
+        raise Http404("User does not exist!")
+
+    profile = user.profile
+
+    followers = Following.objects.filter(followee=profile)
+
+    followers_list = [i.follower for i in followers]
+    return render(
+        request, "musr/followers.html", {"list": followers_list, "request_user": user}
+    )
+
+
 # Account info
 @login_required
 def account(request):
@@ -253,24 +270,6 @@ def photo_upload(request):
                 )
 
     return render(request, "musr/photo_upload.html", {"profile": profile})
-
-
-# Get All Followers
-@login_required
-def get_followers(request, username):
-    try:
-        user = User.objects.select_related("profile").get(username__iexact=username)
-    except User.DoesNotExist:
-        raise Http404("User does not exist!")
-
-    profile = user.profile
-
-    followers = Following.objects.filter(followee=profile)
-
-    followers_list = [i.follower for i in followers]
-    return render(
-        request, "musr/followers.html", {"list": followers_list, "request_user": user}
-    )
 
 
 def search(request):
