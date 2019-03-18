@@ -114,6 +114,14 @@ li.active {
   background: transparent;
 }
 
+/* Firefox fix */
+@-moz-document url-prefix() {
+  body,
+  .horizontal {
+    overflow: hidden !important;
+  }
+}
+
 .horizontal:first-child {
   padding-left: var(--space-xl);
 }
