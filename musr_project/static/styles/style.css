@@ -120,14 +120,10 @@ li.active {
 
   -webkit-overflow-scrolling: touch;
 }
-.horizontal::-webkit-scrollbar {
-  background: transparent;
-}
 
 /* Firefox fix */
 @-moz-document url-prefix() {
-  body,
-  .horizontal {
+  body {
     overflow-x: hidden !important;
   }
 }
