@@ -74,6 +74,7 @@ li.active {
   text-stroke: 1px;
 }
 
+/* Search box */
 .textInput.userSearch {
   width: 88px; /* width of "Search" in IBM Plex Sans */
   border-width: 0;
@@ -133,6 +134,8 @@ li.active {
   }
 }
 
+/* Individual post cards */
+/* width of a card: 350px */
 .post {
   flex: 0 0 auto;
 
@@ -140,8 +143,6 @@ li.active {
 
   width: 350px;
 }
-
-/* Individual post cards */
 
 .post.card {
   padding: var(--space-s) var(--space-m);
@@ -168,15 +169,19 @@ li.active {
   align-items: center;
   justify-content: flex-start;
 }
+
 .post--poster img {
   max-width: 40%;
-
+}
+.post--poster img,
+.userSearchResults--result img {
   /* Normalize height */
   -webkit-clip-path: circle(30% at 50% 50%);
   clip-path: circle(30% at 50% 50%);
   height: auto;
   max-height: 170%;
 }
+
 .post--poster--info {
   display: flex;
   flex-direction: column;
@@ -222,7 +227,7 @@ li.active {
   background: rgba(0, 0, 0, 0.4);
 }
 
-/* Background on form appearance */
+/* Background on add post appearing */
 .container {
   transition: all 0.2s ease-in-out;
 }
@@ -412,15 +417,6 @@ div.login {
   align-items: center;
   justify-content: flex-start;
   max-width: var(--space-3xl);
-}
-
-/* TODO: possible code duplication? */
-/* See profile page */
-.userSearchResults--result img {
-  -webkit-clip-path: circle(30% at 50% 50%);
-  clip-path: circle(30% at 50% 50%);
-  height: auto;
-  max-width: var(--space-2xl);
 }
 
 .userSearchResults--result--info {
