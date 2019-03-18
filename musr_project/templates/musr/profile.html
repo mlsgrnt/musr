@@ -1,6 +1,8 @@
 {% extends "musr/base.html" %}
 {% load musr_template_tags %}
 
+{% block head_title %}{{ profile }}{% endblock %}
+
 {% block content %}
   <div class="profile">
     <img class="maxHeight-xl" src="{{ profile.picture.url }}" />
