@@ -57,8 +57,9 @@ Array.from(document.querySelectorAll('.repostButton')).forEach(
 // Follow/Unfollow button
 const followButtonHandler = e => {
   form.append('username', e.target.id);
-  // This is quite unsafe
-  // TODO
+  // This is quite unsafe -- a malicious extension could manipulate this to do some nasty things.
+  // That being said, a malicious extension will always be able to do nasty things, so given that
+  // no sensitive user input is presented on this page we should be alright for now
   fetch(`/${e.target.innerHTML.toLowerCase()}`, {
     method: 'POST',
     body: form
