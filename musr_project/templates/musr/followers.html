@@ -1,0 +1,15 @@
+{% extends "musr/base.html" %}
+{% load musr_template_tags %}
+
+{% block content %}
+  <h1>{{ request_user }}'s Followers</h1>
+  {% if list %}
+    {% user_list list %}
+  {% else %}
+    {% if user.is_authenticated and request_user == user %}
+      You have no followers
+    {% else %}
+      {{ request_user }} has no followers
+    {% endif %}
+  {% endif %}
+{% endblock %}

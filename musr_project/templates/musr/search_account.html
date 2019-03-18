@@ -4,13 +4,7 @@
 {% block content %}
   <h1>Search Results for "{{ search }}"</h1>
   {% if query %}
-    {% for query_result in query %}
-      <ul class="userSearchResults">
-        <li>
-          {% search_result query_result %}
-        </li>
-      </ul>
-    {% endfor %}
+    {% user_list query %}
   {% else %}
     User does not exist.
   {% endif %}
