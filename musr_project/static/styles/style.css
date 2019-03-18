@@ -22,7 +22,7 @@ body {
   grid-template-rows: 1fr;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 920px) {
   .header {
     display: grid;
     grid-template-columns: 1fr;
@@ -56,8 +56,10 @@ body {
   justify-content: center;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 920px) {
   .center {
+    max-height: 130px;
+    flex-direction: column;
     padding: 0;
     margin: 0;
   }
@@ -98,7 +100,7 @@ li.active {
 }
 
 /* Nasty little hack to correct positioning on mobile */
-@media (max-width: 720px) {
+@media (max-width: 920px) {
   .hoizontalContainer {
     left: calc(var(--space-xl) * -1 + var(--space-m));
   }
@@ -127,7 +129,7 @@ li.active {
   padding-left: var(--space-xl);
 }
 
-@media (max-width: 720px) {
+@media (max-width: 920px) {
   .horizontal:first-child {
     padding-left: 0;
     margin-left: 0;
@@ -386,7 +388,7 @@ div.login {
   display: flex;
   align-items: flex-start;
 }
-@media (max-width: 720px) {
+@media (max-width: 920px) {
   .profile {
     flex-direction: column;
   }
