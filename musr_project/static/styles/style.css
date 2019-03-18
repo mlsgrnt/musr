@@ -74,6 +74,7 @@ li.active {
   text-stroke: 1px;
 }
 
+/* Search box */
 .textInput.userSearch {
   width: 88px; /* width of "Search" in IBM Plex Sans */
   border-width: 0;
@@ -114,6 +115,14 @@ li.active {
   background: transparent;
 }
 
+/* Firefox fix */
+@-moz-document url-prefix() {
+  body,
+  .horizontal {
+    overflow: hidden !important;
+  }
+}
+
 .horizontal:first-child {
   padding-left: var(--space-xl);
 }
@@ -125,6 +134,8 @@ li.active {
   }
 }
 
+/* Individual post cards */
+/* width of a card: 350px */
 .post {
   flex: 0 0 auto;
 
@@ -132,8 +143,6 @@ li.active {
 
   width: 350px;
 }
-
-/* Individual post cards */
 
 .post.card {
   padding: var(--space-s) var(--space-m);
@@ -160,6 +169,7 @@ li.active {
   align-items: center;
   justify-content: flex-start;
 }
+
 .post--poster img {
   max-width: 40%;
   max-height: 170%;
@@ -172,6 +182,7 @@ li.active {
   clip-path: circle(30% at 50% 50%);
   height: auto;
 }
+
 .post--poster--info {
   display: flex;
   flex-direction: column;
@@ -217,7 +228,7 @@ li.active {
   background: rgba(0, 0, 0, 0.4);
 }
 
-/* Background on form appearance */
+/* Background on add post appearing */
 .container {
   transition: all 0.2s ease-in-out;
 }
