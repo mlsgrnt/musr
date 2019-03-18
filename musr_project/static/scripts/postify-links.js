@@ -30,9 +30,9 @@ const deletePost = e => {
     method: 'POST',
     body: form
   }).then(() => {
-    window.location.reload();
-    // Potential feature: remove the relevant div here
-    // TODO
+    // This is very coupled with the structure of the document
+    const postElement = e.target.parentNode.parentNode;
+    postElement.remove();
   });
 };
 Array.from(document.querySelectorAll('.deleteButton')).forEach(
