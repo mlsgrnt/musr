@@ -54,6 +54,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+
+  padding-left: 0; /* Centers MUSR logo */
 }
 
 @media (max-width: 720px) {
