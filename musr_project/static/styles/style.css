@@ -63,6 +63,11 @@ body {
   }
 }
 
+/* MUSR Logo */
+.header .center img {
+  height: var(--space-xl);
+}
+
 .headerItem {
   white-space: nowrap;
   text-decoration: none;
