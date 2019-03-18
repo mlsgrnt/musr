@@ -1,6 +1,6 @@
-<div class="userSearchResults--result">
+<div class="user--list--entry">
   <img src="{{ profile.picture.url }}" class="spaceframe-s"/>
-  <div class="userSearchResults--result--info">
+  <div class="user--list--entry--info">
     <a class="fontWeight-700" href="{% url 'profile' profile.user.username %}">{{ profile }}</a>
     <span>{{ follower_count }} follower{{follower_count|pluralize}}</span>
     <span>{{ post_count }} post{{post_count|pluralize}}</span>

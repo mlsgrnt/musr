@@ -2,14 +2,20 @@
 {% load musr_template_tags %}
 
 {% block content %}
-   <h1 class="textSize-xl c-primary-dark spacerBottom-0 spacerTop-0">Followers</h1>
-  {% if followers %}
-    {% users followers user %}
+  <h1>{{ request_user }}'s Followers</h1>
+  {% if list %}
+    {% for profile in list %}
+      <ul class="user--list">
+        <li>
+          {% user_list profile %}
+        </li>
+      </ul>
+    {% endfor %}
   {% else %}
-    {% if user.is_authenticated and request_user != user %}
-		{{ request_user }} has no followers
-	{% else %}
-		You have no followers
-	{% endif %}
+    {% if request_user != user %}
+       {{ request_user }} has no follower's
+    {% else %}
+       You have no follower's
+    {% endif %}
   {% endif %}
 {% endblock %}

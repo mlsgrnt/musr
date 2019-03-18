@@ -7,27 +7,17 @@ from django.contrib.auth.models import User
 from musr.models import Profile, Post, Following
 
 register = template.Library()
-
-# Followers "users" component
-@register.inclusion_tag("musr/users.html")
-def users(followers, user):
-    return {"users": followers, "user": user}
-
-
-# Followers "user" component
-@register.inclusion_tag("musr/user.html")
-def user(profile, user):
-    followers = profile.number_of_followers()
-
-    try:
-        current_user = Profile.objects.get(user=user)
-        if Following.objects.filter(follower=current_user, followee=profile).exists():
-            button_text = "unfollow"
-        else:
-            button_text = "follow"
-    except:
-        button_text = ""
-    return {"profile": profile, "followers": followers, "button_text": button_text}
+# User List
+@register.inclusion_tag("musr/user_list.html")
+def user_list(user):
+    profile = Profile.objects.get(user=user)
+    follower_count = profile.number_of_followers()
+    post_count = Post.objects.filter(poster=profile).count
+    return {
+        "profile": profile,
+        "follower_count": follower_count,
+        "post_count": post_count,
+    }
 
 
 # Used to highlight currently active page
@@ -82,15 +72,3 @@ def song(post, user):
     post.preview = data["preview"]
 
     return {"song": post, "poster": poster, "re_poster": re_poster, "user": user}
-
-
-@register.inclusion_tag("musr/search_result.html")
-def search_result(user):
-    profile = Profile.objects.get(user=user)
-    follower_count = profile.number_of_followers()
-    post_count = Post.objects.filter(poster=profile).count
-    return {
-        "profile": profile,
-        "follower_count": follower_count,
-        "post_count": post_count,
-    }

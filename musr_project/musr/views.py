@@ -269,9 +269,7 @@ def get_followers(request, username):
 
     followers_list = [i.follower for i in followers]
     return render(
-        request,
-        "musr/followers.html",
-        {"followers": followers_list, "request_user": user},
+        request, "musr/followers.html", {"list": followers_list, "request_user": user}
     )
 
 
