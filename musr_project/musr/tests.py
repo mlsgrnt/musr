@@ -98,7 +98,33 @@ class ProfileTestCase(TestCase):
 
         self.assertEqual(1, profile1.number_of_followers())
 
-    # TODO test profile view
+    def test_user_followees_page_displays_correct_followers(self):
+        user1 = User.objects.create_user(username="testuser1", password="password")
+        user2 = User.objects.create_user(username="testuser2", password="password")
+        user3 = User.objects.create_user(username="testuser3", password="password")
+        user1.save()
+        user2.save()
+        user3.save()
+
+        profile1 = Profile.objects.get(user=user1)
+        profile2 = Profile.objects.get(user=user1)
+        profile3 = Profile.objects.get(user=user3)
+        profile1.save()
+        profile2.save()
+        profile3.save()
+
+        following1 = Following.objects.create(follower=profile2, followee=profile1)
+        following2 = Following.objects.create(follower=profile3, followee=profile1)
+        following1.save()
+        following2.save()
+
+        response = self.client.get(
+            reverse("get_followers", kwargs={"username": "testuser1"})
+        )
+
+        self.assertIn("testuser2", response.content.decode("ascii"))
+        self.assertIn("testuser3", response.content.decode("ascii"))
+        self.assertIn("2 followers", response.content.decode("ascii"))
 
 
 class ModelTestCase(TestCase):
