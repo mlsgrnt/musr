@@ -162,6 +162,7 @@ li.active {
 }
 .post--poster img {
   max-width: 40%;
+  max-height: 170%;
 }
 
 .post--poster img,
@@ -170,7 +171,6 @@ li.active {
   -webkit-clip-path: circle(30% at 50% 50%);
   clip-path: circle(30% at 50% 50%);
   height: auto;
-  max-height: 170%;
 }
 .post--poster--info {
   display: flex;
@@ -407,6 +407,11 @@ div.login {
   align-items: center;
   justify-content: flex-start;
   max-width: var(--space-3xl);
+}
+
+.user-list-entry img {
+  height: auto;
+  max-width: var(--space-2xl);
 }
 
 .user-list--entry-info {
