@@ -162,7 +162,10 @@ li.active {
 }
 .post--poster img {
   max-width: 40%;
+}
 
+.post--poster img,
+.user-list-entry img {
   /* Normalize height */
   -webkit-clip-path: circle(30% at 50% 50%);
   clip-path: circle(30% at 50% 50%);
