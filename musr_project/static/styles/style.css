@@ -121,7 +121,7 @@ li.active {
 @-moz-document url-prefix() {
   body,
   .horizontal {
-    overflow: hidden !important;
+    overflow-x: hidden !important;
   }
 }
 
