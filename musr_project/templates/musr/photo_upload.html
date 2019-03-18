@@ -10,9 +10,6 @@
         <img class="maxHeight-2xl" src="{{ profile.picture.url }}" />
       </div>
     {% endif %}
-
-    {{ error }}
-
     <form id="photoUpload" method="post" action="{% url 'account_photo_upload' %}" enctype="multipart/form-data">
       {% csrf_token %}
       <input class="" type="file" name="photoUpload" id="photoUpload"/>
