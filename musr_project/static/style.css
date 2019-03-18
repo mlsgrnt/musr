@@ -162,12 +162,15 @@ li.active {
 }
 .post--poster img {
   max-width: 40%;
+  max-height: 170%;
+}
 
+.post--poster img,
+.user-list-entry img {
   /* Normalize height */
   -webkit-clip-path: circle(30% at 50% 50%);
   clip-path: circle(30% at 50% 50%);
   height: auto;
-  max-height: 170%;
 }
 .post--poster--info {
   display: flex;
@@ -394,28 +397,24 @@ div.login {
   float: right;
 }
 
-/* User Search Results */
-.userSearchResults {
+/* User List */
+.user-list {
   list-style-type: none;
 }
 
-.userSearchResults--result {
+.user-list-entry {
   display: flex;
   align-items: center;
   justify-content: flex-start;
   max-width: var(--space-3xl);
 }
 
-/* TODO: possible code duplication? */
-/* See profile page */
-.userSearchResults--result img {
-  -webkit-clip-path: circle(30% at 50% 50%);
-  clip-path: circle(30% at 50% 50%);
+.user-list-entry img {
   height: auto;
   max-width: var(--space-2xl);
 }
 
-.userSearchResults--result--info {
+.user-list--entry-info {
   display: flex;
   flex-direction: column;
 }
