@@ -1,6 +1,6 @@
 let audioElementCurrentlyPlaying;
 
-// use function syntax so this binds to the button
+// Use function syntax so "this" binds to the button
 function handleClick(e) {
   const songId = e.target.id;
 
@@ -13,9 +13,10 @@ function handleClick(e) {
       ? audioElementCurrentlyPlaying.play()
       : audioElementCurrentlyPlaying.pause();
   } else {
+    // Pause other song if it's playing
     audioElementCurrentlyPlaying
       ? audioElementCurrentlyPlaying.pause()
-      : undefined; // Pause other song if playing
+      : undefined;
 
     audioElementCurrentlyPlaying = document.getElementById(`audio-${songId}`);
     audioElementCurrentlyPlaying.addEventListener('play', () => {

@@ -5,13 +5,12 @@ postFeed.addEventListener('wheel', e => {
   if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
     return;
   }
+
   if (
-    window.innerWidth + postFeed.scrollLeft != postFeed.scrollWidth &&
-    e.deltaY > 0
+    (window.innerWidth + postFeed.scrollLeft != postFeed.scrollWidth &&
+      e.deltaY > 0) ||
+    (postFeed.scrollLeft != 0 && e.deltaY < 0)
   ) {
-    e.preventDefault();
-  }
-  if (postFeed.scrollLeft != 0 && e.deltaY < 0) {
     e.preventDefault();
   }
 

@@ -6,10 +6,12 @@
 <html>
   <head>
     <title>{% block head_title%}MUSR{% endblock %} - MUSR</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'poco.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'poco-utilities.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'focus.css' %}">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/poco.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/poco-utilities.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/focus.css' %}">
+
     <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,500,700" rel="stylesheet">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -70,14 +72,14 @@
       {% add_post %}
     </div>
 
-    <script type="text/javascript" src="{% static 'lodash.custom.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'scrolling.js' %}"></script>
-    <script type="text/javascript" src="{% static 'play-button.js' %}"></script>
+    <script type="text/javascript" src="{% static 'scripts/lodash.custom.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'scripts/scrolling.js' %}"></script>
+    <script type="text/javascript" src="{% static 'scripts/play-button.js' %}"></script>
 
     {% if user.is_authenticated %}
       {% csrf_token %}
-      <script type="text/javascript" src="{% static 'add-post.js' %}"></script>
-      <script type="text/javascript" src="{% static 'postify-links.js' %}"></script>
+      <script type="text/javascript" src="{% static 'scripts/add-post.js' %}"></script>
+      <script type="text/javascript" src="{% static 'scripts/postify-links.js' %}"></script>
     {% endif %}
   </body>
 </html>
