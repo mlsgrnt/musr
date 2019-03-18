@@ -56,12 +56,12 @@ This “minimal set of CSS variables and utilities” provides a set of base var
 ##### [focus.css framework](https://hihayk.github.io/focus/)
 This “framework” contains a few extra css rules for common components such as buttons and input fields which build upon poco.css.
 ##### [lodash](https://lodash.com)
-Only the denounce method of loadash is imported. It is used to fire requests in a reasonable manner in the add post interface.
+Only the denounce method of lodash is imported. It is used to fire requests in a reasonable manner in the add post interface.
 ### External APIs
 ##### [Deezer song search API](https://developers.deezer.com/api)
 Used to provide song search, info, and song previews.
 
-### Deezer API CORS Proxy server
+## Deezer API CORS Proxy server
 The Deezer API can not be called directly from the browser due to CORS restrictions. To overcome this, a CORS proxy has been set up which restricts API calls to coming from the MUSR website. This enables the client-side Ajax-enabled song search. The source code for this server is available here:
 <!-- View Source Button --><a href="https://glitch.com/edit/#!/deezer-proxy">  <img src="https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fview-source%402x.png?1513093958802" alt="view source button" aria-label="view source" height="33"></a>
 
