@@ -76,7 +76,7 @@ li.active {
 
 /* Search box */
 .textInput.userSearch {
-  width: 88px; /* width of "Search" in IBM Plex Sans */
+  width: 88px; /* width of "Search" in IBM Plex Sans... in most browsers */
   border-width: 0;
 
   transition: all 0.35s ease-in-out;
