@@ -8,7 +8,7 @@ from musr.models import Profile, Post
 
 register = template.Library()
 # User List
-@register.inclusion_tag("musr/user_list.html")
+@register.inclusion_tag("musr/user_list_item.html")
 def user_list(user):
     profile = Profile.objects.get(user=user)
     follower_count = profile.number_of_followers()

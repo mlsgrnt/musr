@@ -395,27 +395,18 @@ div.login {
 }
 
 /* User List */
-.user--list {
+.user-list {
   list-style-type: none;
 }
 
-.user--list--entry {
+.user-list-entry {
   display: flex;
   align-items: center;
   justify-content: flex-start;
   max-width: var(--space-3xl);
 }
 
-/* TODO: possible code duplication? */
-/* See profile page */
-.user--list--entry img {
-  -webkit-clip-path: circle(30% at 50% 50%);
-  clip-path: circle(30% at 50% 50%);
-  height: auto;
-  max-width: var(--space-2xl);
-}
-
-.user--list--entry--info {
+.user-list--entry-info {
   display: flex;
   flex-direction: column;
 }
