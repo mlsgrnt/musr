@@ -11,15 +11,25 @@ The source code is available at [https://github.com/mlsgrnt/musr](https://musr.p
 
 ## To deploy locally:
 To clone the repository, run
+
 `git clone https://github.com/mlsgrnt/musr`
+
 Once the repository is locally cloned, enter the installation directory:
+
 `cd musr`
+
 Next, install the dependencies with
+
 `pip install -r requirements.txt`
+
 Start a test server by running
+
 `python musr_project/manage.py runserver`
+
 If the database is empty, some errors will appear. To fix this, run the population script:
+
 `python musr_project/populate_musr.py`
+
 #### Important notice:
 Some features will not be functional when running the application on localhost, namely
 ###### 1) OAuth based authentication, more specifically the Facebook and Google logins
