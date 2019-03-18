@@ -550,7 +550,7 @@ class SearchForUsers(TestCase):
         response = self.client.post("/search", {"query": "thisSurelyDoesntExit"})
         self.assertContains(
             response,
-            "User does not exist.",
+            "No users found!",
             count=None,
             status_code=200,
             msg_prefix="",
