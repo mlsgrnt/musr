@@ -11,6 +11,7 @@ from django.utils import timezone
 from .models import Profile, Post, Following
 from math import log10
 from datetime import timedelta
+from django.contrib import messages
 
 
 # Index view (Whats hot)
@@ -243,13 +244,16 @@ def photo_upload(request):
         if profile and "photoUpload" in request.FILES:
             if (
                 request.FILES["photoUpload"].name.lower().endswith(".jpg")
-                and request.FILES["photoUpload"].size < 512000
+                or request.FILES["photoUpload"].name.lower().endswith(".png")
+                or request.FILES["photoUpload"].name.lower().endswith(".gif")
+                and request.FILES["photoUpload"].size < 4096000
             ):
                 profile.picture = request.FILES["photoUpload"]
                 profile.save()
             else:
-                return HttpResponse(
-                    "You can only upload .jpg files smaller than 512KB as a profile picture"
+                messages.error(
+                    request,
+                    "You can only upload .jpg, .png or .gif files smaller than 4MB as a profile picture!",
                 )
 
     return render(request, "musr/photo_upload.html", {"profile": profile})
