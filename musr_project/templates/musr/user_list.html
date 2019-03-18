@@ -1,0 +1,9 @@
+{% load musr_template_tags %}
+
+<ul class="user-list">
+  {% for user in users %}
+    <li class="spacerBottom-m">
+      {% user_list_item user %}
+    </li>
+  {% endfor %}
+</ul>

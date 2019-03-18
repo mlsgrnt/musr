@@ -4,18 +4,12 @@
 {% block content %}
   <h1>{{ request_user }}'s Followers</h1>
   {% if list %}
-    {% for profile in list %}
-      <ul class="user-list">
-        <li>
-          {% user_list profile %}
-        </li>
-      </ul>
-    {% endfor %}
+    {% user_list list %}
   {% else %}
     {% if user.is_authenticated and request_user == user %}
-       You have no followers
+      You have no followers
     {% else %}
-       {{ request_user }} has no followers
+      {{ request_user }} has no followers
     {% endif %}
   {% endif %}
 {% endblock %}

@@ -7,19 +7,6 @@ from django.contrib.auth.models import User
 from musr.models import Profile, Post
 
 register = template.Library()
-# User List
-@register.inclusion_tag("musr/user_list_item.html")
-def user_list(user):
-    profile = Profile.objects.get(user=user)
-    follower_count = profile.number_of_followers()
-    post_count = Post.objects.filter(poster=profile).count
-    return {
-        "profile": profile,
-        "follower_count": follower_count,
-        "post_count": post_count,
-    }
-
-
 # Used to highlight currently active page
 @register.simple_tag(takes_context=True)
 def current(context, url=None):
@@ -72,3 +59,21 @@ def song(post, user):
     post.preview = data["preview"]
 
     return {"song": post, "poster": poster, "re_poster": re_poster, "user": user}
+
+
+# User List
+@register.inclusion_tag("musr/user_list.html")
+def user_list(users):
+    return {"users": users}
+
+
+@register.inclusion_tag("musr/user_list_item.html")
+def user_list_item(user):
+    profile = Profile.objects.get(user=user)
+    follower_count = profile.number_of_followers()
+    post_count = Post.objects.filter(poster=profile).count
+    return {
+        "profile": profile,
+        "follower_count": follower_count,
+        "post_count": post_count,
+    }
