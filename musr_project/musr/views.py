@@ -255,10 +255,10 @@ def change_name(request):
 @login_required
 def photo_upload(request):
     user = request.user
-    profile, created = Profile.objects.get_or_create(user=user)
+    profile = Profile.objects.get(user=request.user)
 
     if request.method == "POST":
-        if profile and "photoUpload" in request.FILES:
+        if "photoUpload" in request.FILES:
             if (
                 request.FILES["photoUpload"].name.lower().endswith(".jpg")
                 or request.FILES["photoUpload"].name.lower().endswith(".png")
@@ -272,6 +272,10 @@ def photo_upload(request):
                     request,
                     "You can only upload .jpg, .png or .gif files smaller than 4MB as a profile picture!",
                 )
+        elif request.POST["photoRemove"] == "true":
+            profile.picture = None
+            profile.save()
+            messages.success(request, "Photo removed successfully")
 
     return render(request, "musr/photo_upload.html", {"profile": profile})
 
