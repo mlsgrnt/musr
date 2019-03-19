@@ -233,19 +233,17 @@ def change_name(request):
         fname = request.POST.get("firstName")
         lname = request.POST.get("lastName")
 
-        if not lname or not fname:
-            HttpResponseBadRequest()
+        # Check if the name should be cleared
+        if not fname:
+            lname = ""
 
-        if len(fname) > 20 or len(lname) > 20:
+        # Check length constraint
+        if (fname and len(fname) > 20) or (lname and len(lname) > 20):
             messages.error(
                 request,
                 "Your name can not be empty or greater than 20 alphabetical letters!",
             )
         else:
-            # Check if the name should be cleared
-            if not fname:
-                lname = ""
-
             user.first_name = fname.capitalize()
             user.last_name = lname.capitalize()
             user.save()
