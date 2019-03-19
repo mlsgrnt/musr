@@ -70,8 +70,6 @@ def profile(request, username):
     profile = Profile.objects.get(user=user)
     profile_posts = Post.objects.filter(poster=profile)
 
-    follower_count = profile.number_of_followers()
-
     follow_button_text = ""
     if request.user.is_authenticated:
         own_profile = Profile.objects.get(user=request.user)
@@ -87,9 +85,6 @@ def profile(request, username):
         {
             "profile": profile,
             "posts": profile_posts,
-            "follower_count": follower_count,
-            "post_count": profile_posts.count,
-            "posting_since": profile.user.date_joined,
             "follow_button_text": follow_button_text,
         },
     )
@@ -298,9 +293,9 @@ def photo_upload(request):
 def search(request):
     search = request.POST["query"]
     us = User.objects.filter(
-        Q(username__contains=search)
-        | Q(first_name__contains=search)
-        | Q(last_name__contains=search)
+        Q(username__icontains=search)
+        | Q(first_name__icontains=search)
+        | Q(last_name__icontains=search)
     )
 
     return render(

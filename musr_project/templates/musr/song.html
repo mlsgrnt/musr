@@ -7,7 +7,7 @@
     {% endif %}
   {% endif %}
   <div class="post--poster spaceframe-s">
-    <img src="{{ poster.picture.url }}" class="spaceframe-s"/>
+    <img src="{{ poster.picture_url }}" class="spaceframe-s"/>
     <div class="post--poster--info">
       <a class="textSize-s " href="{% url 'profile' poster.user.username %}">{{ poster }}</a>
       {% if re_poster %}

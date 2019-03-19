@@ -14,13 +14,23 @@ class Profile(models.Model):
     user = models.OneToOneField(User, primary_key=True, on_delete=models.CASCADE)
 
     # store user image
-    picture = models.ImageField(
-        upload_to="profile_images", blank=True, default="profile_images/default.jpg"
-    )
+    picture = models.ImageField(upload_to="profile_images", blank=True)
 
-    def number_of_followers(self):
+    @property
+    def post_count(self):
+        return Post.objects.filter(poster=self).count
+
+    @property
+    def follower_count(self):
         followedBy = Following.objects.filter(followee=self)
         return followedBy.count()
+
+    @property
+    def picture_url(self):
+        if self.picture:
+            return self.picture.url
+        else:
+            return "/media/profile_images/default.jpg"
 
     def __str__(self):
         if self.user.first_name is not "":
