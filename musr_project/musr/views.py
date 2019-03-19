@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponse, Http404, HttpResponseBadRequest
@@ -127,7 +127,7 @@ def feed(request):
 @login_required
 def add_post(request):
     if request.method != "POST":
-        return redirect("/")
+        return redirect(reverse("whats_hot"))
 
     song_id = request.POST["song"]
 
@@ -148,7 +148,7 @@ def add_post(request):
 @login_required
 def repost(request):
     if request.method != "POST":
-        return redirect("/")
+        return redirect(reverse("whats_hot"))
 
     original_post = Post.objects.get(post_id=request.POST["post_id"])
 
@@ -167,7 +167,7 @@ def repost(request):
 @login_required
 def follow(request):
     if request.method != "POST":
-        return redirect("/")
+        return redirect(reverse("whats_hot"))
 
     followee_username = request.POST["username"]
 
@@ -194,7 +194,7 @@ def follow(request):
 @login_required
 def unfollow(request):
     if request.method != "POST":
-        return redirect("/")
+        return redirect(reverse("whats_hot"))
 
     unfollow_username = request.POST["username"]
 
@@ -215,7 +215,7 @@ def unfollow(request):
 @login_required
 def delete_post(request):
     if request.method != "POST":
-        return redirect("/")
+        return redirect(reverse("whats_hot"))
 
     post_id = request.POST["post_id"]
     post = Post.objects.get(post_id=post_id)
@@ -299,13 +299,16 @@ def photo_upload(request):
 
 
 def search(request):
-    search = request.POST["query"]
-    us = User.objects.filter(
-        Q(username__icontains=search)
-        | Q(first_name__icontains=search)
-        | Q(last_name__icontains=search)
-    )
 
-    return render(
-        request, "musr/search_account.html", {"query": us, "search": search.lower()}
-    )
+    if request.method == "POST":
+        search = request.POST["query"]
+        us = User.objects.filter(
+            Q(username__icontains=search)
+            | Q(first_name__icontains=search)
+            | Q(last_name__icontains=search)
+        )
+        return render(
+            request, "musr/search_account.html", {"query": us, "search": search.lower()}
+        )
+    else:
+        return redirect(reverse("whats_hot"))
