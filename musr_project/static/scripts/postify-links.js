@@ -25,6 +25,8 @@ logoutLink.onclick = e => {
 
 // Delete buttons
 const deletePost = e => {
+  e.target.disabled = true;
+
   e.target.innerHTML = 'Deleting...';
   e.target.classList.add('reposted');
 
@@ -49,7 +51,10 @@ Array.from(document.querySelectorAll('.deleteButton')).forEach(
 
 // Repost buttons
 const repostPost = e => {
+  e.target.disabled = true;
+
   form.append('post_id', e.target.id);
+
   fetch('/repost-post', {
     method: 'POST',
     body: form
