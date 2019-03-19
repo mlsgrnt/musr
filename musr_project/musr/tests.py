@@ -18,7 +18,7 @@ class TravisTesterTestCase(TestCase):
 
 class ViewsTestCase(TestCase):
     def test_404_when_user_does_not_exist(self):
-        resp = self.client.get("/profile/madeupuser/", follow=True)
+        resp = self.client.get(reverse("profile") + "/madeupuser/", follow=True)
         self.assertEqual(resp.status_code, 404)
 
 
@@ -78,9 +78,9 @@ class ProfileTestCase(TestCase):
         profile = Profile.objects.get(user=self.user)
         post = Post.objects.create(poster=profile, song_id=27)
 
-        request = self.client.get("/profile/testuser/", follow=True)
-        request1 = self.client.get("/profile/testUsER/", follow=True)
-        request2 = self.client.get("/profile/TESTUSER/", follow=True)
+        request = self.client.get(reverse("profile")+"/testuser/", follow=True)
+        request1 = self.client.get(reverse("profile")+"/testUsER/", follow=True)
+        request2 = self.client.get(reverse("profile")+"/TESTUSER/", follow=True)
 
         self.assertEqual(request.content, request1.content)
         self.assertEqual(request.content, request2.content)
