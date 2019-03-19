@@ -6,7 +6,7 @@
 {% block content %}
   <h1 class="textSize-xl c-primary-dark spacerBottom-0 spacerTop-0">Account Settings</h1>
   <ul sytle="c-grey-1">
-    <li class="{% current 'account_photo_upload' %}"><a class="c-grey-1" href="{% url 'account_photo_upload' %}">Profile Photo</a></li>
+    <li class="{% current 'account_photo_upload' %}"><a class="c-grey-1" href="{% url 'account_photo_upload' %}">Change Profile Picture</a></li>
     <li class="{% current 'change_name' %}"><a class="c-grey-1" href="{% url 'change_name' %}">Change Full Name</a></li>
     <li class="{% current 'account_change_password' %}"><a class="c-grey-1" href="{% url 'account_change_password' %}">Change Password</a></li>
     <li class="{% current 'account_email' %}"><a class="c-grey-1" href="{% url 'account_email' %}">Change Email</a></li>
