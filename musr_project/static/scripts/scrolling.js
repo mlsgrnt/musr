@@ -1,8 +1,14 @@
 const postFeed = document.querySelector('.horizontal');
 
 postFeed.addEventListener('wheel', e => {
-  // Don't affect horizontal scrolls
-  if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+  // Don't affect horizontal scrolls, don't do anything if we're not at the bottom of the page
+  if (
+    Math.abs(e.deltaX) > Math.abs(e.deltaY) ||
+    window.innerHeight +
+      document.documentElement.scrollTop -
+      postFeed.offsetHeight <
+      0
+  ) {
     return;
   }
 

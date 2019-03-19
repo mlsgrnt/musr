@@ -129,8 +129,14 @@ def add_post(request):
     if request.method != "POST":
         return redirect("/")
 
-    # TODO: validate this data!!!! this is begging for mysql injection
     song_id = request.POST["song"]
+
+    # Check song_id is valid
+    try:
+        int(song_id)
+    except ValueError:
+        return HttpResponseBadRequest()
+
     profile = Profile.objects.get(user=request.user)
 
     newpost = Post.objects.create(poster=profile, song_id=song_id)
@@ -280,10 +286,12 @@ def photo_upload(request):
                     request,
                     "You can only upload .jpg, .png or .gif files smaller than 4MB as a profile picture!",
                 )
-        elif request.POST["photoRemove"] == "true":
+        elif "photoRemove" in request.POST and request.POST["photoRemove"] == "true":
             profile.picture = None
             profile.save()
-            messages.success(request, "Photo removed successfully")
+            messages.success(request, "Photo removed successfully!")
+        else:
+            messages.error(request, "You must select a photo to upload!")
 
     return render(request, "account/photo_upload.html", {"profile": profile})
 

@@ -36,7 +36,6 @@ def song(post, user):
         )
         return
 
-    # TODO: make this more elegant
     poster = Profile.objects.get(user=post.poster)
     re_poster = None
     if post.original_poster:
