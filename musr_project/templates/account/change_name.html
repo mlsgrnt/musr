@@ -1,0 +1,15 @@
+{% extends "account/base.html" %}
+
+{% block head_title %}Change Name{% endblock %}
+
+{% block content %}
+  <div class="maxWidth-3xl">
+    <h1 class="textSize-xl">Change Name</h1>
+    <form id="changeName" method="post" action="{% url 'change_name' %}">
+      {% csrf_token %}
+      <input class="textInput" type="text" value="{{ user.first_name }}" placeholder="First Name"  name="firstName" id="firstName"  autocomplete="off"/>
+      <input class="textInput" type="text" value="{{ user.last_name }}" placeholder="Last Name" name="lastName" id="lastName"  autocomplete="off"/>
+      <button class="button button--type-highlighted spacerTop-s spacerBottom-s" type="submit" name="action">Change Name</button>
+    </form>
+  </div>
+{% endblock %}

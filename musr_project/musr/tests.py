@@ -28,24 +28,14 @@ class ChangeNameTestCase(TestCase):
         user.save()
         self.client.login(username="user", password="password")
         response = self.client.post(
-            reverse("change_name"), {"name_to_change": "first_name", "new_name": "fred"}
+            reverse("change_name"), {"firstName": "fred", "lastName": "dred"}
         )
 
         user_firstname = User.objects.get(username="user").first_name
+        user_lastname = User.objects.get(username="user").last_name
 
-        self.assertContains(response, "OK")
-        self.assertEqual(user_firstname, "fred")
-
-    def test_cannot_change_username(self):
-        user = User.objects.create_user(username="user", password="password")
-        user.save()
-        self.client.login(username="user", password="password")
-
-        response = self.client.post(
-            reverse("change_name"), {"name_to_change": "username", "new_name": "fred"}
-        )
-
-        self.assertEqual(response.status_code, 403)
+        self.assertEqual(user_firstname, "Fred")
+        self.assertEqual(user_lastname, "Dred")
 
 
 class ProfilePictureTestCase(TestCase):

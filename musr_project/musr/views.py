@@ -232,23 +232,35 @@ def delete_post(request):
 # Change first or last name
 @login_required
 def change_name(request):
-    if request.method != "POST":
-        redirect("/")
     user = request.user
 
-    if (
-        request.POST["name_to_change"] != "first_name"
-        and request.POST["name_to_change"] != "last_name"
-    ):
-        raise PermissionDenied
+    if request.method == "POST":
+        fname = request.POST.get("firstName")
+        lname = request.POST.get("lastName")
 
-    try:
+        if not lname or not fname:
+            HttpResponseBadRequest()
 
-        setattr(user, request.POST["name_to_change"], request.POST["new_name"])
-        user.save()
-        return HttpResponse("OK")
-    except:
-        return HttpResponseBadRequest()
+        if len(fname) > 20 or len(lname) > 20:
+            messages.error(
+                request,
+                "Your name can not be empty or greater than 20 alphabetical letters!",
+            )
+        else:
+            # Check if the name should be cleared
+            if not fname:
+                lname = ""
+
+            user.first_name = fname.capitalize()
+            user.last_name = lname.capitalize()
+            user.save()
+
+            profile = Profile.objects.get(user=user)
+            messages.success(
+                request, "Name changed successfully to " + str(profile) + "!"
+            )
+
+    return render(request, "account/change_name.html")
 
 
 # Account photo upload
@@ -280,7 +292,7 @@ def photo_upload(request):
             profile.save()
             messages.success(request, "Photo removed successfully")
 
-    return render(request, "musr/photo_upload.html", {"profile": profile})
+    return render(request, "account/photo_upload.html", {"profile": profile})
 
 
 def search(request):
