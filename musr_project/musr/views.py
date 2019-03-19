@@ -107,6 +107,22 @@ def get_followers(request, username):
     )
 
 
+def get_followees(request, username):
+    try:
+        user = User.objects.select_related("profile").get(username__iexact=username)
+    except User.DoesNotExist:
+        raise Http404("User does not exist!")
+
+    profile = user.profile
+
+    followees = Following.objects.filter(follower=profile)
+
+    followees_list = [i.followee for i in followees]
+    return render(
+        request, "musr/following.html", {"list": followees_list, "request_user": user}
+    )
+
+
 # Account info
 @login_required
 def account(request):

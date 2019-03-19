@@ -26,6 +26,11 @@ class Profile(models.Model):
         return followedBy.count()
 
     @property
+    def following_count(self):
+        following = Following.objects.filter(follower=self)
+        return following.count()
+
+    @property
     def picture_url(self):
         if self.picture:
             return self.picture.url
