@@ -244,6 +244,10 @@ def change_name(request):
                 "Your name can not be empty or greater than 20 alphabetical letters!",
             )
         else:
+            # Check if the name should be cleared
+            if not fname:
+                lname = ""
+
             user.first_name = fname
             user.last_name = lname
             user.save()
