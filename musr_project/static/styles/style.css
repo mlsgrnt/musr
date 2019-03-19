@@ -185,7 +185,9 @@ li.active {
   /* Normalize height */
   -webkit-clip-path: circle(30% at 50% 50%);
   clip-path: circle(30% at 50% 50%);
-  height: auto;
+  width: var(--space-2xl);
+  height: var(--space-2xl);
+  object-fit: contain;
 }
 
 .post--poster--info {
@@ -418,11 +420,6 @@ div.login {
   align-items: center;
   justify-content: flex-start;
   max-width: var(--space-3xl);
-}
-
-.user-list-entry img {
-  height: auto;
-  max-width: var(--space-2xl);
 }
 
 .user-list--entry-info {

@@ -143,5 +143,7 @@ AUTHENTICATION_BACKENDS = (
     # `allauth` specific authentication methods, such as login by e-mail
     "allauth.account.auth_backends.AuthenticationBackend",
 )
+ACCOUNT_PRESERVE_USERNAME_CASING = False
+ACCOUNT_USERNAME_VALIDATORS = "musr.validators.custom_username_validators"
 
 SITE_ID = 1
