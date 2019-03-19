@@ -16,7 +16,8 @@ class Profile(models.Model):
     # store user image
     picture = models.ImageField(upload_to="profile_images", blank=True)
 
-    def number_of_followers(self):
+    @property
+    def follower_count(self):
         followedBy = Following.objects.filter(followee=self)
         return followedBy.count()
 

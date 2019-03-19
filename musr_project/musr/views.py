@@ -70,8 +70,6 @@ def profile(request, username):
     profile = Profile.objects.get(user=user)
     profile_posts = Post.objects.filter(poster=profile)
 
-    follower_count = profile.number_of_followers()
-
     follow_button_text = ""
     if request.user.is_authenticated:
         own_profile = Profile.objects.get(user=request.user)
@@ -87,7 +85,6 @@ def profile(request, username):
         {
             "profile": profile,
             "posts": profile_posts,
-            "follower_count": follower_count,
             "post_count": profile_posts.count,
             "posting_since": profile.user.date_joined,
             "follow_button_text": follow_button_text,
