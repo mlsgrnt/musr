@@ -247,9 +247,13 @@ def change_name(request):
             user.first_name = fname
             user.last_name = lname
             user.save()
-            messages.success(request, "Name changed successfully!")
 
-    return render(request, "musr/change_name.html", {"user": user})
+            profile = Profile.objects.get(user=user)
+            messages.success(
+                request, "Name changed successfully to " + str(profile) + "!"
+            )
+
+    return render(request, "account/change_name.html")
 
 
 # Account photo upload
@@ -274,7 +278,7 @@ def photo_upload(request):
                     "You can only upload .jpg, .png or .gif files smaller than 4MB as a profile picture!",
                 )
 
-    return render(request, "musr/photo_upload.html", {"profile": profile})
+    return render(request, "account/photo_upload.html", {"profile": profile})
 
 
 def search(request):

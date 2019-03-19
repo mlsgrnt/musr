@@ -20,11 +20,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 # Manually place the musr photo upload page under account/ to match rest of accounts pages
-from musr.views import photo_upload
+from musr.views import photo_upload, change_name
 
 urlpatterns = [
     path("", include("musr.urls")),
     path("account/", include("allauth.urls")),
     path("account/photo-upload", photo_upload, name="account_photo_upload"),
+    path("account/change-name", change_name, name="change_name"),
     path("admin/", admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
