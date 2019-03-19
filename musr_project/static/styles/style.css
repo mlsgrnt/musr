@@ -149,6 +149,15 @@ li.active {
   width: 350px;
 }
 
+.post-share-count {
+  margin: var(--space-s) var(--space-l);
+
+  text-align: center;
+}
+.post-share-count ~ .post.card {
+  margin-top: 0;
+}
+
 .post.card {
   padding: var(--space-s) var(--space-m);
 }
@@ -194,7 +203,8 @@ li.active {
   display: flex;
   flex-direction: column;
 }
-.post--poster--info span {
+.post--poster--info span,
+.post--poster--info a {
   line-height: var(--lineHeight-xs);
 }
 
@@ -403,8 +413,17 @@ div.login {
   padding-right: var(--space-l);
 }
 
-.profile--buttons {
+.profile img {
+  object-fit: contain;
+  object-position: right;
+  flex: 1;
+}
+.profile .profile--details {
   flex: 2;
+}
+
+.profile--buttons {
+  flex: 1;
 }
 .profile--buttons--followButton {
   float: right;

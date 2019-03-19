@@ -84,3 +84,7 @@ class Post(models.Model):
 
     # a field for the date the post was made
     date = models.DateField(default=timezone.now)
+
+    @property
+    def number_times_posted(self):
+        return Post.objects.filter(song_id=self.song_id).count
