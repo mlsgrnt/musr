@@ -267,7 +267,7 @@ def photo_upload(request):
             ):
                 profile.picture = request.FILES["photoUpload"]
                 profile.save()
-                messages.error(
+                messages.success(
                     request, "Your profile picture has uploaded successfully!"
                 )
             else:
