@@ -65,14 +65,14 @@ class ProfilePictureTestCase(TestCase):
         )
         self.profile.save()
 
-        self.assertIn("small", self.profile.picture.name)
-        self.assertNotIn("default", self.profile.picture.name)
+        self.assertIn("small", self.profile.picture_url)
+        self.assertNotIn("default", self.profile.picture_url)
 
     def test_profile_picture_can_be_removed(self):
         self.client.post(reverse("account_photo_upload"), {"photoRemove": "true"})
 
-        self.assertNotIn("small", self.profile.picture.name)
-        self.assertIn("default", self.profile.picture.name)
+        self.assertNotIn("small", self.profile.picture_url)
+        self.assertIn("default", self.profile.picture_url)
 
 
 class ProfileTestCase(TestCase):
@@ -81,7 +81,7 @@ class ProfileTestCase(TestCase):
         self.user = User.objects.create_user(username="testuser", password="password")
         profile = Profile.objects.get(user=self.user)
 
-        self.assertEqual(profile.picture.name, "profile_images/default.jpg")
+        self.assertIn("profile_images/default.jpg", profile.picture_url)
 
     def test_user_profile_urls_ignore_case(self):
         self.user = User.objects.create_user(username="testuser", password="password")
@@ -123,7 +123,7 @@ class ProfileTestCase(TestCase):
         following1 = Following.objects.create(follower=profile2, followee=profile1)
         following1.save()
 
-        self.assertEqual(1, profile1.number_of_followers())
+        self.assertEqual(1, profile1.follower_count)
 
     def test_user_followees_page_displays_correct_followers(self):
         user1 = User.objects.create_user(username="testuser1", password="password")
