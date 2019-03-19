@@ -25,14 +25,22 @@ logoutLink.onclick = e => {
 
 // Delete buttons
 const deletePost = e => {
+  e.target.innerHTML = 'Deleting...';
+  e.target.classList.add('reposted');
+
   form.append('post_id', e.target.id);
   fetch('/delete-post', {
     method: 'POST',
     body: form
   }).then(() => {
+    /* This used to delete the post directly in the DOM, however this didn't update the post count in the header.
+     * The simple solution was to remove this functionality...
     // This is very coupled with the structure of the document
     const postElement = e.target.parentNode.parentNode;
     postElement.remove();
+    */
+
+    window.location.reload();
   });
 };
 Array.from(document.querySelectorAll('.deleteButton')).forEach(
