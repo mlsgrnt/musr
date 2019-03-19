@@ -5,10 +5,10 @@
     </div>
   {% endif %}
   <div class="post card">
-    {% if poster.user == user or re_poster.user == user %}
+    {% if poster.user == user and not re_poster or re_poster.user == user %}
       <div class="post--post-button textSize-xs"><button class="deleteButton" id="{{ song.post_id }}">Delete</button></div>
     {% else %}
-      {% if user.is_authenticated %}
+      {% if user.is_authenticated and poster.user != user %}
         <div class="post--post-button textSize-xs"><button class="repostButton" id="{{ song.post_id }}">Repost</button></div>
       {% endif %}
     {% endif %}
