@@ -465,19 +465,19 @@ class DeletePostTestCase(TestCase):
         self.assertEquals(posts, 1)
         self.assertEqual(response.status_code, 403)
 
-
-class DeletePostTestCase(TestCase):
     def test_can_repost_post(self):
-        user = User.objects.create_user(username="admin", password="admin")
+        user = User.objects.create_user(username="admin2", password="admin")
         user.save()
         profile = Profile.objects.get(user=user)
-        user1 = User.objects.create_user(username="jeoff", password="paosswoord")
+
+        user1 = User.objects.create_user(username="jeoff2", password="paosswoord")
         user1.save()
         profile1 = Profile.objects.get(user=user1)
+
         post = Post.objects.create(poster=profile, song_id="1")
         post.save()
 
-        self.client.login(username="jeoff", password="paosswoord")
+        self.client.login(username="jeoff2", password="paosswoord")
         response = self.client.post(reverse("repost_post"), {"post_id": post.post_id})
 
         repost = Post.objects.get(poster=profile1, song_id="1")
@@ -508,16 +508,7 @@ class SongTemplateTagTestCase(TestCase):
 
     def test_tag_pulls_song_info_from_deezer(self):
         user = User.objects.create_user(username="admin", password="secret")
-        image = (
-            b"\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x00\x00\x00\x21\xf9\x04"
-            b"\x01\x0a\x00\x01\x00\x2c\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02"
-            b"\x02\x4c\x01\x00\x3b"
-        )
         profile = Profile.objects.get(user=user)
-        profile.picture = SimpleUploadedFile(
-            "small.gif", image, content_type="image/gif"
-        )
-        profile.save()
         post = Post.objects.create(post_id=1, poster=profile, song_id=3135556)
         response = self.render_template(
             "{% load musr_template_tags %}{% song post user %}", {"post": post}
