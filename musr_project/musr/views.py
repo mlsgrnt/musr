@@ -248,8 +248,8 @@ def change_name(request):
             if not fname:
                 lname = ""
 
-            user.first_name = fname
-            user.last_name = lname
+            user.first_name = fname.capitalize()
+            user.last_name = lname.capitalize()
             user.save()
 
             profile = Profile.objects.get(user=user)
