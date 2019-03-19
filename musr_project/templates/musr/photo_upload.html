@@ -21,7 +21,7 @@
     <form id="photoRemove" method="post" action="{% url 'account_photo_upload' %}" enctype="multipart/form-data">
       {% csrf_token %}
       <input class="" type="hidden" name="photoRemove" id="photoRemove" value="true" />
-      <input class="button button--type-primary spacerTop-s spacerBottom-s" type="submit" name="submit" value="Remove Photo"/>
+      <input class="button button--type-primary" type="submit" name="submit" value="Remove Photo"/>
     </form>
     {% endif %}
   </div>
