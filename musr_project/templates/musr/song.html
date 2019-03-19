@@ -1,7 +1,7 @@
 <div>
   {% if show_count %}
     <div class="post-share-count">
-      Shared {{song.number_times_posted}} times
+      Shared {{song.number_times_posted}} time{{song.number_times_posted|pluralize}}
     </div>
   {% endif %}
   <div class="post card">

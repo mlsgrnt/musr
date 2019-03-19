@@ -525,7 +525,7 @@ class SongTemplateTagTestCase(TestCase):
     def test_tag_handles_empty_context_dict(self):
         with self.assertRaises(SuspiciousOperation):
             self.render_template(
-                "{% load musr_template_tags %}{% song post user %}", {}
+                "{% load musr_template_tags %}{% song post user show_count %}", {}
             )
 
     def test_tag_handles_invalid_deezer_song_id(self):
@@ -534,7 +534,7 @@ class SongTemplateTagTestCase(TestCase):
         post = Post.objects.create(post_id=1, poster=profile, song_id=27)
         with self.assertRaises(SuspiciousOperation):
             self.render_template(
-                "{% load musr_template_tags %}{% song post user %}", {}
+                "{% load musr_template_tags %}{% song post user show_count %}", {}
             )
 
     def test_tag_pulls_song_info_from_deezer(self):
@@ -542,12 +542,27 @@ class SongTemplateTagTestCase(TestCase):
         profile = Profile.objects.get(user=user)
         post = Post.objects.create(post_id=1, poster=profile, song_id=3135556)
         response = self.render_template(
-            "{% load musr_template_tags %}{% song post user %}", {"post": post}
+            "{% load musr_template_tags %}{% song post user show_count %}",
+            {"post": post},
         )
 
         self.assertInHTML("Harder Better Faster Stronger", response)
         self.assertInHTML("Discovery", response)
         self.assertInHTML("Daft Punk", response)
+
+    def test_show_count_shows_count(self):
+        user = User.objects.create_user(username="admin", password="secret")
+        profile = Profile.objects.get(user=user)
+        post = Post.objects.create(post_id=1, poster=profile, song_id=3135556)
+        response = self.render_template(
+            "{% load musr_template_tags %}{% song post user show_count %}",
+            {"post": post, "show_count": "show_count"},
+        )
+
+        self.assertInHTML("Harder Better Faster Stronger", response)
+        self.assertInHTML("Discovery", response)
+        self.assertInHTML("Daft Punk", response)
+        self.assertInHTML("Shared 1 time", response)
 
 
 class SearchForUsers(TestCase):
