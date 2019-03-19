@@ -149,6 +149,15 @@ li.active {
   width: 350px;
 }
 
+.post-share-count {
+  margin: var(--space-s) var(--space-l);
+
+  text-align: center;
+}
+.post-share-count ~ .post.card {
+  margin-top: 0;
+}
+
 .post.card {
   padding: var(--space-s) var(--space-m);
 }
