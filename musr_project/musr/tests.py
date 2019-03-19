@@ -48,6 +48,33 @@ class ChangeNameTestCase(TestCase):
         self.assertEqual(response.status_code, 403)
 
 
+class ProfilePictureTestCase(TestCase):
+    @classmethod
+    def setUp(self):
+        self.user = User.objects.create_user(username="testuser", password="password")
+        self.profile = Profile.objects.get(user=self.user)
+
+    def test_profile_picture_can_be_updated(self):
+        image = (
+            b"\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x00\x00\x00\x21\xf9\x04"
+            b"\x01\x0a\x00\x01\x00\x2c\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02"
+            b"\x02\x4c\x01\x00\x3b"
+        )
+        self.profile.picture = SimpleUploadedFile(
+            "small.gif", image, content_type="image/gif"
+        )
+        self.profile.save()
+
+        self.assertIn("small", self.profile.picture.name)
+        self.assertNotIn("default", self.profile.picture.name)
+
+    def test_profile_picture_can_be_removed(self):
+        self.client.post(reverse("account_photo_upload"), {"photoRemove": "true"})
+
+        self.assertNotIn("small", self.profile.picture.name)
+        self.assertIn("default", self.profile.picture.name)
+
+
 class ProfileTestCase(TestCase):
     # TODO!
     def test_user_created_with_built_in_django_methods_has_user_profile_picture(self):
