@@ -238,6 +238,9 @@ def change_name(request):
         fname = request.POST.get("firstName")
         lname = request.POST.get("lastName")
 
+        if not lname or not fname:
+            HttpResponseBadRequest()
+
         if len(fname) > 20 or len(lname) > 20:
             messages.error(
                 request,
