@@ -9,8 +9,8 @@
     <h1 class="textSize-xl c-primary-dark spacerBottom-0 spacerTop-0">{{ profile }}</h1>
     <div class="profile--details">
       <h3 class="textSize-s c-grey-1 spacerBottom-0 spacerTop-0 fontWeight-400"><a href="followers">{{ profile.follower_count }} follower{{profile.follower_count|pluralize}}</a></h3>
-      <h3 class="textSize-s c-grey-1 spacerBottom-0 spacerTop-0 fontWeight-400">{{ post_count }} post{{post_count|pluralize}}</h3>
-      <h3 class="textSize-s c-grey-1 spacerBottom-0 spacerTop-0 fontWeight-400">Posting since {{ posting_since }}</h3>
+      <h3 class="textSize-s c-grey-1 spacerBottom-0 spacerTop-0 fontWeight-400">{{ profile.post_count }} post{{profile.post_count|pluralize}}</h3>
+      <h3 class="textSize-s c-grey-1 spacerBottom-0 spacerTop-0 fontWeight-400">Posting since {{ profile.user.date_joined }}</h3>
     </div>
     <div class="profile--buttons">
       {% if user.is_authenticated and profile.user != user %}

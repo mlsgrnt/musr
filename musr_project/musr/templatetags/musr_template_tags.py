@@ -70,5 +70,4 @@ def user_list(users):
 @register.inclusion_tag("musr/user_list_item.html")
 def user_list_item(user):
     profile = Profile.objects.get(user=user)
-    post_count = Post.objects.filter(poster=profile).count
-    return {"profile": profile, "post_count": post_count}
+    return {"profile": profile}

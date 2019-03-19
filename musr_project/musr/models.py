@@ -17,6 +17,10 @@ class Profile(models.Model):
     picture = models.ImageField(upload_to="profile_images", blank=True)
 
     @property
+    def post_count(self):
+        return Post.objects.filter(poster=self).count
+
+    @property
     def follower_count(self):
         followedBy = Following.objects.filter(followee=self)
         return followedBy.count()

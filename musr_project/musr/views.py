@@ -85,8 +85,6 @@ def profile(request, username):
         {
             "profile": profile,
             "posts": profile_posts,
-            "post_count": profile_posts.count,
-            "posting_since": profile.user.date_joined,
             "follow_button_text": follow_button_text,
         },
     )
