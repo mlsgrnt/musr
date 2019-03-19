@@ -281,9 +281,9 @@ def photo_upload(request):
 def search(request):
     search = request.POST["query"]
     us = User.objects.filter(
-        Q(username__contains=search)
-        | Q(first_name__contains=search)
-        | Q(last_name__contains=search)
+        Q(username__icontains=search)
+        | Q(first_name__icontains=search)
+        | Q(last_name__icontains=search)
     )
 
     return render(
