@@ -282,10 +282,12 @@ def photo_upload(request):
                     request,
                     "You can only upload .jpg, .png or .gif files smaller than 4MB as a profile picture!",
                 )
-        elif request.POST["photoRemove"] == "true":
+        elif "photoRemove" in request.POST and request.POST["photoRemove"] == "true":
             profile.picture = None
             profile.save()
-            messages.success(request, "Photo removed successfully")
+            messages.success(request, "Photo removed successfully!")
+        else:
+            messages.error(request, "You must select a photo to upload!")
 
     return render(request, "account/photo_upload.html", {"profile": profile})
 
