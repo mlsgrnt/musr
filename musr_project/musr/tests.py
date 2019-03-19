@@ -263,13 +263,15 @@ class baseLinksTestCase(TestCase):
         self.user = User.objects.create_user(username="admin", password="secret")
 
     def test_logged_out_user_sees_sign_in_link(self):
-        response = self.client.get("/", follow=True)
+        response = self.client.get(reverse("whats_hot"), follow=True)
         self.assertIn(reverse("account_login"), response.content.decode("ascii"))
         self.assertNotIn(reverse("account_logout"), response.content.decode("ascii"))
 
     def test_normally_logged_in_user_sees_sign_out_link(self):
-        self.client.post("/account/login/", {"login": "admin", "password": "secret"})
-        response = self.client.get("/")
+        self.client.post(
+            reverse("account_login"), {"login": "admin", "password": "secret"}
+        )
+        response = self.client.get(reverse("whats_hot"))
         self.assertNotIn(reverse("account_login"), response.content.decode("ascii"))
         self.assertIn(reverse("account_logout"), response.content.decode("ascii"))
 
@@ -296,14 +298,14 @@ class AllAuthTestCase(TestCase):
 
     # Most of allAuth is tested, only test our integration
     def test_login_page_uses_musr_base(self):
-        response = self.client.get("/account/login/")
+        response = self.client.get(reverse("account_login"))
 
         self.assertContains(response, "<!-- MUSR base.html -->", status_code=200)
         self.assertTemplateUsed(response, "musr/base.html")
 
     def test_complain_about_empty_form(self):
         response = self.client.post(
-            "/account/login/", {"login": "admin", "password": "wrongsecret"}
+            reverse("account_login"), {"login": "admin", "password": "wrongsecret"}
         )
         self.assertContains(
             response,
@@ -314,7 +316,7 @@ class AllAuthTestCase(TestCase):
 
     def test_complain_about_wrong_password(self):
         response = self.client.post(
-            "/account/login/", {"login": "admin", "password": "wrongsecret"}
+            reverse("account_login"), {"login": "admin", "password": "wrongsecret"}
         )
         self.assertContains(
             response, "The username and/or password you specified are not correct."
@@ -323,7 +325,7 @@ class AllAuthTestCase(TestCase):
 
     def test_complain_about_nonexistent_user(self):
         response = self.client.post(
-            "/account/login/", {"login": "fakeuser", "password": "wrongsecret"}
+            reverse("account_login"), {"login": "fakeuser", "password": "wrongsecret"}
         )
         self.assertContains(
             response, "The username and/or password you specified are not correct."
@@ -332,9 +334,9 @@ class AllAuthTestCase(TestCase):
 
     def test_redirect_to_home_after_logging_in(self):
         response = self.client.post(
-            "/account/login/", {"login": "admin", "password": "secret"}
+            reverse("account_login"), {"login": "admin", "password": "secret"}
         )
-        self.assertRedirects(response, "/")
+        self.assertRedirects(response, reverse("whats_hot"))
 
 
 class PostShowingViewTestCase(TestCase):
@@ -377,13 +379,17 @@ class AddPostTestCase(TestCase):
         self.assertTemplateUsed(response, "account/login.html")
 
     def test_making_get_request_to_add_post_does_nothing(self):
-        self.client.post("/account/login/", {"login": "admin", "password": "secret"})
+        self.client.post(
+            reverse("account_login"), {"login": "admin", "password": "secret"}
+        )
 
         response = self.client.get(reverse("add_post"))
-        self.assertRedirects(response, "/")
+        self.assertRedirects(response, reverse("whats_hot"))
 
     def test_post_creation_sucessful(self):
-        self.client.post("/account/login/", {"login": "admin", "password": "secret"})
+        self.client.post(
+            reverse("account_login"), {"login": "admin", "password": "secret"}
+        )
 
         self.client.post(reverse("add_post"), {"song": 1}, follow=True)
 
@@ -549,13 +555,15 @@ class SearchForUsers(TestCase):
         post.save()
 
     def test_search_for_existing_user(self):
-        response = self.client.post("/search", {"query": "jeoff"})
+        response = self.client.post(reverse("search"), {"query": "jeoff"})
         self.assertContains(
             response, "jeoff", count=None, status_code=200, msg_prefix="", html=False
         )
 
     def test_search_for_non_existing_user(self):
-        response = self.client.post("/search", {"query": "thisSurelyDoesntExit"})
+        response = self.client.post(
+            reverse("search"), {"query": "thisSurelyDoesntExit"}
+        )
         self.assertContains(
             response,
             "No users found!",
