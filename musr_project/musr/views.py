@@ -250,7 +250,7 @@ def change_name(request):
 
             profile = Profile.objects.get(user=user)
             messages.success(
-                request, "Name changed successfully to " + str(profile) + "!"
+                request, "Name changed successfully! You are now " + str(profile) + "!"
             )
 
     return render(request, "account/change_name.html")
