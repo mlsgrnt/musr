@@ -33,7 +33,7 @@ function handleClick(e) {
     });
   }
 
-  // TODO: add event listeners for reacting to other playback events (buffering etc)
+  // Potentially add event listeners for reacting to other playback events (buffering etc)
 }
 
 // Hook all buttons

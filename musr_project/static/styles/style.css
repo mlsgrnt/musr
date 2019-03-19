@@ -271,7 +271,7 @@ li.active {
 
 .songSearchResult img {
   object-fit: contain;
-  width: 25vw; /* TODO: this isn't great/doens't work well on mobile... find another solution? */
+  width: 25vw; /* this isn't great/doens't work well on mobile... However it works well enough for now */
   max-height: 100px;
 }
 
@@ -397,15 +397,10 @@ div.login {
   }
 }
 
-.profile img {
-  /* TODO: clip path here? */
-}
-
 .profile * {
   padding-right: var(--space-l);
 }
 
-/* TODO: is this the best position for the follow button? */
 .profile--buttons {
   flex: 2;
 }

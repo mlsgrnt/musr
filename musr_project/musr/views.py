@@ -129,8 +129,14 @@ def add_post(request):
     if request.method != "POST":
         return redirect("/")
 
-    # TODO: validate this data!!!! this is begging for mysql injection
     song_id = request.POST["song"]
+
+    # Check song_id is valid
+    try:
+        int(song_id)
+    except ValueError:
+        return HttpResponseBadRequest()
+
     profile = Profile.objects.get(user=request.user)
 
     newpost = Post.objects.create(poster=profile, song_id=song_id)
@@ -234,7 +240,7 @@ def change_name(request):
         lname = request.POST.get("lastName")
 
         if not lname or not fname:
-            HttpResponseBadRequest()
+            return HttpResponseBadRequest()
 
         if len(fname) > 20 or len(lname) > 20:
             messages.error(
