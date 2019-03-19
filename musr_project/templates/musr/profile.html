@@ -5,7 +5,7 @@
 
 {% block content %}
   <div class="profile">
-    <img class="maxHeight-xl" src="{{ profile.picture.url }}" />
+    <img class="maxHeight-xl" src="{{ profile.picture_url }}" />
     <h1 class="textSize-xl c-primary-dark spacerBottom-0 spacerTop-0">{{ profile }}</h1>
     <div class="profile--details">
       <h3 class="textSize-s c-grey-1 spacerBottom-0 spacerTop-0 fontWeight-400"><a href="followers">{{ follower_count }} follower{{follower_count|pluralize}}</a></h3>
