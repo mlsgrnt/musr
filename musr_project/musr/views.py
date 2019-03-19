@@ -232,23 +232,24 @@ def delete_post(request):
 # Change first or last name
 @login_required
 def change_name(request):
-    if request.method != "POST":
-        redirect("/")
     user = request.user
 
-    if (
-        request.POST["name_to_change"] != "first_name"
-        and request.POST["name_to_change"] != "last_name"
-    ):
-        raise PermissionDenied
+    if request.method == "POST":
+        fname = request.POST.get("firstName")
+        lname = request.POST.get("lastName")
 
-    try:
+        if len(fname) > 20 or len(lname) > 20:
+            messages.error(
+                request,
+                "Your name can not be empty or greater than 20 alphabetical letters!",
+            )
+        else:
+            user.first_name = fname
+            user.last_name = lname
+            user.save()
+            messages.success(request, "Name changed successfully!")
 
-        setattr(user, request.POST["name_to_change"], request.POST["new_name"])
-        user.save()
-        return HttpResponse("OK")
-    except:
-        return HttpResponseBadRequest()
+    return render(request, "musr/change_name.html", {"user": user})
 
 
 # Account photo upload
