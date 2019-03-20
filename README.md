@@ -10,6 +10,8 @@ MUSR is a Django web application where users can share songs they care about, an
 The source code is available at [https://github.com/mlsgrnt/musr](https://musr.pythonanywhere.com) and is deployed at [https://musr.pythonanywhere.com](https://musr.pythonanywhere.com).
 
 ## To deploy locally:
+This project runs on Python 3.
+
 To clone the repository, run
 
 `git clone https://github.com/mlsgrnt/musr`
@@ -22,13 +24,16 @@ Next, install the dependencies with
 
 `pip install -r requirements.txt`
 
+If the database is empty, some errors will appear. To fix this, run the migrations, and run the population script:
+
+```
+python musr_project/manage.py migrate
+python musr_project/populate_musr.py
+```
+
 Start a test server by running
 
 `python musr_project/manage.py runserver`
-
-If the database is empty, some errors will appear. To fix this, run the population script:
-
-`python musr_project/populate_musr.py`
 
 Please note that while debug mode is active on the settings.py shipped in this repository, it has been turned off on the PythonAnywhere instance
 
