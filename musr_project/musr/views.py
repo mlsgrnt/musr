@@ -281,6 +281,16 @@ def search(request):
             | Q(last_name__icontains=search)
         )
 
+        # Execute search again on each word of the search
+        search_words = search.split()
+        for word in search_words:
+            # Concatenate search results
+            us = us | User.objects.filter(
+                Q(username__icontains=word)
+                | Q(first_name__icontains=word)
+                | Q(last_name__icontains=word)
+            )
+
         return render(
             request, "musr/search_account.html", {"query": us, "search": search.lower()}
         )
