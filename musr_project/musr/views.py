@@ -1,17 +1,17 @@
-from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.http import HttpResponse, Http404, HttpResponseBadRequest
+from django.contrib import messages
 from django.core.exceptions import PermissionDenied
+from django.http import HttpResponse, Http404, HttpResponseBadRequest
 from django.shortcuts import redirect
+from django.db import IntegrityError
 from django.db.models import Q
 from django.template import loader, Context
-from django.db import IntegrityError
+from django.shortcuts import render, redirect, reverse
 from django.utils import timezone
 from .models import Profile, Post, Following
 from math import log10
 from datetime import timedelta
-from django.contrib import messages
 
 
 # User-visitable views

@@ -1,4 +1,5 @@
 /* General */
+
 a {
   color: var(--c-primary-2xlight);
   text-decoration: none;
@@ -52,6 +53,7 @@ body {
 
 .center {
   display: flex;
+
   align-items: center;
   justify-content: center;
 
@@ -67,6 +69,12 @@ body {
   }
 }
 
+li.active {
+  /* Ironically only Safari doens't use the -webkit prefix */
+  -webkit-text-stroke: 1px;
+  text-stroke: 1px;
+}
+
 /* MUSR Logo */
 .header .center img {
   height: var(--space-xl);
@@ -77,16 +85,10 @@ body {
   text-decoration: none;
 }
 
-li.active {
-  /* Ironically only Safari doens't use the -webkit prefix */
-  -webkit-text-stroke: 1px;
-  text-stroke: 1px;
-}
-
 /* Search box */
 .textInput.userSearch {
-  width: 88px; /* width of "Search" in IBM Plex Sans... in most browsers */
   border-width: 0;
+  width: 88px; /* width of "Search" in IBM Plex Sans... in most browsers */
 
   transition: all 0.35s ease-in-out;
 }
@@ -100,6 +102,7 @@ li.active {
 }
 
 /* Posts */
+
 .hoizontalContainer {
   position: relative;
   left: calc(var(--space-2xl) * -1);
@@ -194,8 +197,10 @@ li.active {
   /* Normalize height */
   -webkit-clip-path: circle(30% at 50% 50%);
   clip-path: circle(30% at 50% 50%);
+
   width: var(--space-2xl);
   height: var(--space-2xl);
+
   object-fit: contain;
 }
 
@@ -236,7 +241,7 @@ li.active {
   border: none;
 }
 
-/* Add Post */
+/* Add Post Full Screen Takeover */
 
 .addPostForm {
   display: none;
@@ -245,7 +250,7 @@ li.active {
   background: rgba(0, 0, 0, 0.4);
 }
 
-/* Background on add post appearing */
+/* Fade background on add post appearing */
 .container {
   transition: all 0.2s ease-in-out;
 }
@@ -264,11 +269,12 @@ li.active {
   min-height: 100vh;
 }
 
+/* Handle lack of results here, not in javascript */
 .songSearchResults.loaded:empty::before {
   content: 'No results found!';
 }
-/* Song results */
 
+/* Song results */
 .songSearchResult {
   cursor: pointer;
   display: flex;
@@ -298,14 +304,13 @@ li.active {
   line-height: 1.25;
 }
 
-/* Button */
-
+/* Button for add post */
 .button.addPostButton {
   min-width: var(--space-xl);
   height: var(--space-l);
 }
 
-/* Add post Form */
+/* Add post Form itself */
 .container ~ .addPost {
   z-index: -99;
   opacity: 0;
@@ -335,6 +340,7 @@ li.active {
 }
 
 /* Messages */
+
 .dialog.messages {
   position: absolute;
   right: var(--space-l);
@@ -343,6 +349,7 @@ li.active {
 }
 
 /* SocialAccount buttons */
+
 ul.socialaccount_providers {
   list-style-type: none;
   display: flex;
@@ -360,6 +367,7 @@ ul.socialaccount_providers li:first-of-type {
 }
 
 /* Login */
+
 .button--type-highlighted {
   display: block;
   transition: all 0.2s ease-out;
@@ -391,7 +399,7 @@ div.login {
   align-items: flex-start;
 }
 
-/* Profile picture */
+/* Profile picture on profile picture change page */
 .currentProfilePicture {
   display: flex;
   align-items: center;
@@ -399,7 +407,6 @@ div.login {
 
 /* Profile page */
 .profile {
-  /* CSS Grid may be a better solution for this */
   display: flex;
   align-items: flex-start;
 }
@@ -422,7 +429,7 @@ div.login {
   flex: 1;
 }
 
-/* User List */
+/* User List which appears on following pages, as well as search results */
 .user-list {
   list-style-type: none;
 }

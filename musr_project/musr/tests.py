@@ -16,14 +16,6 @@ class TravisTesterTestCase(TestCase):
         self.assertEqual(test_value, 5)
 
 
-class ViewsTestCase(TestCase):
-    def test_404_when_user_does_not_exist(self):
-        resp = self.client.get(
-            reverse("profile", kwargs={"username": "madeupuser"}), follow=True
-        )
-        self.assertEqual(resp.status_code, 404)
-
-
 class ChangeNameTestCase(TestCase):
     def test_can_change_first_name(self):
         user = User.objects.create_user(username="user", password="password")
@@ -45,17 +37,28 @@ class ProfilePictureTestCase(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(username="testuser", password="password")
         self.profile = Profile.objects.get(user=self.user)
-
-    def test_profile_picture_can_be_updated(self):
         image = (
             b"\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x00\x00\x00\x21\xf9\x04"
             b"\x01\x0a\x00\x01\x00\x2c\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02"
             b"\x02\x4c\x01\x00\x3b"
         )
-        self.profile.picture = SimpleUploadedFile(
-            "small.gif", image, content_type="image/gif"
-        )
+        self.picture = SimpleUploadedFile("small.gif", image, content_type="image/gif")
+
+    def test_profile_picture_can_be_updated_via_model(self):
+        self.profile.picture = self.picture
         self.profile.save()
+
+        self.assertIn("small", self.profile.picture_url)
+        self.assertNotIn("default", self.profile.picture_url)
+
+    def test_profile_picture_can_be_updated_via_request(self):
+        self.client.login(username="testuser", password="password")
+
+        response = self.client.post(
+            reverse("account_photo_upload"), {"photoUpload": self.picture}, follow=True
+        )
+
+        self.profile = Profile.objects.get(user=self.user)
 
         self.assertIn("small", self.profile.picture_url)
         self.assertNotIn("default", self.profile.picture_url)
@@ -68,7 +71,12 @@ class ProfilePictureTestCase(TestCase):
 
 
 class ProfileTestCase(TestCase):
-    # TODO!
+    def test_404_when_user_does_not_exist(self):
+        resp = self.client.get(
+            reverse("profile", kwargs={"username": "madeupuser"}), follow=True
+        )
+        self.assertEqual(resp.status_code, 404)
+
     def test_user_created_with_built_in_django_methods_has_user_profile_picture(self):
         self.user = User.objects.create_user(username="testuser", password="password")
         profile = Profile.objects.get(user=self.user)
@@ -250,7 +258,6 @@ class ModelTestCase(TestCase):
         self.assertQuerysetEqual(Following.objects.all(), [])
 
 
-# TODO: refactor these
 class baseLinksTestCase(TestCase):
     @classmethod
     def setUp(self):
@@ -284,7 +291,6 @@ class baseLinksTestCase(TestCase):
         self.assertIn(reverse("account_logout"), response.content.decode("ascii"))
 
 
-# TODO: these could use some fleshing out
 class AllAuthTestCase(TestCase):
     @classmethod
     def setUp(self):
@@ -345,21 +351,6 @@ class AllAuthTestCase(TestCase):
             reverse("account_login"), {"login": "admin", "password": "secret"}
         )
         self.assertRedirects(response, reverse("whats_hot"))
-
-
-class PostShowingViewTestCase(TestCase):
-    @classmethod
-    def setUp(self):
-        self.user = User.objects.create_user(username="number_one", password="1")
-        self.user.save()
-
-        self.profile = Profile.objects.get(user=self.user)
-        self.profile.save()
-
-        self.post = Post.objects.create(
-            profile=self.profile, Song_Id=1, date=datetime.datetime(2019, 2, 1, 12, 0)
-        )
-        self.post.save()
 
 
 class AddPostTestCase(TestCase):
@@ -559,9 +550,6 @@ class SongTemplateTagTestCase(TestCase):
             {"post": post, "show_count": "show_count"},
         )
 
-        self.assertInHTML("Harder Better Faster Stronger", response)
-        self.assertInHTML("Discovery", response)
-        self.assertInHTML("Daft Punk", response)
         self.assertInHTML("Shared 1 time", response)
 
 
@@ -579,6 +567,14 @@ class SearchForUsers(TestCase):
 
     def test_search_for_existing_user(self):
         response = self.client.post(reverse("search"), {"query": "jeoff"})
+        self.assertContains(
+            response, "jeoff", count=None, status_code=200, msg_prefix="", html=False
+        )
+
+    def test_search_for_user_with_weird_string(self):
+        response = self.client.post(
+            reverse("search"), {"query": "shias asehisli asfihsalhie asflihaewsfh j"}
+        )
         self.assertContains(
             response, "jeoff", count=None, status_code=200, msg_prefix="", html=False
         )
