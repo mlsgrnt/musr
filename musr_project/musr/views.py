@@ -14,6 +14,7 @@ from datetime import timedelta
 from django.contrib import messages
 
 
+# User-visitable views
 # Index view (Whats hot)
 def whats_hot(request):
     # Get all posts made within the last month
@@ -23,11 +24,12 @@ def whats_hot(request):
 
     song_ids = []
 
+    # Populate list of all song ids
     for post in all_posts:
         if post.song_id not in song_ids:
             song_ids.append(post.song_id)
 
-    # Get all original posts made within the last month
+    # Give each song a starting ranking of 1
     song_rankings = {song_id: 1 for song_id in song_ids}
 
     # Increase rankings each time we find a duplicate
@@ -35,16 +37,20 @@ def whats_hot(request):
         if post.song_id in song_rankings:
             song_rankings[post.song_id] += 1
 
-    # Decay the longer ago a post was reposted
-    for song_id in song_rankings.keys():
+    # Decrease ranking based on how long ago each song was posted
+    for post in all_posts:
+        song_id = post.song_id
+
         days_since_posting = (current_time.date() - post.date).days
         song_rankings[song_id] = song_rankings[song_id] / log10(
             (4 + days_since_posting) / 3.2
         )
 
+    # Sort all songs by their rank
     sorted_songs = sorted(song_rankings.items(), key=lambda x: x[1], reverse=True)
     sorted_posts = []
 
+    # Find oldest post for each song, which will then be shown
     for song in sorted_songs:
         sorted_posts.append(
             Post.objects.filter(date__gte=four_weeks_ago, song_id=song[0]).order_by(
@@ -52,6 +58,7 @@ def whats_hot(request):
             )[0]
         )
 
+    # Show only the top 6 posts
     return render(request, "musr/whats_hot.html", {"posts": sorted_posts[:6]})
 
 
@@ -313,7 +320,6 @@ def photo_upload(request):
 
 
 def search(request):
-
     if request.method == "POST":
         search = request.POST["query"]
         us = User.objects.filter(
