@@ -10,7 +10,10 @@ register = template.Library()
 # Used to highlight currently active page
 @register.simple_tag(takes_context=True)
 def current(context, url=None):
-    if "request" in context and context.request.resolver_match.url_name == url:
+    if (
+        "resolver_match" in context.request
+        and context.request.resolver_match.url_name == url
+    ):
         return "active"
     return ""
 

@@ -1,4 +1,4 @@
-from django.urls import path, re_path
+from django.urls import path
 from django.conf.urls import url
 from . import views
 
@@ -18,5 +18,4 @@ urlpatterns = [
     path("repost-post", views.repost, name="repost_post"),
     path("search", views.search, name="search"),
     path("unfollow", views.unfollow, name="unfollow"),
-    re_path(r"\w*", views.custom_404, {"exception": Exception("Page Not Found")}),
 ]

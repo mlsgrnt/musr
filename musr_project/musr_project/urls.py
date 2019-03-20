@@ -29,6 +29,3 @@ urlpatterns = [
     path("account/change-name", change_name, name="change_name"),
     path("admin/", admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-handler404 = "musr.views.custom_404"
-handler500 = "musr.views.custom_500"
