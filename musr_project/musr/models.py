@@ -35,7 +35,7 @@ class Profile(models.Model):
         if self.picture:
             return self.picture.url
         else:
-            return "/media/profile_images/default.jpg"
+            return "/media/profile_images/default.png"
 
     def __str__(self):
         if self.user.first_name is not "":
