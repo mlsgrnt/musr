@@ -34,7 +34,9 @@ const deletePost = e => {
   fetch('/delete-post', {
     method: 'POST',
     body: form
-  }).then(() => {
+  }).then(async response => {
+    const body = await response;
+    const responseText = await body.text();
     /* This used to delete the post directly in the DOM, however this didn't update the post count in the header.
      * The simple solution was to remove this functionality...
     // This is very coupled with the structure of the document
@@ -42,7 +44,11 @@ const deletePost = e => {
     postElement.remove();
     */
 
-    window.location.reload();
+    if (responseText == 'OK') {
+      window.location.reload();
+    } else {
+      e.target.innerHTML = 'Failed!';
+    }
   });
 };
 Array.from(document.querySelectorAll('.deleteButton')).forEach(
@@ -58,9 +64,17 @@ const repostPost = e => {
   fetch('/repost-post', {
     method: 'POST',
     body: form
-  }).then(() => {
-    e.target.innerHTML = 'Reposted!';
+  }).then(async response => {
+    const body = await response;
+    const responseText = await body.text();
+
     e.target.classList.add('reposted');
+
+    if (responseText == 'OK') {
+      e.target.innerHTML = 'Reposted!';
+    } else {
+      e.target.innerHTML = 'Failed!';
+    }
   });
 };
 Array.from(document.querySelectorAll('.repostButton')).forEach(
@@ -76,9 +90,16 @@ const followButtonHandler = e => {
   fetch(`/${e.target.innerHTML.toLowerCase()}`, {
     method: 'POST',
     body: form
-  }).then(() => {
-    e.target.innerHTML += 'ed!';
-    window.location.reload();
+  }).then(async response => {
+    const body = await response;
+    const responseText = await body.text();
+
+    if (responseText == 'OK') {
+      e.target.innerHTML += 'ed!';
+      window.location.reload();
+    } else {
+      e.target.innerHTML = 'Failed! Try again.';
+    }
   });
 };
 const followButton = document.querySelector('.profile--buttons--followButton');
