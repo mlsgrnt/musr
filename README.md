@@ -24,9 +24,10 @@ Next, install the dependencies with
 
 `pip install -r requirements.txt`
 
-If the database is empty, some errors will appear. To fix this, run the migrations, and run the population script:
+If the database is empty, some errors will appear. To fix this, run database migrations, and run the population script:
 
 ```
+python musr_project/manage.py makemigrations
 python musr_project/manage.py migrate
 python musr_project/populate_musr.py
 ```
