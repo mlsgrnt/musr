@@ -409,10 +409,6 @@ div.login {
   }
 }
 
-.profile * {
-  padding-right: var(--space-l);
-}
-
 .profile img {
   object-fit: contain;
   object-position: right;
@@ -424,9 +420,6 @@ div.login {
 
 .profile--buttons {
   flex: 1;
-}
-.profile--buttons--followButton {
-  float: right;
 }
 
 /* User List */
