@@ -24,12 +24,12 @@ def populate():
     setupAllAuth()
 
     musers = [
-        {"user": "Drake", "firstName": "Drake", "lastName": "Graham"},
-        {"user": "Beethoven", "firstName": "Ludwig", "lastName": "Beethoven"},
-        {"user": "PeterParker", "firstName": "Peter", "lastName": "Parker"},
-        {"user": "MichaelScott", "firstName": "Michael", "lastName": "Scott"},
-        {"user": "PostMalone", "firstName": "Austin", "lastName": "Malone"},
-        {"user": "FreddieMercury", "firstName": "Freddie", "lastName": "Mercury"},
+        {"user": "drake", "firstName": "Drake", "lastName": "Graham"},
+        {"user": "beethoven", "firstName": "Ludwig", "lastName": "Beethoven"},
+        {"user": "peterparker", "firstName": "Peter", "lastName": "Parker"},
+        {"user": "michaelscott", "firstName": "Michael", "lastName": "Scott"},
+        {"user": "postmalone", "firstName": "Austin", "lastName": "Malone"},
+        {"user": "freddie", "firstName": "Freddie", "lastName": "Mercury"},
     ]
 
     followers = [
