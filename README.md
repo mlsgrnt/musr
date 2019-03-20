@@ -59,6 +59,9 @@ This “minimal set of CSS variables and utilities” provides a set of base var
 This “framework” contains a few extra css rules for common components such as buttons and input fields which build upon poco.css.
 ##### [lodash](https://lodash.com)
 Only the denounce method of lodash is imported. It is used to fire requests in a reasonable manner in the add post interface.
+##### [avataaars](https://getavataaars.com/?avatarStyle=Transparent&clotheType=BlazerShirt&facialHairType=Blank&skinColor=Yellow&topType=LongHairShavedSides)
+Default profile picture sourced from the excellent Avataaars collection.
+
 ### External APIs
 ##### [Deezer song search API](https://developers.deezer.com/api)
 Used to provide song search, info, and song previews.
