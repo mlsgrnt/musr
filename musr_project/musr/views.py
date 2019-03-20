@@ -297,7 +297,6 @@ def photo_upload(request):
 
 
 def search(request):
-
     if request.method == "POST":
         search = request.POST["query"]
         us = User.objects.filter(
@@ -310,3 +309,12 @@ def search(request):
         )
     else:
         return redirect(reverse("whats_hot"))
+
+
+# Custom error views
+def custom_404(request, exception):
+    return render(request, "404.html", {"exception": exception})
+
+
+def custom_500(request):
+    return render(request, "500.html")
