@@ -10,10 +10,10 @@ from django.utils import timezone
 
 # Profile Model
 class Profile(models.Model):
-    # link to django user model
+    # Link to django user model
     user = models.OneToOneField(User, primary_key=True, on_delete=models.CASCADE)
 
-    # store user image
+    # Store user image
     picture = models.ImageField(upload_to="profile_images", blank=True)
 
     @property
@@ -30,6 +30,7 @@ class Profile(models.Model):
         following = Following.objects.filter(follower=self)
         return following.count()
 
+    # If no profile picture is set, return a default one
     @property
     def picture_url(self):
         if self.picture:
@@ -37,6 +38,7 @@ class Profile(models.Model):
         else:
             return "/media/profile_images/default.png"
 
+    # String representation
     def __str__(self):
         if self.user.first_name is not "":
             return self.user.first_name + " " + self.user.last_name
@@ -45,7 +47,7 @@ class Profile(models.Model):
 
 
 class Following(models.Model):
-    # create two foreign keys from profile, one a follower and the other the followed
+    # Create two foreign keys from profile, one a follower and the other the followed
     follower = models.ForeignKey(
         Profile, on_delete=models.CASCADE, related_name="follower"
     )
@@ -54,11 +56,12 @@ class Following(models.Model):
         Profile, on_delete=models.CASCADE, related_name="followee"
     )
 
+    # Verify that following is valid
     def clean(self):
         if self.followee == self.follower:
             raise ValidationError("User may not follow themselves.")
 
-    # set the pair to function as a multi attribute primary key
+    # Set the pair to function as a multi attribute primary key
     class Meta:
         unique_together = (("follower", "followee"),)
         verbose_name_plural = "following"
@@ -69,13 +72,13 @@ class Post(models.Model):
     class Meta:
         ordering = ("-date", "-post_id")
 
-    # create a post ID as the post primary key
+    # Create a post ID as the post primary key
     post_id = models.AutoField(primary_key=True)
 
-    # store Profile ID of poster
+    # Store Profile ID of poster
     poster = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="poster")
 
-    # a foreign key field if the post is reposted
+    # A foreign key field if the post is reposted
     original_poster = models.ForeignKey(
         Profile,
         blank=True,
@@ -84,10 +87,10 @@ class Post(models.Model):
         related_name="original_poster",
     )
 
-    # a field for the song's Deezr ID
+    # A field for the song's Deezer ID
     song_id = models.IntegerField()
 
-    # a field for the date the post was made
+    # A field for the date the post was made
     date = models.DateField(default=timezone.now)
 
     @property
