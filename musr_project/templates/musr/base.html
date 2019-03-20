@@ -29,12 +29,12 @@
             <li class="{% current 'account_login' %}"><a href="{% url 'account_login' %}">Login</a></li>
             <li class="{% current 'account_signup' %}"><a href="{% url 'account_signup' %}">Sign Up</a></li>
           {% endif %}
-            <li>
-              <form action="{% url 'search' %}" method='post'>
+          <li>
+            <form action="{% url 'search' %}" method='post'>
               {% csrf_token %}
               <input class="textInput userSearch {% current 'search' %}" type="text" placeholder="Search" name="query" value='{{ search }}' required autocomplete="off" >
-              </form>
-            </li>
+            </form>
+          </li>
         </ul>
 
         <div class="center">

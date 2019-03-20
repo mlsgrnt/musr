@@ -7,7 +7,8 @@
   <h1 class="textSize-xl c-primary-dark spacerBottom-0 spacerTop-0">What's Hot</h1>
   {% if not user.is_authenticated %}
     <p class="textSize-m c-grey-1 maxWidth-4xl">Welcome to MUSR, the world's #1 website for sharing the songs you're loving, and for seeing what others are loving. Please log in, sign up, or see what's being shared most below.
-  </p>  {% endif %}
+    </p>
+  {% endif %}
 
   {% if posts %}
     {% songs posts user "show_count" %}
