@@ -33,28 +33,28 @@ def populate():
     ]
 
     followers = [
-        {"follower": "Drake", "followee": "Beethoven"},
-        {"follower": "Drake", "followee": "PeterParker"},
-        {"follower": "PeterParker", "followee": "Drake"},
-        {"follower": "PostMalone", "followee": "Beethoven"},
-        {"follower": "Beethoven", "followee": "FreddieMercury"},
-        {"follower": "Drake", "followee": "FreddieMercury"},
-        {"follower": "PostMalone", "followee": "MichaelScott"},
-        {"follower": "Drake", "followee": "MichaelScott"},
-        {"follower": "Beethoven", "followee": "MichaelScott"},
+        {"follower": "drake", "followee": "beethoven"},
+        {"follower": "drake", "followee": "peterparker"},
+        {"follower": "peterparker", "followee": "drake"},
+        {"follower": "postmalone", "followee": "beethoven"},
+        {"follower": "beethoven", "followee": "freddie"},
+        {"follower": "drake", "followee": "freddie"},
+        {"follower": "postmalone", "followee": "michaelscott"},
+        {"follower": "drake", "followee": "michaelscott"},
+        {"follower": "beethoven", "followee": "michaelscott"},
     ]
 
     posts = [
-        {"poster": "Drake", "song_id": 639437722},
-        {"poster": "Beethoven", "original": "Drake", "song_id": 639437722},
-        {"poster": "PostMalone", "original": "Drake", "song_id": 639437722},
-        {"poster": "MichaelScott", "original": "Drake", "song_id": 639437722},
-        {"poster": "PeterParker", "song_id": 639437722},
-        {"poster": "FreddieMercury", "original": "Drake", "song_id": 639437722},
-        {"poster": "Beethoven", "song_id": 5707517},
-        {"poster": "Drake", "original": "Beethoven", "song_id": 5707517},
-        {"poster": "PostMalone", "song_id": 3135556},
-        {"poster": "PeterParker", "original": "PostMalone", "song_id": 3135556},
+        {"poster": "drake", "song_id": 639437722},
+        {"poster": "beethoven", "original": "drake", "song_id": 639437722},
+        {"poster": "postmalone", "original": "drake", "song_id": 639437722},
+        {"poster": "michaelscott", "original": "drake", "song_id": 639437722},
+        {"poster": "peterparker", "song_id": 639437722},
+        {"poster": "freddie", "original": "drake", "song_id": 639437722},
+        {"poster": "beethoven", "song_id": 5707517},
+        {"poster": "drake", "original": "beethoven", "song_id": 5707517},
+        {"poster": "postmalone", "song_id": 3135556},
+        {"poster": "peterparker", "original": "postmalone", "song_id": 3135556},
     ]
 
     for user in musers:
