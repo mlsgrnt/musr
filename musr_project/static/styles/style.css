@@ -411,8 +411,8 @@ div.login {
 
 .profile img {
   object-fit: contain;
-  object-position: right;
-  flex: 1;
+  object-position: center;
+  flex: 0;
 }
 .profile .profile--details {
   flex: 2;
