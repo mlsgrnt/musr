@@ -30,6 +30,8 @@ If the database is empty, some errors will appear. To fix this, run the populati
 
 `python musr_project/populate_musr.py`
 
+Please note that while debug mode is active on the settings.py shipped in this repository, it has been turned off on the PythonAnywhere instance
+
 #### Important notice:
 Some features will not be functional when running the application on localhost, namely
 ###### 1) OAuth based authentication, more specifically the Facebook and Google logins
