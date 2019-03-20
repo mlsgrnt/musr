@@ -15,10 +15,10 @@ urlpatterns = [
     path(
         "profile/<slug:username>/following", views.get_followees, name="get_followees"
     ),
+    path("search", views.search, name="search"),
     path("add-post", views.add_post, name="add_post"),
     path("follow", views.follow, name="follow"),
-    path("delete-post", views.delete_post, name="delete_post"),
-    path("repost-post", views.repost, name="repost_post"),
-    path("search", views.search, name="search"),
     path("unfollow", views.unfollow, name="unfollow"),
+    path("repost-post", views.repost, name="repost_post"),
+    path("delete-post", views.delete_post, name="delete_post"),
 ]
