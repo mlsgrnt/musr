@@ -1,40 +1,46 @@
-<div>
-  {% if show_count %}
-    <div class="post-share-count">
-      Shared {{song.number_times_posted}} time{{song.number_times_posted|pluralize}}
-    </div>
-  {% endif %}
-  <div class="post card">
-    {% if poster.user == user and not re_poster or re_poster.user == user %}
-      <div class="post--post-button textSize-xs"><button class="deleteButton" id="{{ song.post_id }}">Delete</button></div>
-    {% else %}
-      {% if user.is_authenticated and poster.user != user %}
-        <div class="post--post-button textSize-xs"><button class="repostButton" id="{{ song.post_id }}">Repost</button></div>
-      {% endif %}
+{% if error %}
+  <div class="post-share-count">
+    {{ error }}
+  </div>
+{% else %}
+  <div>
+    {% if show_count %}
+      <div class="post-share-count">
+        Shared {{song.number_times_posted}} time{{song.number_times_posted|pluralize}}
+      </div>
     {% endif %}
-    <div class="post--poster spaceframe-s">
-      <img src="{{ poster.picture_url }}" class="spaceframe-s"/>
-      <div class="post--poster--info">
-        <a class="textSize-s " href="{% url 'profile' poster.user.username %}">{{ poster }}</a>
-        {% if re_poster %}
-          <span class="textSize-xs">Reposted by {{ re_poster }}</span>
+    <div class="post card">
+      {% if poster.user == user and not re_poster or re_poster.user == user %}
+        <div class="post--post-button textSize-xs"><button class="deleteButton" id="{{ song.post_id }}">Delete</button></div>
+      {% else %}
+        {% if user.is_authenticated and poster.user != user %}
+          <div class="post--post-button textSize-xs"><button class="repostButton" id="{{ song.post_id }}">Repost</button></div>
         {% endif %}
-        <span class="textSize-xs">Posted {{ song.date }}</span>
-      </div>
-    </div>
-    <div class="post--song">
-      <img src="{{ song.album_art }}" />
-      <div class="post--song--wrapper spacerTop-s">
-        <div class="post--song--play-button">
-          <button id="{{ song.song_id }}" class="play c-primary-xdark textSize-l">▶</button>
-        </div>
-        <div class="post--song--info">
-          <span class="textSize-m fontWeight-700 c-primary-2xlight">{{ song.title }}</span>
-          <span class="textSize-s">{{ song.artist }}</span>
-          <span class="textSize-s ">{{ song.album }}</span>
+      {% endif %}
+      <div class="post--poster spaceframe-s">
+        <img src="{{ poster.picture_url }}" class="spaceframe-s"/>
+        <div class="post--poster--info">
+          <a class="textSize-s " href="{% url 'profile' poster.user.username %}">{{ poster }}</a>
+          {% if re_poster %}
+            <span class="textSize-xs">Reposted by {{ re_poster }}</span>
+          {% endif %}
+          <span class="textSize-xs">Posted {{ song.date }}</span>
         </div>
       </div>
-      <audio id="audio-{{ song.song_id }}" src="{{ song.preview }}"  />
+      <div class="post--song">
+        <img src="{{ song.album_art }}" />
+        <div class="post--song--wrapper spacerTop-s">
+          <div class="post--song--play-button">
+            <button id="{{ song.song_id }}" class="play c-primary-xdark textSize-l">▶</button>
+          </div>
+          <div class="post--song--info">
+            <span class="textSize-m fontWeight-700 c-primary-2xlight">{{ song.title }}</span>
+            <span class="textSize-s">{{ song.artist }}</span>
+            <span class="textSize-s ">{{ song.album }}</span>
+          </div>
+        </div>
+        <audio id="audio-{{ song.song_id }}" src="{{ song.preview }}"  />
+      </div>
     </div>
   </div>
-</div>
+{% endif %}

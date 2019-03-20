@@ -43,10 +43,15 @@ def song(post, user, show_count):
         poster = Profile.objects.get(user=post.original_poster)
 
     # Grab data from deezer
-    url = "https://api.deezer.com/track/" + str(post.song_id)
-    req = urllib.request.Request(url)
-    r = urllib.request.urlopen(req).read()
-    data = json.loads(r.decode("utf-8"))
+    try:
+        url = "https://api.deezer.com/track/" + str(post.song_id)
+        req = urllib.request.Request(url)
+        r = urllib.request.urlopen(req).read()
+        data = json.loads(r.decode("utf-8"))
+    except:
+        return {
+            "error": "Could not retrieve information from Deezer API. Try refreshing the page."
+        }
 
     if "error" in data:
         raise SuspiciousOperation("Invalid request; deezer song id is not a valid song")
