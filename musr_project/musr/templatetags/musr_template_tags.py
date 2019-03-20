@@ -17,12 +17,6 @@ def current(context, url=None):
     return ""
 
 
-# Add post "component"
-@register.inclusion_tag("musr/add_post.html")
-def add_post():
-    return {}
-
-
 # Feed view "component"
 @register.inclusion_tag("musr/songs.html")
 def songs(posts, user, show_count=None):
