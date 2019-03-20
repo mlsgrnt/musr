@@ -73,7 +73,7 @@ class ProfileTestCase(TestCase):
         self.user = User.objects.create_user(username="testuser", password="password")
         profile = Profile.objects.get(user=self.user)
 
-        self.assertIn("profile_images/default.jpg", profile.picture_url)
+        self.assertIn("profile_images/default.png", profile.picture_url)
 
     def test_user_profile_urls_ignore_case(self):
         self.user = User.objects.create_user(username="testuser", password="password")
