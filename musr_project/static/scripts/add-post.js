@@ -66,7 +66,7 @@ const selectSong = e => {
     document.querySelector('.songSearchResults').innerHTML = 'Song added!';
     document.querySelector('.songSearch').value = '';
 
-    // Remove ourselves -- and reload if we're on the profile page
+    // Remove ourselves
     window.setTimeout(() => {
       document.querySelector('.container').classList.remove('addingPost');
     }, 750);
