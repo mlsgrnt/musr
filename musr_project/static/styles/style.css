@@ -419,7 +419,6 @@ div.login {
 .profile img {
   object-fit: contain;
   object-position: center;
-  flex: 0;
 }
 .profile .profile--details {
   flex: 2;

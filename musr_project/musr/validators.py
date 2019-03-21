@@ -9,4 +9,7 @@ class MUSRUsernameValidator(validators.RegexValidator):
     flags = re.ASCII
 
 
-custom_username_validators = [MUSRUsernameValidator()]
+custom_username_validators = [
+    MUSRUsernameValidator(),
+    validators.MaxLengthValidator(20),
+]
