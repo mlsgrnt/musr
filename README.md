@@ -64,7 +64,7 @@ This “minimal set of CSS variables and utilities” provides a set of base var
 ##### [focus.css framework](https://hihayk.github.io/focus/)
 This “framework” contains a few extra css rules for common components such as buttons and input fields which build upon poco.css.
 ##### [lodash](https://lodash.com)
-Only the denounce method of lodash is imported. It is used to fire requests in a reasonable manner in the add post interface.
+Only the debounce method of lodash is imported. It is used to fire requests in a reasonable manner in the add post interface.
 ##### [avataaars](https://getavataaars.com/?avatarStyle=Transparent&clotheType=BlazerShirt&facialHairType=Blank&skinColor=Yellow&topType=LongHairShavedSides)
 Default profile picture sourced from the excellent Avataaars collection.
 
